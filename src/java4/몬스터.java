@@ -103,7 +103,6 @@ public class 몬스터 { //몬스터 정보와 전투는 이곳에
             else{
                 break;
             }
-
         }
         if (캐릭터.캐릭터현재체력<=0){
             System.out.println("플레이어는 사망했다.");

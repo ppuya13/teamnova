@@ -18,8 +18,8 @@ public class 아이템 { //아이템 정보는 이곳에
 
     아이템(int 고유번호){
         if(고유번호==0){
-            this.아이템이름="빈 아이템";
-            this.빈아이템();
+            this.아이템이름="더미 아이템";
+            this.더미아이템();
         }
         else if(고유번호 == -1){
             this.아이템이름="체력물약";
@@ -62,7 +62,7 @@ public class 아이템 { //아이템 정보는 이곳에
 
 
 
-    public void 빈아이템(){
+    public void 더미아이템(){
         this.아이템분류=0;
         this.착용가능여부=false;
         this.스택가능여부=false;
