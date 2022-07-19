@@ -29,7 +29,6 @@ public class 몬스터 { //몬스터 정보와 전투는 이곳에
             this.오크();
         }
     }
-
     public void 슬라임(){
         this.번호 = 이름;
         this.이름 = "슬라임" + 이름;
