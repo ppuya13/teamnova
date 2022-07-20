@@ -1,5 +1,9 @@
 package java4;
 
+import java4.메인화면;
+import java4.몬스터;
+import java4.상점;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -59,8 +63,6 @@ public class Practice4 {
         }
 
         System.out.println(메인.몬스터목록(몬스터머릿수,몬스터어레이,죽은몬스터수));
-
-        상점 상점=new 상점();
 
 //        //상점초기화연습
 //        for (int i = 0; i < 상점.리스트.size(); i++) {

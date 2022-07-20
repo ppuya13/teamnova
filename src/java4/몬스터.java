@@ -3,6 +3,7 @@ package java4;
 import java.util.ArrayList;
 
 public class 몬스터 { //몬스터 정보와 전투는 이곳에
+    //몬스터 상속으로 처리하기
     String 이름;
     int 공격력;
     int 방어력;
@@ -17,7 +18,7 @@ public class 몬스터 { //몬스터 정보와 전투는 이곳에
 //    }
 
 
-    몬스터(String 이름, String 몬스터종류) { //공격력, 방어력, 이름 등의 이름은 그냥 변수명같은거라 자유임.
+    몬스터(String 이름, String 몬스터종류) {
         this.이름 = 이름;
         if(몬스터종류=="슬라임") {
             this.슬라임();

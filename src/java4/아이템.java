@@ -45,6 +45,10 @@ public class 아이템 { //아이템 정보는 이곳에
             this.아이템이름="각반";
             this.각반();
         }
+        else if(고유번호 == 200){
+            this.아이템이름="공격력 물약";
+            this.공격력물약();
+        }
         else if(고유번호 == 300){
             this.아이템이름="슬라임젤리";
             this.슬라임젤리();
@@ -59,23 +63,19 @@ public class 아이템 { //아이템 정보는 이곳에
         }
     }
 
-
-
-
     public void 더미아이템(){
         this.아이템분류=0;
         this.착용가능여부=false;
         this.스택가능여부=false;
         this.스택수=0;
     }
-
     public void 체력물약(){
         this.고유번호=-1;
         this.아이템분류=4;
         this.착용가능여부=false;
         this.착용여부=false;
         this.스택가능여부=true;
-        this.스택수=this.스택수+1;
+        this.스택수=1;
         this.상점판매여부 = true;
         this.구매가격=10;
         this.판매가격=5;
@@ -86,7 +86,7 @@ public class 아이템 { //아이템 정보는 이곳에
         this.착용가능여부=false;
         this.착용여부=false;
         this.스택가능여부=true;
-        this.스택수=this.스택수+1;
+        this.스택수=1;
         this.상점판매여부 = true;
         this.구매가격=10;
         this.판매가격=5;
@@ -138,6 +138,19 @@ public class 아이템 { //아이템 정보는 이곳에
         this.구매가격=100;
         this.판매가격=50;
         this.아이템효과="장착시 방어력을 10 증가시킵니다.";
+    }
+
+    public void 공격력물약(){
+        this.고유번호=200;
+        this.아이템분류=2;
+        this.착용가능여부=false;
+        this.착용여부=false;
+        this.스택가능여부=true;
+        this.스택수=1;
+        this.상점판매여부 = true;
+        this.구매가격=50;
+        this.판매가격=25;
+        this.아이템효과="사용 시 공격력을 10 증가시킵니다.";
     }
     public void 슬라임젤리(){
         this.고유번호=300;
