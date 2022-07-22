@@ -1,6 +1,8 @@
 package java4;
 
 
+import com.sun.jdi.event.ThreadStartEvent;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -15,23 +17,29 @@ public class 능력치 { //캐릭터의 능력치나 소지품에 영향을 미�
     int 캐릭터최종체력;
     int 캐릭터최대체력;
     int 캐릭터추가체력;
+    int 레벨업추가체력;
     int 캐릭터현재체력;
     int 캐릭터최종마나;
     int 캐릭터최대마나;
     int 캐릭터추가마나;
+    int 레벨업추가마나;
     int 캐릭터현재마나;
     int 캐릭터최종공격력;
     int 캐릭터공격력;
     int 캐릭터추가공격력;
+    int 레벨업추가공격력;
     int 캐릭터최종방어력;
     int 캐릭터방어력;
     int 캐릭터추가방어력;
+    int 레벨업추가방어력;
     double 캐릭터최종치확;
     double 캐릭터치명확률;
     double 캐릭터추가치확;
+    double 레벨업추가치확;
     double 캐릭터최종치피;
     double 캐릭터치명피해;
     double 캐릭터추가치피;
+    double 레벨업추가치피;
     double 캐릭터회피;
 
     Scanner sc = new Scanner(System.in);
@@ -88,18 +96,27 @@ public class 능력치 { //캐릭터의 능력치나 소지품에 영향을 미�
     public void 인벤토리초기화 (){
         아이템 체력물약 = new 아이템(-1);
         아이템 마나물약 = new 아이템(-2);
-        아이템 슬라임젤리 = new 아이템(300);
         아이템 아이템 = new 아이템(0);
         this.회복물약가방.add(체력물약);
         this.회복물약가방.add(마나물약);
+
+//        //이 아래로는 테스트용 아이템생성. 나중에 지우기
+        아이템 슬라임젤리 = new 아이템(300);
         슬라임젤리.스택수=30;
         this.소지품.add(슬라임젤리);
 
-
+        아이템 검 = new 아이템(100);
+        아이템 방패 = new 아이템(101);
+        아이템 갑옷 = new 아이템(102);
+        this.소지품.add(검);
+        this.소지품.add(방패);
+        this.소지품.add(갑옷);
+        System.out.println("첫번째검 : " + this.소지품.get(1).착용여부 + ", 두번째검 : " + this. 소지품. get(2).착용여부);
 //        //더미아이템 20개 생성
 //        for (int i = 0; i <= 14; i++) { //0부터 14까지 총 15번 반복
 //            this.소지품.add(아이템);
-//        }//더미아이템 15개를 캐릭터의 소지품에 넣음, 나중에 지우기
+//        }//더미아이템 15개를 캐릭터의 소지품에 넣음
+
     }
 
     //아이템 사용, 버리기, 판매 후에 한 번 씩 호출되는 메소드를 만들 자리 (사용, 버리기, 판매한 아이템의 남은 개수가 0개라면 소지품에서 삭제하는 기능)
@@ -238,11 +255,17 @@ public class 능력치 { //캐릭터의 능력치나 소지품에 영향을 미�
             Thread.sleep(1000);
         }
         else if(스택가능==2) { //물약이 아니고 스택불가능이면
-            this.소지품.get(타겟-3).스택수=0;
-            this.소지금=this.소지금+this.소지품.get(타겟-3).판매가격;
-            System.out.println(this.소지품.get(타겟-3).아이템이름+"을(를) 판매하여 " +
-                    this.소지품.get(타겟-3).판매가격 + "골드를 받았습니다.");
-            Thread.sleep(1000);
+            if(!this.소지품.get(타겟-3).착용여부) { //착용중이 아니면
+                this.소지품.get(타겟 - 3).스택수 = 0;
+                this.소지금 = this.소지금 + this.소지품.get(타겟 - 3).판매가격;
+                System.out.println(this.소지품.get(타겟 - 3).아이템이름 + "을(를) 판매하여 " +
+                        this.소지품.get(타겟 - 3).판매가격 + "골드를 받았습니다.");
+                Thread.sleep(1000);
+            }
+            else{
+                System.out.println("착용 중인 아이템은 판매할 수 없습니다.");
+                Thread.sleep(1000);
+            }
         }
     }
     public void 인벤정리(){
@@ -259,7 +282,76 @@ public class 능력치 { //캐릭터의 능력치나 소지품에 영향을 미�
             }
         }
     }
+    public void 아이템사용(int 물약여부, int 사용선택) throws InterruptedException {
+        아이템 타겟;
+        if(물약여부==1){ //물약이면
+            타겟=this.회복물약가방.get(사용선택);
+            타겟.물약사용(this);
+        }
+        else{
+            System.out.println("\n소모 아이템은 전투중에만 사용할 수 있습니다.");
+            Thread.sleep(1000);
+        }
 
+    }
+    public void 아이템장착(int 사용선택) throws InterruptedException {
+        아이템 타겟 = this.소지품.get(사용선택);
+        int 인벤토리크기=this.소지품.size()-1;
+        boolean 속행=true;
+        if(타겟.착용여부){//착용중이면
+            타겟.착용여부=false;
+            System.out.println("\n"+타겟.아이템이름+"을(를) 착용 해제했습니다.");
+            Thread.sleep(1000);
+        }
+        else { //착용중이 아니면
+            for(int i=0 ; i <= 인벤토리크기 ; i++){
+                if(this.소지품.get(i).장비부위==타겟.장비부위 && this.소지품.get(i).착용여부){ //인벤토리에 장비부위가 같고 착용중인 아이템이 있으면
+                    System.out.println("\n같은 부위의 착용중인 아이템을 우선 착용 해제하세요.");
+                    Thread.sleep(1000);
+                    속행=false;
+                    break;
+                }
+            }
+            if(속행){ //속행이 true면(장비부위가 같고 착용중인 아이템이 없으면)
+                타겟.착용여부=true;
+                System.out.println("\n"+타겟.아이템이름+"을(를) 착용했습니다.");
+                Thread.sleep(1000);
+            }
+        }
+    }
+    public void 장비능력치적용(){
+        this.캐릭터추가체력=0;
+        this.캐릭터추가마나=0;
+        this.캐릭터추가공격력=0;
+        this.캐릭터추가방어력=0;
+        this.캐릭터추가치확=0;
+        this.캐릭터추가치피=0;
+        ArrayList<아이템> 소지품 = this.소지품;
+        아이템 타겟;
+        for(int i=0 ; i<=소지품.size()-1 ; i++){
+            타겟 = 소지품.get(i);
+            if(타겟.착용여부){ //i번째 장비템이 착용중이면
+                this.캐릭터추가체력=this.캐릭터추가체력+타겟.기본체력+타겟.추가체력+this.레벨업추가체력;
+//                System.out.println("추가체력적용 "+this.캐릭터추가체력);
+                this.캐릭터추가마나=this.캐릭터추가마나+타겟.기본마나+타겟.추가마나+this.레벨업추가마나;
+//                System.out.println("추가마나적용 "+this.캐릭터추가마나);
+                this.캐릭터추가공격력=this.캐릭터추가공격력+타겟.기본공격력+타겟.추가공격력+this.레벨업추가공격력;
+//                System.out.println("추가공격적용 "+this.캐릭터추가공격력);
+                this.캐릭터추가방어력= this.캐릭터추가방어력+타겟.기본방어력+타겟.추가방어력+this.레벨업추가방어력;
+//                System.out.println("추가방어적용 "+this.캐릭터추가방어력);
+                this.캐릭터추가치확=this.캐릭터추가치확+타겟.기본치확+타겟.추가치확+this.레벨업추가치확;
+//                System.out.println("추가치확적용 "+this.캐릭터추가치확);
+                this.캐릭터추가치피=this.캐릭터추가치피+타겟.기본치피+타겟.추가치피+this.레벨업추가치피;
+//                System.out.println("추가치피적용 "+this.캐릭터추가치피);
+            }
+        }
+        this.캐릭터최종체력=1000+this.캐릭터추가체력;
+        this.캐릭터최종마나=100+this.캐릭터추가마나;
+        this.캐릭터최종공격력=this.캐릭터공격력+this.캐릭터추가공격력;
+        this.캐릭터최종방어력=this.캐릭터방어력+this.캐릭터추가방어력;
+        this.캐릭터최종치확=this.캐릭터치명확률+this.캐릭터추가치확;
+        this.캐릭터최종치피=this.캐릭터치명피해+this.캐릭터추가치피;
+    }
     //결론 : 구매 시 새로운 아이템을 추가할 땐 그때마다 new를 통해 새로운 객체를 만들어야 한다.
 }
 
