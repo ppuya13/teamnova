@@ -43,5 +43,4 @@ public class 상점 { // 상점에 관련된 정보는 여기에
         String 구매한템이름=this.리스트.get(타겟-1).아이템이름;
         return 구매한템이름;
     }
-
 }
