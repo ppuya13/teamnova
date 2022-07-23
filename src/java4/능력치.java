@@ -10,6 +10,7 @@ public class 능력치 { //캐릭터의 능력치나 소지품에 영향을 미�
 
     ArrayList<아이템> 회복물약가방;
     ArrayList<아이템> 소지품;
+    ArrayList<아이템> 강화목록;
     int 소지금;
     int 캐릭터레벨;
     int 캐릭터최대경험치;
@@ -90,6 +91,7 @@ public class 능력치 { //캐릭터의 능력치나 소지품에 영향을 미�
         this.소지금=소지금;
         this.회복물약가방 = new ArrayList<>();
         this.소지품 = new ArrayList<>();
+        this.강화목록 = new ArrayList<>();
     }
 
 
@@ -125,7 +127,15 @@ public class 능력치 { //캐릭터의 능력치나 소지품에 영향을 미�
     //체력물약과 마나물약이라면 아무일도 일어나지 않음
     //체력물약과 마나물약이 아니라면 남은 스택 수가 0개인지 확인하고 0개라면 소지품 리스트에서 remove
     //스택불가능하다면 바로 소지품 리스트에서 remove
-
+    public void 강화리스트생성(){
+        System.out.println("강화리스트생성");
+        this.강화목록.clear();
+        for(int i=0 ; i<=this.소지품.size()-1 ; i++){
+            if(this.소지품.get(i).착용가능여부){ //착용가능하면(현재는 착용가능한템이 전부 강화가 가능함)
+                this.강화목록.add(this.소지품.get(i));
+            }
+        }
+    }
 
 
     public void 상점구매(int 타겟, 상점 상점,int 스택가능, int 구매개수) throws InterruptedException {
