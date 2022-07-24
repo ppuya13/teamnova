@@ -323,6 +323,13 @@ public class 아이템 { //아이템 정보는 이곳에
         }
         Thread.sleep(1000);
     }
+    public 아이템 야스(){
+        아이템 아이템야스;
+
+        아이템야스 = new 아이템(100);
+
+        return 아이템야스;
+    }
 
 //    public void 소모품사용(능력치 캐릭터) throws InterruptedException {
 //        if(this.고유번호==200){ //고유번호가 200이면(공격력물약이면)
