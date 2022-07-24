@@ -12,7 +12,7 @@ public class 몬스터 { //몬스터 정보와 전투는 이곳에
     int 경험치;
     String 번호;
     아이템 드랍템;
-    ArrayList<아이템> 드랍테이블;
+    ArrayList<아이템> 드랍테이블 = new ArrayList<>();
 
 //    public String 랜덤몬스터(){
 //        String 랜덤몬스터결과 = 몬스터뽑기[num];
@@ -74,10 +74,11 @@ public class 몬스터 { //몬스터 정보와 전투는 이곳에
 
     public static int 공격(ArrayList<몬스터> 몬스터어레이, int 타겟, 능력치 캐릭터) throws InterruptedException {
         int 몬스터사망=0;
-        몬스터어레이.get(타겟-1).현재체력 = 몬스터어레이.get(타겟-1).현재체력-(캐릭터.캐릭터최종공격력-몬스터어레이.get(타겟-1).방어력);
-        System.out.println(몬스터어레이.get(타겟-1).이름 + "을(를) 공격합니다.");
+        몬스터 타겟몬스터=몬스터어레이.get(타겟-1);
+        타겟몬스터.현재체력 = 타겟몬스터.현재체력-(캐릭터.캐릭터최종공격력-타겟몬스터.방어력);
+        System.out.println(타겟몬스터.이름 + "을(를) 공격합니다.");
         Thread.sleep(1000);
-        System.out.println(몬스터어레이.get(타겟-1).이름+"에게 "+(캐릭터.캐릭터최종공격력-몬스터어레이.get(타겟-1).방어력)+"의 데미지!");
+        System.out.println(타겟몬스터.이름+"에게 "+(캐릭터.캐릭터최종공격력-타겟몬스터.방어력)+"의 데미지!");
         Thread.sleep(1000);
 
         if(몬스터어레이.get(타겟-1).현재체력<=0){
@@ -88,7 +89,6 @@ public class 몬스터 { //몬스터 정보와 전투는 이곳에
         else{
             System.out.println(몬스터어레이.get(타겟-1).이름+"의 남은 체력은 "+몬스터어레이.get(타겟-1).현재체력+"이다.");
         }
-
         return 몬스터사망;
     }
 

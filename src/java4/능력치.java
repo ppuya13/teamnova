@@ -440,6 +440,12 @@ public class 능력치 { //캐릭터의 능력치나 소지품에 영향을 미�
         }
     }
     //결론 : 구매 시 새로운 아이템을 추가할 땐 그때마다 new를 통해 새로운 객체를 만들어야 한다.
+    public 몬스터 캐릭터공격(몬스터 타겟) throws InterruptedException {
+        System.out.println(타겟.이름 + "을(를) 공격합니다.");
+        Thread.sleep(1000);
+        return 타겟;
+    }
+
 }
 
 //1. 선택한 템이 스택가능이면 몇개를 구매할건지 물어보기//
