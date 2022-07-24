@@ -11,6 +11,8 @@ public class 몬스터 { //몬스터 정보와 전투는 이곳에
     int 현재체력;
     int 경험치;
     String 번호;
+    아이템 드랍템;
+    ArrayList<아이템> 드랍테이블;
 
 //    public String 랜덤몬스터(){
 //        String 랜덤몬스터결과 = 몬스터뽑기[num];
@@ -38,6 +40,8 @@ public class 몬스터 { //몬스터 정보와 전투는 이곳에
         this.최대체력 = 30;
         this.현재체력 = 30;
         this.경험치 = 10;
+        드랍템 = new 아이템(300);
+        this.드랍테이블.add(드랍템);
     }
     public void 고블린(){
         this.번호 = 이름;
@@ -47,6 +51,8 @@ public class 몬스터 { //몬스터 정보와 전투는 이곳에
         this.최대체력 = 50;
         this.현재체력 = 50;
         this.경험치 = 30;
+        드랍템 = new 아이템(302);
+        this.드랍테이블.add(드랍템);
     }
     public void 오크(){
         this.번호 = 이름;
@@ -56,6 +62,8 @@ public class 몬스터 { //몬스터 정보와 전투는 이곳에
         this.최대체력 = 200;
         this.현재체력 = 200;
         this.경험치 = 100;
+        드랍템 = new 아이템(301);
+        this.드랍테이블.add(드랍템);
     }
 //    public void 시체(){
 //        this.번호 = "1000";

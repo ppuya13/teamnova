@@ -209,7 +209,7 @@ public class 메인화면 { //화면에 표시하기 위한 메소드는 이곳�
         return 강화목록표기;
     }
 
-    public StringBuilder 살펴보기(아이템 아이템, int 물약여부) {
+    public StringBuilder 살펴보기(아이템 아이템) {
         StringBuilder 살펴보기표기 = new StringBuilder();
         if (아이템.아이템분류 == 1) { //아이템이 장비아이템이면
             살펴보기표기.append("\n" + 아이템.아이템이름 + "\n" +

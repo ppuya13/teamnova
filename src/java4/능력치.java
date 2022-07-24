@@ -12,6 +12,8 @@ public class 능력치 { //캐릭터의 능력치나 소지품에 영향을 미�
     ArrayList<아이템> 회복물약가방;
     ArrayList<아이템> 소지품;
     ArrayList<아이템> 강화목록;
+    ArrayList<아이템> 드랍템;
+    int 획득경험치;
     int 소지금;
     int 캐릭터레벨;
     int 캐릭터최대경험치;
@@ -95,9 +97,11 @@ public class 능력치 { //캐릭터의 능력치나 소지품에 영향을 미�
         this.캐릭터최종공격력=this.캐릭터공격력+this.캐릭터추가공격력;
         this.캐릭터최종방어력=this.캐릭터방어력+this.캐릭터추가방어력;
         this.소지금=소지금;
+        this.획득경험치=0;
         this.회복물약가방 = new ArrayList<>();
         this.소지품 = new ArrayList<>();
         this.강화목록 = new ArrayList<>();
+        this.드랍템 = new ArrayList<>();
     }
 
 
