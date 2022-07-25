@@ -45,6 +45,7 @@ public class 능력치 { //캐릭터의 능력치나 소지품에 영향을 미�
     double 캐릭터추가치피;
     double 레벨업추가치피;
     double 캐릭터회피;
+    double 추가회피;
 
     Random rd = new Random();
     int 정수강화;
@@ -123,7 +124,7 @@ public class 능력치 { //캐릭터의 능력치나 소지품에 영향을 미�
         this.소지품.add(검);
         this.소지품.add(방패);
         this.소지품.add(갑옷);
-        System.out.println("첫번째검 : " + this.소지품.get(1).착용여부 + ", 두번째검 : " + this. 소지품. get(2).착용여부);
+//        System.out.println("첫번째검 : " + this.소지품.get(1).착용여부 + ", 두번째검 : " + this. 소지품. get(2).착용여부);
 //        //더미아이템 20개 생성
 //        for (int i = 0; i <= 14; i++) { //0부터 14까지 총 15번 반복
 //            this.소지품.add(아이템);
@@ -345,9 +346,9 @@ public class 능력치 { //캐릭터의 능력치나 소지품에 영향을 미�
         }
     }
     public void 아이템강화(아이템 아이템) throws InterruptedException {
-        int 랜덤값=rd.nextInt(60); //0~9체력 | 10~19마나 | 20~29공격력 | 30~39방어력 | 40~49치확 | 50~59치피
+        int 랜덤값=rd.nextInt(70); //0~9체력 | 10~19마나 | 20~29공격력 | 30~39방어력 | 40~49치확 | 50~59치피 | 60~69회피
         if(랜덤값<=9){ //0~9체력
-            정수강화=rd.nextInt(100);
+            정수강화=rd.nextInt(51)+50; //50~100 상승
             System.out.println(아이템.아이템이름+"을(를) 강화하여 체력이 "+정수강화+" 상승하였습니다.");
             아이템.추가체력=아이템.추가체력+정수강화;
             아이템.강화=아이템.강화+1;
@@ -355,7 +356,7 @@ public class 능력치 { //캐릭터의 능력치나 소지품에 영향을 미�
             Thread.sleep(1000);
         }
         else if(랜덤값<=19){ //10~19마나
-            정수강화=rd.nextInt(10);
+            정수강화=rd.nextInt(6)+5; //5~10 상승
             System.out.println(아이템.아이템이름+"을(를) 강화하여 마나가 "+정수강화+" 상승하였습니다.");
             아이템.추가마나=아이템.추가마나+정수강화;
             아이템.강화=아이템.강화+1;
@@ -364,7 +365,7 @@ public class 능력치 { //캐릭터의 능력치나 소지품에 영향을 미�
             Thread.sleep(1000);
         }
         else if(랜덤값<=29){ //20~29공격력
-            정수강화=rd.nextInt(20);
+            정수강화=rd.nextInt(11)+10;
             System.out.println(아이템.아이템이름+"을(를) 강화하여 공격력이 "+정수강화+" 상승하였습니다.");
             아이템.추가공격력=아이템.추가공격력+정수강화;
             아이템.강화=아이템.강화+1;
@@ -373,7 +374,7 @@ public class 능력치 { //캐릭터의 능력치나 소지품에 영향을 미�
             Thread.sleep(1000);
         }
         else if(랜덤값<=39){ //30~39방어력
-            정수강화=rd.nextInt(5);
+            정수강화=rd.nextInt(4)+2;
             System.out.println(아이템.아이템이름+"을(를) 강화하여 방어력이 "+정수강화+" 상승하였습니다.");
             아이템.추가방어력=아이템.추가방어력+정수강화;
             아이템.강화=아이템.강화+1;
@@ -382,7 +383,7 @@ public class 능력치 { //캐릭터의 능력치나 소지품에 영향을 미�
             Thread.sleep(1000);
         }
         else if(랜덤값<=49){ //40~49치확
-            실수강화=rd.nextInt(5);
+            실수강화=rd.nextInt(2)+1;
             System.out.println(아이템.아이템이름+"을(를) 강화하여 치명확률이 "+실수강화+" 상승하였습니다.");
             아이템.추가치확=아이템.추가치확+실수강화;
             아이템.강화=아이템.강화+1;
@@ -391,7 +392,7 @@ public class 능력치 { //캐릭터의 능력치나 소지품에 영향을 미�
             Thread.sleep(1000);
         }
         else if(랜덤값<=59){ //50~59치피
-            실수강화=rd.nextInt(10);
+            실수강화=rd.nextInt(6)+5;
             System.out.println(아이템.아이템이름+"을(를) 강화하여 치명피해가 "+실수강화+" 상승하였습니다.");
             아이템.추가치피=아이템.추가치피+실수강화;
             아이템.강화=아이템.강화+1;
@@ -399,6 +400,16 @@ public class 능력치 { //캐릭터의 능력치나 소지품에 영향을 미�
             아이템.아이템이름="+" + 아이템.강화 + " " + 아이템.임시이름;
             Thread.sleep(1000);
         }
+        else if(랜덤값<=69){ //60~69회피
+            실수강화=rd.nextInt(2)+1;
+            System.out.println(아이템.아이템이름+"을(를) 강화하여 회피율이 "+실수강화+" 상승하였습니다.");
+            아이템.추가회피=아이템.추가회피+실수강화;
+            아이템.강화=아이템.강화+1;
+            this.소지금=this.소지금-500;
+            아이템.아이템이름="+" + 아이템.강화 + " " + 아이템.임시이름;
+            Thread.sleep(1000);
+        }
+//        System.out.println("아이템 강화수치 : " + 아이템.강화 + ", 강화수치 + 이름 : " +아이템.아이템이름);
     }
     public void 장비능력치적용(){
         this.캐릭터추가체력=0;
@@ -448,23 +459,152 @@ public class 능력치 { //캐릭터의 능력치나 소지품에 영향을 미�
                 "\n플레이어의 기본공격!");
         타겟.현재체력 = 타겟.현재체력-입힌데미지;
         Thread.sleep(1000);
-        System.out.printf("\n" +
+        System.out.println("" +
                 타겟.이름 + "에게 " + 입힌데미지 + "만큼의 데미지를 입혔다!");
         Thread.sleep(1000);
         if(타겟.현재체력<=0){ //공격받은 뒤 타겟의 현재체력이 0이하면
-            System.out.printf("" +
-                    "\n" + 타겟.이름 + "은(는) 쓰러졌다!");
+            System.out.println("" +
+                    "" + 타겟.이름 + "은(는) 쓰러졌다!");
             Thread.sleep(1000);
         }
         else{ //공격받은 뒤 타겟의 체력이 남아있으면
-            System.out.printf("" +
-                    "\n" + 타겟.이름 + "의 체력이" + 타겟.현재체력 + " 남았다!");
+            System.out.println("" +
+                    "" + 타겟.이름 + "의 체력이" + 타겟.현재체력 + " 남았다!");
             Thread.sleep(1000);
         }
         return 타겟;
     }
 
+    public void 전투정산(boolean 승리, ArrayList<아이템> 드랍템, int 경험치) throws InterruptedException { //만약 드랍템 어레이가 겹치게 바뀐다면 이것도 바꿔야함(안겹칠걸 전제로 스택이 있는 아이템들은 스택수가 1개씩 오르게 해놨음)
+        Thread.sleep(1000);
+        ArrayList<아이템> 버린템 = new ArrayList<>();
+        아이템 아이템;
+        boolean 버림=false;
+        if(승리) { //전투 승리 시에만 아이템 루팅이 가능함.
+            재시작:
+            while (true) {
+//                System.out.println("정산 재시작 루프");
+//                System.out.println("재시작 이후 인벤토리 크기 비교용 : " + this.소지품.size());
+                if (드랍템.size() != 0) { //드랍템이 존재하면
+//                    System.out.println("드랍템의 아이템이름 : "+드랍템.get(0).아이템이름 + ", 드랍템의 고유번호 : "+드랍템.get(0).고유번호);
+                    for (int i = 0; i < 드랍템.size(); i++) { //드랍템의 개수만큼 반복
+                        if (드랍템.get(i).고유번호 < 0) { //포션이면
+                            for (int j = 0; j < this.회복물약가방.size(); j++) { //회복물약가방 사이즈만큼 반복
+                                if (this.회복물약가방.get(j).고유번호 == 드랍템.get(i).고유번호) {//그중에 아이템과 일치하는걸 찾아서 수치를 1올려줌
+                                    System.out.println(드랍템.get(i).아이템이름 + "을(를) 획득했다!");
+                                    this.회복물약가방.get(j).스택수++;
+                                    드랍템.remove(i);
+                                    continue 재시작;
+                                }
+                            }
+                        } else { //포션이 아니면
+                            if (드랍템.get(i).스택가능여부) { //스택가능하면
+                                for (int j = 0; j < this.소지품.size(); j++) { //소지품가방 사이즈만큼 반복
+//                                    System.out.println("선택템의 아이템이름 : "+this.소지품.get(j).아이템이름 + ", 선택템의 고유번호 : "+this.소지품.get(j).고유번호);
+                                    if (this.소지품.get(j).고유번호 == 드랍템.get(i).고유번호) { //소지품창에 일치하는게 있으면 수치를 1올려줌
+                                        System.out.println(드랍템.get(i).아이템이름 + "을(를) 획득했다!");
+                                        this.소지품.get(j).스택수++;
+                                        드랍템.remove(i);
+                                        continue 재시작;
+                                    }
+                                }
+                            }
+                            //여기에 도달했다는건 스택가능한 템이지만 소지품창에 일치하는게 없었다는 소리임.
+                            if (this.소지품.size() < 20) { //가진 소지품이 20종류 미만이면
+                                아이템 = new 아이템(드랍템.get(i).고유번호);
+                                this.소지품.add(아이템); //드랍템을 소지품에 추가함
+                                System.out.println(드랍템.get(i).아이템이름 + "을(를) 획득했다!");
+                            } else { //가진 소지품이 20종류 이상이면
+                                버린템.add(드랍템.get(i)); //아이템을 버린템 어레이에 추가함
+                                버림 = true;
+                            }
+                            드랍템.remove(i);
+                            continue 재시작;
+                        }
+                    } //아이템드랍 for문 종료
+//                    System.out.println("아이템정산(추가) 완료");
+                    Thread.sleep(1000);
+                } //아이템드랍 제일 밖 if문 종료
+                else { //드랍템이 존재하지 않거나 정산이 끝났다면
+                    if (버림) { //버린템이 존재한다면
+                        for (int i = 0; i < 버린템.size(); i++) { //버린템의 개수만큼 반복
+                            System.out.println("인벤토리가 부족해 " + 버린템.get(i).아이템이름 + "을(를) 들고갈 수 없다.");
+                        }
+                    }
+                }
+                Thread.sleep(1000);
+                break;
+            } //아이템드랍 제일 밖 while문 종료
+        }//승리판정 끝
+        this.캐릭터현재경험치 = this.캐릭터현재경험치+경험치;
+        System.out.println("경험치가 " + 경험치 + " 올라 " + this.캐릭터현재경험치 + "이(가) 되었다!");
+        Thread.sleep(1000);
+        while(true){
+//            System.out.println("경험치 while문 시작");
+            if(this.캐릭터현재경험치>=this.캐릭터최대경험치){ //현재경험치가 최대경험치보다 많을경우
+                this.레벨업();
+                System.out.print("" +
+                        "계속하려면 아무 숫자나 입력하세요." +
+                        "\n→");
+                입력 = sc.nextInt();
+            }
+            else{
+                break;
+            }
+        }
+    }
+    public void 레벨업() throws InterruptedException {
+        System.out.println("\n레벨업!");
+        this.캐릭터레벨++;
+        System.out.println("레벨이 "+this.캐릭터레벨 + "이(가) 되었다!");
+        this.캐릭터현재경험치 = this.캐릭터현재경험치 -this.캐릭터최대경험치;
+        this.캐릭터최대경험치 = this.캐릭터최대경험치 + 100;
+        Thread.sleep(1000);
+        int 랜덤값;
+        int 상승횟수=0;
+        while(상승횟수 <= 4){
+            랜덤값 = rd.nextInt(50); //0~9체력 | 10~19마나 | 20~29공격력 | 30~39방어력 | 40~49치피
+            if(랜덤값<=9){ //0~9체력
+                정수강화=rd.nextInt(51)+50; //50~100 상승
+                System.out.println("체력이 "+정수강화+" 만큼 성장했다!");
+                this.캐릭터최대체력=this.캐릭터최대체력+정수강화;
+                this.캐릭터현재체력=this.캐릭터최대체력;
+                상승횟수++;
+                Thread.sleep(200);
+            }
+            else if(랜덤값<=19){ //10~19마나
+                정수강화=rd.nextInt(6)+5;
+                System.out.println("마나가 "+정수강화+" 만큼 성장했다!");
+                this.캐릭터최대마나=this.캐릭터최대마나+정수강화;
+                this.캐릭터현재마나=this.캐릭터최대마나;
+                상승횟수++;
+                Thread.sleep(200);
+            }
+            else if(랜덤값<=29){ //20~29공격력
+                정수강화=rd.nextInt(11)+10;
+                System.out.println("공격력이 "+정수강화+" 만큼 성장했다!");
+                this.캐릭터공격력=this.캐릭터공격력+정수강화;
+                상승횟수++;
+                Thread.sleep(200);
+            }
+            else if(랜덤값<=39){ //30~39방어력
+                정수강화=rd.nextInt(4)+2;
+                System.out.println("방어력이 "+정수강화+" 만큼 성장했다!");
+                this.캐릭터방어력=this.캐릭터방어력+정수강화;
+                상승횟수++;
+                Thread.sleep(200);
+            }
+            else if(랜덤값<=49){ //40~49치피
+                실수강화=rd.nextInt(6)+5;
+                System.out.println("치명타 피해량이 "+실수강화+" 만큼 상승했다!");
+                this.캐릭터치명피해=this.캐릭터치명피해+실수강화;
+                상승횟수++;
+                Thread.sleep(200);
+            }
+        }
+    }
 }
+
 
 //1. 선택한 템이 스택가능이면 몇개를 구매할건지 물어보기//
 //1-1 구매개수를 1이상으로 입력 받으면 진짜 구매할건지 물어보기//
