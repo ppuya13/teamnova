@@ -1,6 +1,7 @@
 package java4;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class 몬스터 { //몬스터 정보와 전투는 이곳에
     //몬스터 상속으로 처리하기
@@ -15,6 +16,8 @@ public class 몬스터 { //몬스터 정보와 전투는 이곳에
     아이템 드랍템;
     ArrayList<아이템> 드랍테이블 = new ArrayList<>();
     ArrayList<아이템> 공용드랍테이블 = new ArrayList<>();
+    Random rd = new Random();
+    static Random rd2 = new Random();
 
 //    public String 랜덤몬스터(){
 //        String 랜덤몬스터결과 = 몬스터뽑기[num];
@@ -58,11 +61,11 @@ public class 몬스터 { //몬스터 정보와 전투는 이곳에
     public void 슬라임(){
         this.번호 = 이름;
         this.이름 = "슬라임" + 이름;
-        this.공격력 = 5;
-        this.방어력 = 0;
-        this.최대체력 = 30;
-        this.현재체력 = 30;
-        this.경험치 = 10;
+        this.공격력 = rd.nextInt(1)+5; //5~6
+        this.방어력 = rd.nextInt(2)+1; //1~3
+        this.최대체력 = rd.nextInt(10)+25; //25~35
+        this.현재체력 = this.최대체력;
+        this.경험치 = rd.nextInt(1)+10; //10~11
         this.정보 = "굉장히 약한 슬라임입니다. 일반인도 무리없이 사냥할 수 있습니다.";
 
         this.드랍테이블.addAll(공용드랍테이블);
@@ -72,11 +75,11 @@ public class 몬스터 { //몬스터 정보와 전투는 이곳에
     public void 고블린(){
         this.번호 = 이름;
         this.이름 = "고블린" + 이름;
-        this.공격력 = 10;
-        this.방어력 = 3;
-        this.최대체력 = 50;
-        this.현재체력 = 50;
-        this.경험치 = 30;
+        this.공격력 = rd.nextInt(5)+10;
+        this.방어력 = rd.nextInt(3)+2;
+        this.최대체력 = rd.nextInt(25)+50;
+        this.현재체력 = this.최대체력;
+        this.경험치 = rd.nextInt(5)+30;
         this.정보 = "약한 고블린입니다. 약간 지성이 있으며 무리를 짓고 있으면 굉장히 위협적입니다.";
 
         this.드랍테이블.addAll(공용드랍테이블);
@@ -86,11 +89,11 @@ public class 몬스터 { //몬스터 정보와 전투는 이곳에
     public void 오크(){
         this.번호 = 이름;
         this.이름 = "오크" + 이름;
-        this.공격력 = 300;
-        this.방어력 = 10;
-        this.최대체력 = 200;
-        this.현재체력 = 200;
-        this.경험치 = 100;
+        this.공격력 = rd.nextInt(20)+30;
+        this.방어력 = rd.nextInt(5)+10;
+        this.최대체력 = rd.nextInt(40)+180;
+        this.현재체력 = this.최대체력;
+        this.경험치 = rd.nextInt(20)+90;
         this.정보 = "오크는 호전적이며 강력합니다. 대부분 부족사회를 이루고 있으며, 단일 개체의 신체능력은 인간을 상회합니다.";
 
         this.드랍테이블.addAll(공용드랍테이블);
@@ -127,18 +130,24 @@ public class 몬스터 { //몬스터 정보와 전투는 이곳에
     public static boolean 몬스터공격(ArrayList<몬스터> 몬스터어레이, int 몬스터수, 능력치 캐릭터) throws InterruptedException {
         boolean 캐릭터사망 = false;
         for (int i=0; i < 몬스터수; i++){
-            if(캐릭터.캐릭터현재체력>=1){
-                if(몬스터어레이.get(i).공격력-캐릭터.캐릭터최종방어력>=1) {
-                    System.out.println("\n"+몬스터어레이.get(i).이름 + "의 공격!");
-                    System.out.println((몬스터어레이.get(i).공격력 - 캐릭터.캐릭터최종방어력) + "의 데미지를 입었다!");
-                    Thread.sleep(1000);
-                    캐릭터.캐릭터현재체력 = 캐릭터.캐릭터현재체력 - (몬스터어레이.get(i).공격력 - 캐릭터.캐릭터최종방어력);
+            if(캐릭터.캐릭터현재체력>=1){ //캐릭터가 살아있으면
+                if(rd2.nextInt(100)+캐릭터.캐릭터최종회피>99) {//회피판정 성공시
+                    System.out.println("\n" + 몬스터어레이.get(i).이름 + "의 공격!" +
+                            "\n플레이어는 회피했다!");
+                    Thread.sleep(500);
                 }
-                else{
-                    System.out.println("\n"+몬스터어레이.get(i).이름 + "의 공격!");
-                    System.out.println("1의 데미지를 입었다!");
-                    Thread.sleep(1000);
-                    캐릭터.캐릭터현재체력 = 캐릭터.캐릭터현재체력 - 1;
+                else {
+                    if (몬스터어레이.get(i).공격력 - 캐릭터.캐릭터최종방어력 >= 1) {
+                        System.out.println("\n" + 몬스터어레이.get(i).이름 + "의 공격!");
+                        System.out.println((몬스터어레이.get(i).공격력 - 캐릭터.캐릭터최종방어력) + "의 데미지를 입었다!");
+                        Thread.sleep(500);
+                        캐릭터.캐릭터현재체력 = 캐릭터.캐릭터현재체력 - (몬스터어레이.get(i).공격력 - 캐릭터.캐릭터최종방어력);
+                    } else {
+                        System.out.println("\n" + 몬스터어레이.get(i).이름 + "의 공격!");
+                        System.out.println("1의 데미지를 입었다!");
+                        Thread.sleep(500);
+                        캐릭터.캐릭터현재체력 = 캐릭터.캐릭터현재체력 - 1;
+                    }
                 }
             }
             else{

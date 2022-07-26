@@ -50,20 +50,55 @@ public class Practice4 {
         int 죽은몬스터수 = 0;
 
 
-        System.out.println("\n"+몬스터머릿수+"마리의 몬스터를 생성합니다.\n");
+//        System.out.println("\n"+몬스터머릿수+"마리의 몬스터를 생성합니다.\n");
 
-        for(int i = 1; i<=몬스터머릿수; i++){
-            몬스터생성난수 = Math.random();
-            num=(int)Math.floor(몬스터생성난수*몬스터종류배열.length);
-            랜덤몬스터결과 = 몬스터종류배열[num];
+//        for(int i = 1; i<=몬스터머릿수; i++){
+//            몬스터생성난수 = Math.random();
+//            num=(int)Math.floor(몬스터생성난수*몬스터종류배열.length);
+//            랜덤몬스터결과 = 몬스터종류배열[num];
+//
+//            몬스터번호 = Integer.toString(i);
+//            몬스터정보 = new 몬스터(몬스터번호,랜덤몬스터결과);
+//            몬스터어레이.add(몬스터정보);
+//        }
 
-            몬스터번호 = Integer.toString(i);
-            몬스터정보 = new 몬스터(몬스터번호,랜덤몬스터결과);
-            몬스터어레이.add(몬스터정보);
+//        System.out.println(메인.몬스터목록(몬스터머릿수,몬스터어레이,죽은몬스터수));
+        double db;
+        int a=0;
+        while(a<10) {
+            db=Math.random() * 0.2 + 0.9;
+            System.out.println("db : " + db);
+            db=Math.round((Math.random() * 0.2 + 0.9)*100);
+            System.out.println("Math.round(db*100) : " + db);
+            db=(Math.round((Math.random() * 0.2 + 0.9)*100))/100;
+            System.out.println("(Math.round(db*100))/100 : " + db);
+//            db=Math.round((Math.random()*0.2+0.9)*100)/100;
+//            System.out.println("결론 : " + db);
+//            System.out.println("");
+            a++;
+//            db=Math.random() * 0.2 + 0.9;
+//            System.out.println("db : " + db);
+//            db=Math.round(db*100);
+//            System.out.println("Math.round(db*100) : " + db);
+//            db=db/100;
+//            System.out.println("(Math.round(db*100))/100 : " + db);
+//            db=Math.round((Math.random()*0.2+0.9)*100)/100;
+//            System.out.println("결론 : " + db);
+//            System.out.println("");
+//            a++;
         }
-
-        System.out.println(메인.몬스터목록(몬스터머릿수,몬스터어레이,죽은몬스터수));
-
+//        int b=0;
+//        while(b<10) {
+//            db=Math.round((((Math.random() * 0.2) + 0.9) * 10)/10);
+//            System.out.println(db);
+//            b++;
+//        }
+//        int c=0;
+//        while(c<10) {
+//            db=Math.round(1.222 * 10) / 10;
+//            System.out.println(db);
+//            c++;
+//        }
 //        //상점초기화연습
 //        for (int i = 0; i < 상점.리스트.size(); i++) {
 //            System.out.println(상점.리스트.get(i).아이템이름);
