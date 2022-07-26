@@ -13,6 +13,7 @@ public class 능력치 { //캐릭터의 능력치나 소지품에 영향을 미�
     ArrayList<아이템> 소지품;
     ArrayList<아이템> 강화목록;
     ArrayList<아이템> 드랍템;
+    ArrayList<아이템> 사용중;
     int 획득경험치;
     int 소지금;
     int 캐릭터레벨;
@@ -32,10 +33,12 @@ public class 능력치 { //캐릭터의 능력치나 소지품에 영향을 미�
     int 캐릭터공격력;
     int 캐릭터추가공격력;
     int 레벨업추가공격력;
+    int 소모품추가공격력;
     int 캐릭터최종방어력;
     int 캐릭터방어력;
     int 캐릭터추가방어력;
     int 레벨업추가방어력;
+    int 소모품추가방어력;
     double 캐릭터최종치확;
     double 캐릭터치명확률;
     double 캐릭터추가치확;
@@ -44,8 +47,9 @@ public class 능력치 { //캐릭터의 능력치나 소지품에 영향을 미�
     double 캐릭터치명피해;
     double 캐릭터추가치피;
     double 레벨업추가치피;
+    double 캐릭터최종회피;
     double 캐릭터회피;
-    double 추가회피;
+    double 캐릭터추가회피;
 
     Random rd = new Random();
     int 정수강화;
@@ -88,21 +92,25 @@ public class 능력치 { //캐릭터의 능력치나 소지품에 영향을 미�
         this.캐릭터현재마나 = 현재마나;
         this.캐릭터공격력 = 공격력;
         this.캐릭터추가공격력 = 추가공격력;
+        this.소모품추가공격력 = 0;
         this.캐릭터방어력 = 방어력;
         this.캐릭터추가방어력 = 추가방어력;
+        this.소모품추가방어력 = 0;
         this.캐릭터치명확률 = 치명확률;
         this.캐릭터최종치확 = this.캐릭터치명확률+this.캐릭터추가치확;
         this.캐릭터치명피해 = 치명피해;
         this.캐릭터최종치피 = this.캐릭터치명피해+this.캐릭터추가치피;
         this.캐릭터회피 = 회피;
-        this.캐릭터최종공격력=this.캐릭터공격력+this.캐릭터추가공격력;
-        this.캐릭터최종방어력=this.캐릭터방어력+this.캐릭터추가방어력;
+        this.캐릭터최종회피 = this.캐릭터회피+this.캐릭터추가회피;
+        this.캐릭터최종공격력=this.캐릭터공격력+this.캐릭터추가공격력+this.소모품추가공격력;
+        this.캐릭터최종방어력=this.캐릭터방어력+this.캐릭터추가방어력+this.소모품추가방어력;
         this.소지금=소지금;
         this.획득경험치=0;
         this.회복물약가방 = new ArrayList<>();
         this.소지품 = new ArrayList<>();
         this.강화목록 = new ArrayList<>();
         this.드랍템 = new ArrayList<>();
+        this.사용중 = new ArrayList<>();
     }
 
 
@@ -315,6 +323,16 @@ public class 능력치 { //캐릭터의 능력치나 소지품에 영향을 미�
         }
 
     }
+    public void 전투아이템사용(int 물약여부, int 사용선택) throws  InterruptedException{
+        if(물약여부==1){ //물약이면
+            아이템 타겟=this.회복물약가방.get(사용선택);;
+            타겟.물약사용(this);
+        }
+        else{ //
+            아이템 타겟=this.소지품.get(사용선택);;
+            타겟.소모템사용(this);
+        }
+    }
     public void 아이템버리기(int 개수, 아이템 아이템){
         System.out.println("버리기전 아이템.스택수 : "+ 아이템.스택수 + ", 개수 : "+개수);
         아이템.스택수 = 아이템.스택수-개수;
@@ -451,6 +469,38 @@ public class 능력치 { //캐릭터의 능력치나 소지품에 영향을 미�
         }
     }
     //결론 : 구매 시 새로운 아이템을 추가할 땐 그때마다 new를 통해 새로운 객체를 만들어야 한다.
+    public void 소모템적용(){
+        아이템 타겟;
+        재시작:
+        while (true) {//지속시간이 0인 아이템 전부 삭제
+            if(this.사용중.size()>=1) {
+                for (int i = 0; i < this.사용중.size(); i++) {
+                    타겟 = this.사용중.get(i);
+                    if (타겟.지속시간 == 0) {
+                        if(타겟.고유번호==200){
+                            this.소모품추가공격력=this.소모품추가공격력-타겟.추가능력치;
+                        }
+
+                        this.사용중.remove(i);
+                        System.out.printf("지속시간 0인 아이템 있음(" + 타겟.아이템이름 + ")");
+                        continue 재시작;
+                    }
+                }
+            }
+            System.out.printf("지속시간 0인 아이템 없음");
+            break;
+        }
+        //소모품 어레이에 남은 아이템들은 모두 지속시간이 1이상인 아이템
+        if(this.사용중.size()>=1) { //남은 아이템이 있다면
+            for (int i = 0; i < this.사용중.size(); i++) {
+                타겟 = this.사용중.get(i);
+                if (타겟.고유번호 == 200) { //공격력물약을 발견했다면
+                    this.소모품추가공격력=this.소모품추가공격력+타겟.추가능력치;
+                }
+                타겟.지속시간--;
+            }
+        }
+    }
     public 몬스터 캐릭터공격(몬스터 타겟) throws InterruptedException {
 
         int 입힌데미지 = this.캐릭터최종공격력; //데미지 공식을 이곳에 적용
