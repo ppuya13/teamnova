@@ -493,7 +493,7 @@ public class 능력치 { //캐릭터의 능력치나 소지품에 영향을 미�
         int 공격력 = (int) Math.ceil(this.캐릭터최종공격력*(Math.random()*0.2+0.9));
         if(rd.nextInt(100)+캐릭터최종치확>99){
             치명타=true;
-            System.out.println("공격력 : " + 공격력 + ", 공격력*캐릭터최종치피 : " + (int)Math.ceil(공격력*캐릭터최종치피) + ", 100나누면 : " + (int)Math.ceil(공격력*캐릭터최종치피)/100);
+//            System.out.println("공격력 : " + 공격력 + ", 공격력*캐릭터최종치피 : " + (int)Math.ceil(공격력*캐릭터최종치피) + ", 100나누면 : " + (int)Math.ceil(공격력*캐릭터최종치피)/100);
             공격력=(int)Math.ceil(공격력*캐릭터최종치피/100);
         }
         int 입힌데미지 = 공격력-타겟.방어력;
@@ -523,6 +523,7 @@ public class 능력치 { //캐릭터의 능력치나 소지품에 영향을 미�
                     "" + 타겟.이름 + "의 체력이" + 타겟.현재체력 + " 남았다!");
             Thread.sleep(1000);
         }
+        치명타=false;
         System.out.println("");
 //        return 타겟;
     }
@@ -568,6 +569,7 @@ public class 능력치 { //캐릭터의 능력치나 소지품에 영향을 미�
         }else if(스킬.고유번호 ==101){ //사용한 스킬이 강타가 아니라 고유번호 101이라면...
 
         }
+        치명타=false;
         System.out.println("");
     }
     public void 다중스킬(ArrayList<몬스터> 몬스터어레이, 스킬 스킬, int 타겟) throws InterruptedException {

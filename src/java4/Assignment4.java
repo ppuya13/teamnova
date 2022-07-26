@@ -461,8 +461,8 @@ public class Assignment4 {
                 } else if (화면 == 5 && 세부1 == 5 && 세부2 == 0) {
                     System.out.print("" +
                             "\n정말 도망치겠습니까?" +
+                            "\n0.취소한다" +
                             "\n1.도망친다" +
-                            "\n2.취소한다" +
                             "\n→");
                 } else if (화면 == 5 && 세부1 == 0 && 세부2 == 0 && 몬스터머릿수 - 죽은몬스터수 == 0) {
                     System.out.println("\n전투에서 승리했습니다.");
@@ -1178,6 +1178,10 @@ public class Assignment4 {
                     a=sc.nextInt();
                     a = -1;
                 }
+                if (화면 == 5 && 세부1 == 5 && 세부2 == 0 && a == 0) {
+                    세부1 = 0;
+                    a = -1;
+                }
                 if (화면 == 5 && 세부1 == 5 && 세부2 == 0 && a == 1) {
                     System.out.println("도망쳤습니다.");
                     캐릭터.사용중.clear();
@@ -1186,10 +1190,6 @@ public class Assignment4 {
                     죽은몬스터수 = 0;
                     몬스터어레이.clear();
                     화면 = 2;
-                    세부1 = 0;
-                    a = -1;
-                }
-                if (화면 == 5 && 세부1 == 5 && 세부2 == 0 && a == 2) {
                     세부1 = 0;
                     a = -1;
                 }
@@ -1346,17 +1346,25 @@ public class Assignment4 {
                     Thread.sleep(1000);
                     if (캐릭터.캐릭터최종체력 - 캐릭터.캐릭터현재체력 >= 300) {
                         캐릭터.캐릭터현재체력 = 캐릭터.캐릭터현재체력 + 300;
-                        System.out.print("\n체력이 300회복되어 " + 캐릭터.캐릭터현재체력 + "이(가) 되었습니다." +
-                                "\n계속하려면 아무 숫자나 입력하세요." +
-                                "\n→");
+                        System.out.print("\n체력이 300회복되어 " + 캐릭터.캐릭터현재체력 + "이(가) 되었습니다.");
 
                     } else {
                         System.out.print("\n체력이 " + (캐릭터.캐릭터최종체력 - 캐릭터.캐릭터현재체력) + "회복되어 ");
                         캐릭터.캐릭터현재체력 = 캐릭터.캐릭터최종체력;
-                        System.out.print(캐릭터.캐릭터현재체력 + "이(가) 되었습니다." +
-                                "\n계속하려면 아무 숫자나 입력하세요." +
-                                "\n→");
+                        System.out.print(캐릭터.캐릭터현재체력 + "이(가) 되었습니다.");
                     }
+                    if (캐릭터.캐릭터최종마나 - 캐릭터.캐릭터현재마나 >= 30) {
+                        캐릭터.캐릭터현재마나 = 캐릭터.캐릭터현재마나 + 30;
+                        System.out.print("\n체력이 30회복되어 " + 캐릭터.캐릭터현재마나 + "이(가) 되었습니다.");
+
+                    } else {
+                        System.out.print("\n체력이 " + (캐릭터.캐릭터최종마나 - 캐릭터.캐릭터현재마나) + "회복되어 ");
+                        캐릭터.캐릭터현재마나 = 캐릭터.캐릭터최종마나;
+                        System.out.print(캐릭터.캐릭터현재마나 + "이(가) 되었습니다.");
+                    }
+                    System.out.print("" +
+                            "\n계속하려면 아무 숫자나 입력하세요." +
+                            "\n→");
                     a = sc.nextInt();
                     if (세부2 == 1) {
                         화면 = 1;
@@ -1369,19 +1377,19 @@ public class Assignment4 {
 
                 //스킬사용 시작
                 if(스킬발동){
-                    System.out.println("스킬발동");
+//                    System.out.println("스킬발동");
                     스킬발동=false;
                     if(캐릭터.캐릭터현재마나>=스킬.소모량) { //현재마나가 소모량 이상이면
                         if (스킬.타입 == 1) {
-                            System.out.println("단일스킬발동");
+//                            System.out.println("단일스킬발동");
                             캐릭터.단일스킬(몬스터타겟, 스킬);
                         } else if (스킬.타입 == 2) {
-                            System.out.println("다중스킬발동");
+//                            System.out.println("다중스킬발동");
                             몬스터타겟=몬스터어레이.get(0);
                             캐릭터.다중스킬(몬스터어레이, 스킬, 스킬타겟);
                         } else if(스킬.타입 ==3){
                             몬스터타겟=몬스터어레이.get(0);
-                            System.out.println("광역스킬발동");
+//                            System.out.println("광역스킬발동");
                             캐릭터.광역스킬(몬스터어레이, 스킬);
                         }
                     }
@@ -1479,9 +1487,9 @@ public class Assignment4 {
                 System.exit(0);
             }
             //
-            System.out.print("\n화면 : "+화면);
-            System.out.print("\n세부1: "+세부1);
-            System.out.print("\n세부2: "+세부2+"\n");
+//            System.out.print("\n화면 : "+화면);
+//            System.out.print("\n세부1: "+세부1);
+//            System.out.print("\n세부2: "+세부2+"\n");
 
 
         }//제일바깥쪽 while문 닫힘
