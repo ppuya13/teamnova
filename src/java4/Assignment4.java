@@ -327,7 +327,7 @@ public class Assignment4 {
                         세부2=0;
                         Thread.sleep(1000);
                     }
-                    else if(아이템정보.강화>=10) {
+                    else if(아이템정보.강화>=10) { //아이템이 10강이라면
                         System.out.println("\n더 이상 강화할 수 없습니다.");
                         Thread.sleep(1000);
                         System.out.println("해당 아이템의 추가능력치는");
@@ -350,6 +350,9 @@ public class Assignment4 {
                         if (아이템정보.추가치피 >= 1) {
                             강화능력치표시.append("추가 치명피해: " + 아이템정보.추가치피 + "\n");
                         }
+                        if (아이템정보.추가회피 >= 1) {
+                            강화능력치표시.append("추가 회피율: " + 아이템정보.추가회피 + "\n");
+                        }
                         System.out.print(강화능력치표시+"입니다. " +
                                 "\n계속하려면 아무 숫자나 입력하세요." +
                                 "\n→");
@@ -357,7 +360,7 @@ public class Assignment4 {
                         a=-1;
                         패스=true;
                         세부2=0;
-                    }else{
+                    }else{ //강화가능하다면
                         강화능력치표시.append("\n" + 아이템정보.아이템이름 + "\n");
                         if (아이템정보.추가체력 >= 1) { //선택한 아이템이 추가체력이 1 이상일 때
                             강화능력치표시.append("추가 체력: " + 아이템정보.추가체력 + "\n");
@@ -376,6 +379,9 @@ public class Assignment4 {
                         }
                         if (아이템정보.추가치피 >= 1) {
                             강화능력치표시.append("추가 치명피해: " + 아이템정보.추가치피 + "\n");
+                        }
+                        if (아이템정보.추가회피 >= 1) {
+                            강화능력치표시.append("추가 회피율: " + 아이템정보.추가회피 + "\n");
                         }
                         강화능력치표시.append("위 아이템을 강화하시겠습니까?" +
                                 "\n0.취소하기" +
@@ -571,9 +577,9 @@ public class Assignment4 {
                     }
                     //이 위는 버리기와 장착하기에도 동일하게 쓰임
                     a = -1;
-                    System.out.println("아이템사용 : " + 아이템사용);
-                    System.out.println("사용선택 : " + 사용선택);
-                    System.out.println("물약여부 : " + 물약여부);
+//                    System.out.println("아이템사용 : " + 아이템사용);
+//                    System.out.println("사용선택 : " + 사용선택);
+//                    System.out.println("물약여부 : " + 물약여부);
                 }
                 if (화면 == 1 && 세부1 == 2 && 세부2 == 2 && a == 0) {
                     세부2 = 0;
