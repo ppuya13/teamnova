@@ -11,6 +11,7 @@ public class 몬스터 { //몬스터 정보와 전투는 이곳에
     int 최대체력;
     int 현재체력;
     int 경험치;
+    int 소지금;
     String 정보;
     String 번호;
     아이템 드랍템;
@@ -66,6 +67,7 @@ public class 몬스터 { //몬스터 정보와 전투는 이곳에
         this.최대체력 = rd.nextInt(10)+25; //25~35
         this.현재체력 = this.최대체력;
         this.경험치 = rd.nextInt(1)+10; //10~11
+        this.소지금 = rd.nextInt(4)+1;
         this.정보 = "굉장히 약한 슬라임입니다. 일반인도 무리없이 사냥할 수 있습니다.";
 
         this.드랍테이블.addAll(공용드랍테이블);
@@ -80,6 +82,7 @@ public class 몬스터 { //몬스터 정보와 전투는 이곳에
         this.최대체력 = rd.nextInt(25)+50;
         this.현재체력 = this.최대체력;
         this.경험치 = rd.nextInt(5)+30;
+        this.소지금 = rd.nextInt(5)+5;
         this.정보 = "약한 고블린입니다. 약간 지성이 있으며 무리를 짓고 있으면 굉장히 위협적입니다.";
 
         this.드랍테이블.addAll(공용드랍테이블);
@@ -94,6 +97,7 @@ public class 몬스터 { //몬스터 정보와 전투는 이곳에
         this.최대체력 = rd.nextInt(40)+180;
         this.현재체력 = this.최대체력;
         this.경험치 = rd.nextInt(20)+90;
+        this.소지금 = rd.nextInt(10)+10;
         this.정보 = "오크는 호전적이며 강력합니다. 대부분 부족사회를 이루고 있으며, 단일 개체의 신체능력은 인간을 상회합니다.";
 
         this.드랍테이블.addAll(공용드랍테이블);
