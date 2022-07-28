@@ -63,30 +63,36 @@ public class Practice4 {
 //        }
 
 //        System.out.println(메인.몬스터목록(몬스터머릿수,몬스터어레이,죽은몬스터수));
-        double db;
-        int a=0;
-        while(a<10) {
-            db=Math.random() * 0.2 + 0.9;
-            System.out.println("db : " + db);
-            db=Math.round((Math.random() * 0.2 + 0.9)*100);
-            System.out.println("Math.round(db*100) : " + db);
-            db=(Math.round((Math.random() * 0.2 + 0.9)*100))/100;
-            System.out.println("(Math.round(db*100))/100 : " + db);
-//            db=Math.round((Math.random()*0.2+0.9)*100)/100;
-//            System.out.println("결론 : " + db);
-//            System.out.println("");
-            a++;
+//        double db;
+//        int a=0;
+//        while(a<10) {
 //            db=Math.random() * 0.2 + 0.9;
 //            System.out.println("db : " + db);
-//            db=Math.round(db*100);
+//            db=Math.round((Math.random() * 0.2 + 0.9)*100);
 //            System.out.println("Math.round(db*100) : " + db);
-//            db=db/100;
+//            db=(Math.round((Math.random() * 0.2 + 0.9)*100))/100;
 //            System.out.println("(Math.round(db*100))/100 : " + db);
-//            db=Math.round((Math.random()*0.2+0.9)*100)/100;
-//            System.out.println("결론 : " + db);
-//            System.out.println("");
+//
+////            db=Math.round((Math.random()*0.2+0.9)*100)/100;
+////            System.out.println("결론 : " + db);
+////            System.out.println("");
 //            a++;
-        }
+////            db=Math.random() * 0.2 + 0.9;
+////            System.out.println("db : " + db);
+////            db=Math.round(db*100);
+////            System.out.println("Math.round(db*100) : " + db);
+////            db=db/100;
+////            System.out.println("(Math.round(db*100))/100 : " + db);
+////            db=Math.round((Math.random()*0.2+0.9)*100)/100;
+////            System.out.println("결론 : " + db);
+////            System.out.println("");
+////            a++;
+//        }
+
+
+
+
+
 //        int b=0;
 //        while(b<10) {
 //            db=Math.round((((Math.random() * 0.2) + 0.9) * 10)/10);

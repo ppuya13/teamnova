@@ -56,7 +56,6 @@ public class 능력치 { //캐릭터의 능력치나 소지품에 영향을 미�
     int 정수강화;
 //    double 실수강화;
     boolean 치명타=false;
-    int 랜덤값;
 
     Scanner sc = new Scanner(System.in);
     int 구매개수=0;
@@ -310,7 +309,7 @@ public class 능력치 { //캐릭터의 능력치나 소지품에 영향을 미�
     public void 인벤정리(){
         for(int i = 0; i<=this.소지품.size()-1 ; i++){
             if(this.소지품.get(i).스택수 == 0){
-                System.out.println(this.소지품.size()-1);
+//                System.out.println(this.소지품.size()-1);
                 this.소지품.remove(i);
                 break;
             }
@@ -338,10 +337,17 @@ public class 능력치 { //캐릭터의 능력치나 소지품에 영향을 미�
             타겟.소모템사용(this);
         }
     }
-    public void 아이템버리기(int 개수, 아이템 아이템){
-        System.out.println("버리기전 아이템.스택수 : "+ 아이템.스택수 + ", 개수 : "+개수);
+    public void 아이템버리기(int 개수, 아이템 아이템) throws InterruptedException {
+//        System.out.println("버리기전 아이템.스택수 : "+ 아이템.스택수 + ", 개수 : "+개수);
+        if(개수>1) {
+            System.out.println(아이템.아이템이름 + "을 " + 개수 + "개 버립니다.");
+        }
+        else{
+            System.out.println(아이템.아이템이름 + "을 버립니다.");
+        }
+        Thread.sleep(1000);
         아이템.스택수 = 아이템.스택수-개수;
-        System.out.println("버린후 아이템.스택수 : "+ 아이템.스택수 + ", 개수 : "+개수);
+//        System.out.println("버린후 아이템.스택수 : "+ 아이템.스택수 + ", 개수 : "+개수);
     }
     public void 아이템장착(int 사용선택) throws InterruptedException {
         아이템 타겟 = this.소지품.get(사용선택);
@@ -371,37 +377,37 @@ public class 능력치 { //캐릭터의 능력치나 소지품에 영향을 미�
     public void 아이템강화(아이템 아이템) throws InterruptedException {
         int 랜덤값=rd.nextInt(70); //0~9체력 | 10~19마나 | 20~29공격력 | 30~39방어력 | 40~49치확 | 50~59치피 | 60~69회피
         if(랜덤값<=9){ //0~9체력
-            정수강화=rd.nextInt(50)+50; //50~100 상승
+            정수강화=rd.nextInt(11)+20; //20~30 상승
             System.out.println(아이템.아이템이름+"을(를) 강화하여 체력이 "+정수강화+" 상승하였습니다.");
             아이템.추가체력=아이템.추가체력+정수강화;
         }
         else if(랜덤값<=19){ //10~19마나
-            정수강화=rd.nextInt(5)+5; //5~10 상승
+            정수강화=rd.nextInt(6)+5; //5~10 상승
             System.out.println(아이템.아이템이름+"을(를) 강화하여 마나가 "+정수강화+" 상승하였습니다.");
             아이템.추가마나=아이템.추가마나+정수강화;
         }
         else if(랜덤값<=29){ //20~29공격력
-            정수강화=rd.nextInt(5)+5;
+            정수강화=rd.nextInt(6)+5;
             System.out.println(아이템.아이템이름+"을(를) 강화하여 공격력이 "+정수강화+" 상승하였습니다.");
             아이템.추가공격력=아이템.추가공격력+정수강화;
         }
         else if(랜덤값<=39){ //30~39방어력
-            정수강화=rd.nextInt(2)+1;
+            정수강화=rd.nextInt(3)+1;
             System.out.println(아이템.아이템이름+"을(를) 강화하여 방어력이 "+정수강화+" 상승하였습니다.");
             아이템.추가방어력=아이템.추가방어력+정수강화;
         }
         else if(랜덤값<=49){ //40~49치확
-            정수강화=rd.nextInt(2)+1;
+            정수강화=rd.nextInt(3)+1;
             System.out.println(아이템.아이템이름+"을(를) 강화하여 치명확률이 "+정수강화+" 상승하였습니다.");
             아이템.추가치확=아이템.추가치확+정수강화;
         }
         else if(랜덤값<=59){ //50~59치피
-            정수강화=rd.nextInt(5)+5;
+            정수강화=rd.nextInt(6)+5;
             System.out.println(아이템.아이템이름+"을(를) 강화하여 치명피해가 "+정수강화+" 상승하였습니다.");
             아이템.추가치피=아이템.추가치피+정수강화;
         }
         else if(랜덤값<=69){ //60~69회피
-            정수강화=rd.nextInt(2)+1;
+            정수강화=rd.nextInt(3)+1;
             System.out.println(아이템.아이템이름+"을(를) 강화하여 회피율이 "+정수강화+" 상승하였습니다.");
             아이템.추가회피=아이템.추가회피+정수강화;
         }
@@ -480,8 +486,8 @@ public class 능력치 { //캐릭터의 능력치나 소지품에 영향을 미�
     public void 최종능력치적용(){
         this.캐릭터최종체력=1000+this.캐릭터추가체력+this.레벨업추가체력;
         this.캐릭터최종마나=100+this.캐릭터추가마나+this.레벨업추가마나;
-        this.캐릭터최종공격력=this.캐릭터공격력+this.캐릭터추가공격력+this.소모품추가공격력;
-        this.캐릭터최종방어력=this.캐릭터방어력+this.캐릭터추가방어력+this.소모품추가방어력;
+        this.캐릭터최종공격력=this.캐릭터공격력+this.캐릭터추가공격력+this.레벨업추가공격력+this.소모품추가공격력;
+        this.캐릭터최종방어력=this.캐릭터방어력+this.캐릭터추가방어력+this.레벨업추가방어력+this.소모품추가방어력;
         this.캐릭터최종치확=this.캐릭터치명확률+this.캐릭터추가치확+this.레벨업추가치확;
         this.캐릭터최종치피=this.캐릭터치명피해+this.캐릭터추가치피+this.레벨업추가치피;
         this.캐릭터최종회피=this.캐릭터회피+this.캐릭터추가회피;
@@ -491,6 +497,58 @@ public class 능력치 { //캐릭터의 능력치나 소지품에 영향을 미�
         if(this.캐릭터최종마나<캐릭터현재마나){//최종마나보다 현재마나가 클경우
             this.캐릭터현재마나=this.캐릭터최종마나;
         }
+    }
+    public void 레벨업() throws InterruptedException {
+        System.out.println("\n레벨업!");
+        this.캐릭터레벨++;
+        System.out.println("레벨이 "+this.캐릭터레벨 + "이(가) 되었다!");
+        this.캐릭터현재경험치 = this.캐릭터현재경험치 -this.캐릭터최대경험치;
+        this.캐릭터최대경험치 = this.캐릭터최대경험치 + 100;
+        Thread.sleep(1000);
+        int 랜덤값;
+        int 상승횟수=0;
+        while(상승횟수 <= 4){
+            랜덤값 = rd.nextInt(50); //0~9체력 | 10~19마나 | 20~29공격력 | 30~39방어력 | 40~49치피
+            if(랜덤값<=9){ //0~9체력
+                정수강화=rd.nextInt(11)+20; //20~30 상승
+                System.out.println("체력이 "+정수강화+" 만큼 성장했다!");
+                this.레벨업추가체력=this.레벨업추가체력+정수강화;
+                상승횟수++;
+                Thread.sleep(200);
+            }
+            else if(랜덤값<=19){ //10~19마나
+                정수강화=rd.nextInt(6)+5;
+                System.out.println("마나가 "+정수강화+" 만큼 성장했다!");
+                this.레벨업추가마나=this.레벨업추가마나+정수강화;
+                상승횟수++;
+                Thread.sleep(200);
+            }
+            else if(랜덤값<=29){ //20~29공격력
+                정수강화=rd.nextInt(6)+5;
+                System.out.println("공격력이 "+정수강화+" 만큼 성장했다!");
+//                this.캐릭터공격력=this.캐릭터공격력+정수강화;
+                this.캐릭터공격력=this.캐릭터공격력+정수강화;
+                상승횟수++;
+                Thread.sleep(200);
+            }
+            else if(랜덤값<=39){ //30~39방어력
+                정수강화=rd.nextInt(3)+1;
+                System.out.println("방어력이 "+정수강화+" 만큼 성장했다!");
+//                this.캐릭터방어력=this.캐릭터방어력+정수강화;
+                this.캐릭터방어력=this.캐릭터방어력+정수강화;
+                상승횟수++;
+                Thread.sleep(200);
+            }
+            else if(랜덤값<=49){ //40~49치피
+                정수강화=rd.nextInt(6)+5;
+                System.out.println("치명타 피해량이 "+정수강화+" 만큼 상승했다!");
+                this.레벨업추가치피=this.레벨업추가치피+정수강화;
+                상승횟수++;
+                Thread.sleep(200);
+            }
+        }
+        this.캐릭터현재체력=this.캐릭터최대체력+this.레벨업추가체력;
+        this.캐릭터현재마나=this.캐릭터최대마나+this.레벨업추가마나;
     }
     public void 캐릭터공격(몬스터 타겟) throws InterruptedException {
 
@@ -705,56 +763,7 @@ public class 능력치 { //캐릭터의 능력치나 소지품에 영향을 미�
         }
         this.최종능력치적용();
     }
-    public void 레벨업() throws InterruptedException {
-        System.out.println("\n레벨업!");
-        this.캐릭터레벨++;
-        System.out.println("레벨이 "+this.캐릭터레벨 + "이(가) 되었다!");
-        this.캐릭터현재경험치 = this.캐릭터현재경험치 -this.캐릭터최대경험치;
-        this.캐릭터최대경험치 = this.캐릭터최대경험치 + 100;
-        Thread.sleep(1000);
-        int 랜덤값;
-        int 상승횟수=0;
-        while(상승횟수 <= 4){
-            랜덤값 = rd.nextInt(50); //0~9체력 | 10~19마나 | 20~29공격력 | 30~39방어력 | 40~49치피
-            if(랜덤값<=9){ //0~9체력
-                정수강화=rd.nextInt(50)+50; //50~100 상승
-                System.out.println("체력이 "+정수강화+" 만큼 성장했다!");
-                this.레벨업추가체력=this.레벨업추가체력+정수강화;
-                상승횟수++;
-                Thread.sleep(200);
-            }
-            else if(랜덤값<=19){ //10~19마나
-                정수강화=rd.nextInt(5)+5;
-                System.out.println("마나가 "+정수강화+" 만큼 성장했다!");
-                this.레벨업추가마나=this.레벨업추가마나+정수강화;
-                상승횟수++;
-                Thread.sleep(200);
-            }
-            else if(랜덤값<=29){ //20~29공격력
-                정수강화=rd.nextInt(5)+5;
-                System.out.println("공격력이 "+정수강화+" 만큼 성장했다!");
-                this.캐릭터공격력=this.캐릭터공격력+정수강화;
-                상승횟수++;
-                Thread.sleep(200);
-            }
-            else if(랜덤값<=39){ //30~39방어력
-                정수강화=rd.nextInt(2)+1;
-                System.out.println("방어력이 "+정수강화+" 만큼 성장했다!");
-                this.캐릭터방어력=this.캐릭터방어력+정수강화;
-                상승횟수++;
-                Thread.sleep(200);
-            }
-            else if(랜덤값<=49){ //40~49치피
-                정수강화=rd.nextInt(5)+5;
-                System.out.println("치명타 피해량이 "+정수강화+" 만큼 상승했다!");
-                this.캐릭터치명피해=this.캐릭터치명피해+정수강화;
-                상승횟수++;
-                Thread.sleep(200);
-            }
-        }
-        this.캐릭터현재체력=this.캐릭터최대체력+this.레벨업추가체력;
-        this.캐릭터현재마나=this.캐릭터최대마나+this.레벨업추가마나;
-    }
+
 }
 
 //모든 데미지는 1미만일경우 1로 판정, 공격력은 스탯의 0.9~1.1배까지 랜덤으로 곱한 뒤 올림

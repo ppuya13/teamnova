@@ -104,6 +104,7 @@ public class 몬스터 { //몬스터 정보와 전투는 이곳에
         드랍템 = new 아이템(301);
         this.드랍테이블.add(드랍템);
     }
+
 //    public void 시체(){
 //        this.번호 = "1000";
 //        this.이름 = "시신";
@@ -111,6 +112,7 @@ public class 몬스터 { //몬스터 정보와 전투는 이곳에
 //    }
 
 
+    //전투방식 갈아엎음. 현재 사용되지 않는 메소드.
     public static int 공격(ArrayList<몬스터> 몬스터어레이, int 타겟, 능력치 캐릭터) throws InterruptedException {
         int 몬스터사망=0;
         몬스터 타겟몬스터=몬스터어레이.get(타겟-1);
@@ -159,7 +161,7 @@ public class 몬스터 { //몬스터 정보와 전투는 이곳에
             }
         }
         if (캐릭터.캐릭터현재체력<=0){
-            System.out.println("플레이어는 사망했다.");
+            System.out.println("플레이어는 쓰러졌다.");
             캐릭터사망=true;
             Thread.sleep(1000);
         }
