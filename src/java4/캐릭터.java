@@ -1,13 +1,11 @@
 package java4;
 
 
-import com.sun.jdi.event.ThreadStartEvent;
-
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
-public class 능력치 { //캐릭터의 능력치나 소지품에 영향을 미치는 메소드는 이곳에
+public class 캐릭터 { //캐릭터의 능력치나 소지품에 영향을 미치는 메소드는 이곳에
 
     ArrayList<아이템> 회복물약가방;
     ArrayList<아이템> 소지품;
@@ -64,49 +62,25 @@ public class 능력치 { //캐릭터의 능력치나 소지품에 영향을 미�
 
 
 
-    능력치(
-            int 레벨,
-            int 최대경험치,
-            int 현재경험치,
-            int 최대체력,
-            int 현재체력,
-            int 최대마나,
-            int 현재마나,
-            int 공격력,
-            int 추가공격력,
-            int 방어력,
-            int 추가방어력,
-            int 치명확률,
-            int 치명피해,
-            int 회피,
-            int 소지금
-    )
+    캐릭터()
     {
-        this.캐릭터레벨 = 레벨;
-        this.캐릭터최대경험치 = 최대경험치;
-        this.캐릭터현재경험치 = 현재경험치;
-        this.캐릭터최대체력 = 최대체력;
-        this.캐릭터최종체력 = this.캐릭터최대체력+this.캐릭터추가체력;
-        this.캐릭터현재체력 = 현재체력;
-        this.캐릭터최대마나 = 최대마나;
-        this.캐릭터최종마나 = this.캐릭터최대마나+this.캐릭터추가마나;
-        this.캐릭터현재마나 = 현재마나;
-        this.캐릭터공격력 = 공격력;
-        this.캐릭터추가공격력 = 추가공격력;
-        this.소모품추가공격력 = 0;
-        this.캐릭터방어력 = 방어력;
-        this.캐릭터추가방어력 = 추가방어력;
-        this.소모품추가방어력 = 0;
-        this.캐릭터치명확률 = 치명확률;
-        this.캐릭터최종치확 = this.캐릭터치명확률+this.캐릭터추가치확;
-        this.캐릭터치명피해 = 치명피해;
-        this.캐릭터최종치피 = this.캐릭터치명피해+this.캐릭터추가치피;
-        this.캐릭터회피 = 회피;
-        this.캐릭터최종회피 = this.캐릭터회피+this.캐릭터추가회피;
-        this.캐릭터최종공격력=this.캐릭터공격력+this.캐릭터추가공격력+this.소모품추가공격력;
-        this.캐릭터최종방어력=this.캐릭터방어력+this.캐릭터추가방어력+this.소모품추가방어력;
-        this.소지금=소지금;
-        this.획득경험치=0;
+        this.캐릭터레벨 = 1;
+        this.캐릭터최대경험치 = 100;
+        this.캐릭터현재경험치 = 0;
+        this.캐릭터최대체력 = 1000;
+        this.캐릭터최종체력 = this.캐릭터최대체력;
+        this.캐릭터현재체력 = this.캐릭터최대체력;
+        this.캐릭터최대마나 = 100;
+        this.캐릭터최종마나 = this.캐릭터최대마나;
+        this.캐릭터현재마나 = this.캐릭터최대마나;
+        this.캐릭터공격력 = 30;
+        this.캐릭터방어력 = 0;
+        this.캐릭터치명확률 = 20;
+        this.캐릭터최종치확 = 20;
+        this.캐릭터치명피해 = 150;
+        this.캐릭터최종치피 = 150;
+        this.캐릭터회피 = 10;
+        this.소지금=1000;
         this.회복물약가방 = new ArrayList<>();
         this.소지품 = new ArrayList<>();
         this.강화목록 = new ArrayList<>();

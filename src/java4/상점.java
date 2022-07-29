@@ -3,7 +3,7 @@ package java4;
 import java.util.ArrayList;
 
 public class 상점 { // 상점에 관련된 정보는 여기에
-    ArrayList<아이템> 리스트 = new ArrayList<>();
+    public ArrayList<아이템> 리스트 = new ArrayList<>();
 
     //물약
     아이템 체력물약 = new 아이템(-1);

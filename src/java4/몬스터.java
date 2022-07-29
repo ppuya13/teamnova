@@ -113,7 +113,7 @@ public class 몬스터 { //몬스터 정보와 전투는 이곳에
 
 
     //전투방식 갈아엎음. 현재 사용되지 않는 메소드.
-    public static int 공격(ArrayList<몬스터> 몬스터어레이, int 타겟, 능력치 캐릭터) throws InterruptedException {
+    public static int 공격(ArrayList<몬스터> 몬스터어레이, int 타겟, 캐릭터 캐릭터) throws InterruptedException {
         int 몬스터사망=0;
         몬스터 타겟몬스터=몬스터어레이.get(타겟-1);
         타겟몬스터.현재체력 = 타겟몬스터.현재체력-(캐릭터.캐릭터최종공격력-타겟몬스터.방어력);
@@ -133,7 +133,7 @@ public class 몬스터 { //몬스터 정보와 전투는 이곳에
         return 몬스터사망;
     }
 
-    public static boolean 몬스터공격(ArrayList<몬스터> 몬스터어레이, int 몬스터수, 능력치 캐릭터) throws InterruptedException {
+    public static boolean 몬스터공격(ArrayList<몬스터> 몬스터어레이, int 몬스터수, 캐릭터 캐릭터) throws InterruptedException {
         boolean 캐릭터사망 = false;
         for (int i=0; i < 몬스터수; i++){
             if(캐릭터.캐릭터현재체력>=1){ //캐릭터가 살아있으면

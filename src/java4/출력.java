@@ -2,25 +2,30 @@ package java4;
 
 import java.util.ArrayList;
 
-public class 출력 { //화면에 표시하기 위한 메소드는 이곳에
-    public StringBuilder 능력치창(능력치 캐릭터){
+public class 출력 extends Main{ //화면에 표시하기 위한 메소드는 이곳에
+
+    public void 테스트(){
+    }
+
+
+    public StringBuilder 능력치창(){
         boolean 소모템있음 = false;
         아이템 아이템;
         StringBuilder 능력치표기 = new StringBuilder("" +
                 "\n┌──────────────────" +
-                "\n│레벨: " + 캐릭터.캐릭터레벨 + " (" + 캐릭터.캐릭터현재경험치 + "/" + 캐릭터.캐릭터최대경험치 + ")" +
-                "\n│소지금: "+캐릭터.소지금+ "골드" +
-                "\n│체력: " + 캐릭터.캐릭터현재체력 + "/" + 캐릭터.캐릭터최종체력 +
-                "\n│마나: " + 캐릭터.캐릭터현재마나 + "/" + 캐릭터.캐릭터최종마나 +
-                "\n│공격력: " + 캐릭터.캐릭터공격력 + " +" + 캐릭터.캐릭터추가공격력 +
-                "\n│방어력: " + 캐릭터.캐릭터방어력 + " +" + 캐릭터.캐릭터추가방어력 +
-                "\n│치명확률: " + 캐릭터.캐릭터최종치확 + "%" +
-                "\n│치명피해: " + 캐릭터.캐릭터최종치피 + "%" +
-                "\n│회피율: " + 캐릭터.캐릭터최종회피 + "%" +
+                "\n│레벨: " + 플레이어.캐릭터레벨 + " (" + 플레이어.캐릭터현재경험치 + "/" + 플레이어.캐릭터최대경험치 + ")" +
+                "\n│소지금: "+ 플레이어.소지금+ "골드" +
+                "\n│체력: " + 플레이어.캐릭터현재체력 + "/" + 플레이어.캐릭터최종체력 +
+                "\n│마나: " + 플레이어.캐릭터현재마나 + "/" + 플레이어.캐릭터최종마나 +
+                "\n│공격력: " + 플레이어.캐릭터공격력 + " +" + 플레이어.캐릭터추가공격력 +
+                "\n│방어력: " + 플레이어.캐릭터방어력 + " +" + 플레이어.캐릭터추가방어력 +
+                "\n│치명확률: " + 플레이어.캐릭터최종치확 + "%" +
+                "\n│치명피해: " + 플레이어.캐릭터최종치피 + "%" +
+                "\n│회피율: " + 플레이어.캐릭터최종회피 + "%" +
                 "\n└──────────────────");
-        if(캐릭터.사용중.size()>=1){ //적용중인 소모템이 있으면
-            for(int i = 0 ; i < 캐릭터.사용중.size() ; i++){
-                아이템 = 캐릭터.사용중.get(i);
+        if(플레이어.사용중.size()>=1){ //적용중인 소모템이 있으면
+            for(int i = 0; i < 플레이어.사용중.size() ; i++){
+                아이템 = 플레이어.사용중.get(i);
                 if((아이템.선적용 && 아이템.지속시간>=1) || (!아이템.선적용 && 아이템.지속시간>=0)){//(선적용템이고 지속시간이 1이상이거나) (후적용템이고 지속시간이 0이상이면) 표기
                     소모템있음=true;
                 }
@@ -28,8 +33,8 @@ public class 출력 { //화면에 표시하기 위한 메소드는 이곳에
             if(소모템있음) { //앞에 조건에 맞는 템이 하나라도 있으면
                 능력치표기.append("" +
                         "\n┌──적용 중인 소모아이템");
-                for(int i = 0 ; i < 캐릭터.사용중.size() ; i++){
-                    아이템 = 캐릭터.사용중.get(i);
+                for(int i = 0; i < 플레이어.사용중.size() ; i++){
+                    아이템 = 플레이어.사용중.get(i);
                     if(아이템.선적용) {
                         if (아이템.지속시간 >= 1) { //해당 아이템이 선적용이고 지속시간이 1이상이라면
                             능력치표기.append("\n│" + 아이템.사용중 + "(남은 지속시간 : " + 아이템.지속시간 + "턴)");
@@ -49,21 +54,21 @@ public class 출력 { //화면에 표시하기 위한 메소드는 이곳에
         return 능력치표기;
     }
 
-    public StringBuilder 인벤토리(능력치 캐릭터){
+    public StringBuilder 인벤토리(){
         StringBuilder 인벤토리표기2=new StringBuilder();
 
         //만약 회복물약 종류가 늘어난다면 이부분을 for문으로 바꿔야함
-        인벤토리표기2.append(캐릭터.회복물약가방.get(0).아이템이름).append(" : ").append(캐릭터.회복물약가방.get(0).스택수).append("개\n")
-                .append(캐릭터.회복물약가방.get(1).아이템이름).append(" : ").append(캐릭터.회복물약가방.get(1).스택수).append("개\n");
-        for(int i=1 ; i <= 캐릭터.소지품.size() ; i++) {
+        인벤토리표기2.append(플레이어.회복물약가방.get(0).아이템이름).append(" : ").append(플레이어.회복물약가방.get(0).스택수).append("개\n")
+                .append(플레이어.회복물약가방.get(1).아이템이름).append(" : ").append(플레이어.회복물약가방.get(1).스택수).append("개\n");
+        for(int i = 1; i <= 플레이어.소지품.size() ; i++) {
             //고유번호가 0이 아닐때
-            if(캐릭터.소지품.get(i-1).고유번호!=0) {
+            if(플레이어.소지품.get(i-1).고유번호!=0) {
                 //착용가능여부가 true일때
                 //방패
-                if(캐릭터.소지품.get(i-1).착용가능여부) {
-                    인벤토리표기2.append(캐릭터.소지품.get(i - 1).아이템이름);
+                if(플레이어.소지품.get(i-1).착용가능여부) {
+                    인벤토리표기2.append(플레이어.소지품.get(i - 1).아이템이름);
                     //착용가능여부가 true이고 착용여부가 true일때
-                    if(캐릭터.소지품.get(i-1).착용여부){
+                    if(플레이어.소지품.get(i-1).착용여부){
                         인벤토리표기2.append("(착용중)\n");
                     }
                     else{
@@ -71,16 +76,16 @@ public class 출력 { //화면에 표시하기 위한 메소드는 이곳에
                     }
                 }
                 //착용가능여부가 false이고 스택가능여부가 true이며 스택이 1이상일때
-                else if(캐릭터.소지품.get(i-1).스택가능여부&&캐릭터.소지품.get(i-1).스택수>=1){
-                    인벤토리표기2.append(캐릭터.소지품.get(i-1).아이템이름).append(" : ").append(캐릭터.소지품.get(i-1).스택수).append("개\n");
+                else if(플레이어.소지품.get(i-1).스택가능여부&& 플레이어.소지품.get(i-1).스택수>=1){
+                    인벤토리표기2.append(플레이어.소지품.get(i-1).아이템이름).append(" : ").append(플레이어.소지품.get(i-1).스택수).append("개\n");
                 }
                 //착용가능여부가 false이고 스택가능여부가 false일때
-                else if(!캐릭터.소지품.get(i-1).스택가능여부) {//현재 이런 아이템은 빈아이템 밖에 없음
-                    인벤토리표기2.append(캐릭터.소지품.get(i-1).아이템이름).append("\n");
+                else if(!플레이어.소지품.get(i-1).스택가능여부) {//현재 이런 아이템은 빈아이템 밖에 없음
+                    인벤토리표기2.append(플레이어.소지품.get(i-1).아이템이름).append("\n");
                 }
             }
             else{ //빈 아이템을 목록에 표시하도록 하는 부분
-                인벤토리표기2.append(캐릭터.소지품.get(i-1).아이템이름).append("\n");
+                인벤토리표기2.append(플레이어.소지품.get(i-1).아이템이름).append("\n");
             }
         }
 //        인벤토리표기2.append("끝");
@@ -88,21 +93,21 @@ public class 출력 { //화면에 표시하기 위한 메소드는 이곳에
         return 인벤토리표기2;
     }
 
-    public StringBuilder 행동인벤토리(능력치 캐릭터){
+    public StringBuilder 행동인벤토리(){
         StringBuilder 인벤토리표기2=new StringBuilder();
 
         인벤토리표기2.append("0.취소하기\n")
-                .append("1.").append(캐릭터.회복물약가방.get(0).아이템이름).append(" : ").append(캐릭터.회복물약가방.get(0).스택수).append("개\n")
-                .append("2.").append(캐릭터.회복물약가방.get(1).아이템이름).append(" : ").append(캐릭터.회복물약가방.get(1).스택수).append("개\n");
-        for(int i=1 ; i <= 캐릭터.소지품.size() ; i++) {
+                .append("1.").append(플레이어.회복물약가방.get(0).아이템이름).append(" : ").append(플레이어.회복물약가방.get(0).스택수).append("개\n")
+                .append("2.").append(플레이어.회복물약가방.get(1).아이템이름).append(" : ").append(플레이어.회복물약가방.get(1).스택수).append("개\n");
+        for(int i = 1; i <= 플레이어.소지품.size() ; i++) {
             //고유번호가 0이 아닐때
-            if(캐릭터.소지품.get(i-1).고유번호!=0) {
+            if(플레이어.소지품.get(i-1).고유번호!=0) {
                 //착용가능여부가 true일때
                 //방패
-                if(캐릭터.소지품.get(i-1).착용가능여부) {
-                    인벤토리표기2.append(i+2).append(".").append(캐릭터.소지품.get(i - 1).아이템이름);
+                if(플레이어.소지품.get(i-1).착용가능여부) {
+                    인벤토리표기2.append(i+2).append(".").append(플레이어.소지품.get(i - 1).아이템이름);
                     //착용가능여부가 true이고 착용여부가 true일때
-                    if(캐릭터.소지품.get(i-1).착용여부){
+                    if(플레이어.소지품.get(i-1).착용여부){
                         인벤토리표기2.append("(착용중)\n");
                     }
                     else{
@@ -110,16 +115,16 @@ public class 출력 { //화면에 표시하기 위한 메소드는 이곳에
                     }
                 }
                 //착용가능여부가 false이고 스택가능여부가 true이며 스택이 1이상일때
-                else if(캐릭터.소지품.get(i-1).스택가능여부&&캐릭터.소지품.get(i-1).스택수>=1){
-                    인벤토리표기2.append(i+2).append(".").append(캐릭터.소지품.get(i-1).아이템이름).append(" : ").append(캐릭터.소지품.get(i-1).스택수).append("개\n");
+                else if(플레이어.소지품.get(i-1).스택가능여부&& 플레이어.소지품.get(i-1).스택수>=1){
+                    인벤토리표기2.append(i+2).append(".").append(플레이어.소지품.get(i-1).아이템이름).append(" : ").append(플레이어.소지품.get(i-1).스택수).append("개\n");
                 }
                 //착용가능여부가 false이고 스택가능여부가 false일때
-                else if(!캐릭터.소지품.get(i-1).스택가능여부) {//현재 이런 아이템은 빈아이템 밖에 없음
-                    인벤토리표기2.append(i+2).append(".").append(캐릭터.소지품.get(i-1).아이템이름).append("\n");
+                else if(!플레이어.소지품.get(i-1).스택가능여부) {//현재 이런 아이템은 빈아이템 밖에 없음
+                    인벤토리표기2.append(i+2).append(".").append(플레이어.소지품.get(i-1).아이템이름).append("\n");
                 }
             }
             else{ //빈 아이템을 목록에 표시하도록 하는 부분
-                인벤토리표기2.append(i+2).append(".").append(캐릭터.소지품.get(i-1).아이템이름).append("\n");
+                인벤토리표기2.append(i+2).append(".").append(플레이어.소지품.get(i-1).아이템이름).append("\n");
             }
         }
 //        인벤토리표기2.append("끝");
@@ -153,9 +158,9 @@ public class 출력 { //화면에 표시하기 위한 메소드는 이곳에
         return 몬스터목록;
     }
 
-    public StringBuilder 상점구매목록(능력치 캐릭터, 상점 상점){
+    public StringBuilder 상점구매목록(상점 상점){
         StringBuilder 구매목록표기 = new StringBuilder();
-        구매목록표기.append("\n┌─상점품목(소지금:"+캐릭터.소지금+"골드)");
+        구매목록표기.append("\n┌─상점품목(소지금:"+ 플레이어.소지금+"골드)");
         for(int i = 1; i <= 상점.리스트.size(); i++){
             if(상점.리스트.get(i-1).상점판매여부){ //상점판매여부가 true면
                 구매목록표기.append("\n│").append(상점.리스트.get(i-1).아이템이름).append(" (").append(상점.리스트.get(i-1).구매가격).append("골드)");
@@ -165,10 +170,10 @@ public class 출력 { //화면에 표시하기 위한 메소드는 이곳에
         return 구매목록표기;
     }
 
-    public StringBuilder 행동상점구매목록(능력치 캐릭터, 상점 상점){
+    public StringBuilder 행동상점구매목록(상점 상점){
         StringBuilder 구매목록표기 = new StringBuilder();
         구매목록표기.append("" +
-                "\n┌─상점품목(소지금:"+캐릭터.소지금+"골드)" +
+                "\n┌─상점품목(소지금:"+ 플레이어.소지금+"골드)" +
                 "\n│0.취소");
         for(int i = 1; i <= 상점.리스트.size(); i++){
             if(상점.리스트.get(i-1).상점판매여부){ //상점판매여부가 true면
@@ -178,22 +183,22 @@ public class 출력 { //화면에 표시하기 위한 메소드는 이곳에
         return 구매목록표기;
     }
 
-    public StringBuilder 행동상점판매목록(능력치 캐릭터){
+    public StringBuilder 행동상점판매목록(){
         StringBuilder 판매목록표기 = new StringBuilder();
         판매목록표기.append("" +
-                        "\n┌─인벤토리(소지금:"+캐릭터.소지금+"골드)"+
+                        "\n┌─인벤토리(소지금:"+ 플레이어.소지금+"골드)"+
                         "\n│0.취소하기\n")
-                .append("│1.").append(캐릭터.회복물약가방.get(0).아이템이름).append(" (").append(캐릭터.회복물약가방.get(0).판매가격).append("골드) : ").append(캐릭터.회복물약가방.get(0).스택수).append("개\n")
-                .append("│2.").append(캐릭터.회복물약가방.get(1).아이템이름).append(" (").append(캐릭터.회복물약가방.get(1).판매가격).append("골드) : ").append(캐릭터.회복물약가방.get(1).스택수).append("개\n");
-        for(int i=1 ; i <= 캐릭터.소지품.size() ; i++) {
+                .append("│1.").append(플레이어.회복물약가방.get(0).아이템이름).append(" (").append(플레이어.회복물약가방.get(0).판매가격).append("골드) : ").append(플레이어.회복물약가방.get(0).스택수).append("개\n")
+                .append("│2.").append(플레이어.회복물약가방.get(1).아이템이름).append(" (").append(플레이어.회복물약가방.get(1).판매가격).append("골드) : ").append(플레이어.회복물약가방.get(1).스택수).append("개\n");
+        for(int i = 1; i <= 플레이어.소지품.size() ; i++) {
             //고유번호가 0이 아닐때
-            if(캐릭터.소지품.get(i-1).고유번호!=0) {
+            if(플레이어.소지품.get(i-1).고유번호!=0) {
                 //착용가능여부가 true일때
                 //방패
-                if(캐릭터.소지품.get(i-1).착용가능여부) {
-                    판매목록표기.append("│").append(i+2).append(".").append(캐릭터.소지품.get(i - 1).아이템이름);
+                if(플레이어.소지품.get(i-1).착용가능여부) {
+                    판매목록표기.append("│").append(i+2).append(".").append(플레이어.소지품.get(i - 1).아이템이름);
                     //착용가능여부가 true이고 착용여부가 true일때
-                    if(캐릭터.소지품.get(i-1).착용여부){
+                    if(플레이어.소지품.get(i-1).착용여부){
                         판매목록표기.append("(착용중)\n");
                     }
                     else{
@@ -201,16 +206,16 @@ public class 출력 { //화면에 표시하기 위한 메소드는 이곳에
                     }
                 }
                 //착용가능여부가 false이고 스택가능여부가 true일 때(스택수가 1이상일때 조건도 넣었었으나 스택수가 0이면 삭제하는 메소드를 따로 넣었으므로 삭제함.)
-                else if(캐릭터.소지품.get(i-1).스택가능여부){
-                    판매목록표기.append("│").append(i+2).append(".").append(캐릭터.소지품.get(i-1).아이템이름).append(" (").append(캐릭터.소지품.get(i-1).판매가격).append("골드) : ").append(캐릭터.소지품.get(i-1).스택수).append("개\n");
+                else if(플레이어.소지품.get(i-1).스택가능여부){
+                    판매목록표기.append("│").append(i+2).append(".").append(플레이어.소지품.get(i-1).아이템이름).append(" (").append(플레이어.소지품.get(i-1).판매가격).append("골드) : ").append(플레이어.소지품.get(i-1).스택수).append("개\n");
                 }
                 //착용가능여부가 false이고 스택가능여부가 false일때
-                else if(!캐릭터.소지품.get(i-1).스택가능여부) {//현재 이런 아이템은 빈아이템 밖에 없음
-                    판매목록표기.append("│").append(i+2).append(".").append(캐릭터.소지품.get(i-1).아이템이름).append(" (").append(캐릭터.소지품.get(i-1).판매가격).append("골드)").append("\n");
+                else if(!플레이어.소지품.get(i-1).스택가능여부) {//현재 이런 아이템은 빈아이템 밖에 없음
+                    판매목록표기.append("│").append(i+2).append(".").append(플레이어.소지품.get(i-1).아이템이름).append(" (").append(플레이어.소지품.get(i-1).판매가격).append("골드)").append("\n");
                 }
             }
             else{ //빈 아이템을 목록에 표시하도록 하는 부분
-                판매목록표기.append("│").append(i+2).append(".").append(캐릭터.소지품.get(i-1).아이템이름).append("\n");
+                판매목록표기.append("│").append(i+2).append(".").append(플레이어.소지품.get(i-1).아이템이름).append("\n");
             }
         }
 //        //아래는 인벤토리의 각각 항목과 스택수를 표시하는 부분으로, 판매메소드 완성 후 지우기
@@ -223,15 +228,15 @@ public class 출력 { //화면에 표시하기 위한 메소드는 이곳에
         return 판매목록표기;
     }
 
-    public StringBuilder 행동강화목록(능력치 캐릭터){
+    public StringBuilder 행동강화목록(){
         StringBuilder 강화목록표기 = new StringBuilder();
         강화목록표기.append("" +
-                "\n┌─인벤토리(소지금:"+캐릭터.소지금+"골드)"+
+                "\n┌─인벤토리(소지금:"+ 플레이어.소지금+"골드)"+
                 "\n│0.취소하기\n");
-        for(int i=0 ; i <=캐릭터.강화목록.size()-1 ; i++){
+        for(int i = 0; i <= 플레이어.강화목록.size()-1 ; i++){
             //System.out.println("i : " + i);
-            강화목록표기.append("│").append(i+1).append(".").append(캐릭터.강화목록.get(i).아이템이름);
-            if(캐릭터.강화목록.get(i).착용여부){
+            강화목록표기.append("│").append(i+1).append(".").append(플레이어.강화목록.get(i).아이템이름);
+            if(플레이어.강화목록.get(i).착용여부){
                 강화목록표기.append("(착용중)\n");
             }
             else{
@@ -316,11 +321,11 @@ public class 출력 { //화면에 표시하기 위한 메소드는 이곳에
         return 출력값;
      }
 
-     public StringBuilder 스킬창(능력치 캐릭터){
+     public StringBuilder 스킬창(){
         StringBuilder 스킬창 = new StringBuilder();
         스킬창.append("0.뒤로간다.");
-        for(int i = 0; i < 캐릭터.스킬목록.size() ; i++){
-            스킬 스킬 = 캐릭터.스킬목록.get(i);
+        for(int i = 0; i < 플레이어.스킬목록.size() ; i++){
+            스킬 스킬 = 플레이어.스킬목록.get(i);
             스킬창.append("\n" + (i+1) + "." + 스킬.스킬명 + "(마나 "+ 스킬.소모량 + ") : " + 스킬.효과);
         }
         return 스킬창;

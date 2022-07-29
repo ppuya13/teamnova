@@ -1,7 +1,5 @@
 package java4;
 
-import java.util.ArrayList;
-
 public class 아이템 { //아이템 정보는 이곳에
 
     String 아이템이름;
@@ -340,7 +338,7 @@ public class 아이템 { //아이템 정보는 이곳에
     //=============================================사용 메소드============================================//
     //==================================================================================================//
 
-    public void 물약사용(능력치 캐릭터) throws InterruptedException {
+    public void 물약사용(캐릭터 캐릭터) throws InterruptedException {
 //        System.out.println("this.고유번호" + this.고유번호);
         if(this.고유번호==-1) { //고유번호가 -1이면(회복물약이면)
             if (캐릭터.캐릭터최종체력 - 캐릭터.캐릭터현재체력 >= 300) {
@@ -365,7 +363,7 @@ public class 아이템 { //아이템 정보는 이곳에
         }
         Thread.sleep(1000);
     }
-    public void 소모템사용(능력치 캐릭터){
+    public void 소모템사용(캐릭터 캐릭터){
         아이템 소모템 = new 아이템(this.고유번호);
         boolean 사용완료 = false;
 //        System.out.println("(아이템.소모템사용) if문 진입");
