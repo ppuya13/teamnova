@@ -2,41 +2,41 @@ package java4;
 
 public class 아이템 { //아이템 정보는 이곳에
 
-    String 아이템이름;
-    String 임시이름;
-    int 고유번호 = 0; //100~장비, 200~소모, 300~재료, 0~회복
-    int 아이템분류 = 0; // 0:없음, 1:장비, 2:소모, 3:재료, 4:회복
-    boolean 착용가능여부 = false;
-    boolean 착용여부 = false; //true이면 인벤토리 상에서 (착용중) 으로 표시
-    boolean 스택가능여부 = false; //true이면 인벤토리상에서 몇개인지 표시
-    int 스택수 = 0; //스택가능여부가 true이면 스택수를 이용해 몇개인지 표시
-    boolean 상점판매여부 = false; //true이면 상점에서 판매함
-    int 구매가격 = 0;
-    int 판매가격 = 0;
-    int 장비부위 = 0; //1:무기 2:방패 3:갑옷 4:각반
-    boolean 사용가능여부=false;
-    String 아이템효과 = "";
-    int 지속시간=0;
-    String 사용중; //지속시간이 존재하는 아이템에만 적용
-    boolean 선적용;
+    public String 아이템이름;
+    public String 임시이름;
+    public int 고유번호 = 0; //100~장비, 200~소모, 300~재료, 0~회복
+    public int 아이템분류 = 0; // 0:없음, 1:장비, 2:소모, 3:재료, 4:회복
+    public boolean 착용가능여부 = false;
+    public boolean 착용여부 = false; //true이면 인벤토리 상에서 (착용중) 으로 표시
+    public boolean 스택가능여부 = false; //true이면 인벤토리상에서 몇개인지 표시
+    public int 스택수 = 0; //스택가능여부가 true이면 스택수를 이용해 몇개인지 표시
+    public boolean 상점판매여부 = false; //true이면 상점에서 판매함
+    public int 구매가격 = 0;
+    public int 판매가격 = 0;
+    public int 장비부위 = 0; //1:무기 2:방패 3:갑옷 4:각반
+    public boolean 사용가능여부=false;
+    public String 아이템효과 = "";
+    public int 지속시간=0;
+    public String 사용중; //지속시간이 존재하는 아이템에만 적용
+    public boolean 선적용;
 
-    int 기본공격력=0;
-    int 기본방어력=0;
-    int 기본체력=0;
-    int 기본마나=0;
-    int 기본치확=0;
-    int 기본치피=0;
-    int 추가능력치=0;
+    public int 기본공격력=0;
+    public int 기본방어력=0;
+    public int 기본체력=0;
+    public int 기본마나=0;
+    public int 기본치확=0;
+    public int 기본치피=0;
+    public int 추가능력치=0;
     // 일단 추가능력치로 퉁쳐보고 안될거같으면 아래것들 사용하기
-    int 추가공격력=0;
-    int 추가방어력=0;
-    int 추가체력=0;
-    int 추가마나=0;
-    int 추가치확=0;
-    int 추가치피=0;
-    int 추가회피=0;
-    int 강화=0;
-    int 드랍률=0;
+    public int 추가공격력=0;
+    public int 추가방어력=0;
+    public int 추가체력=0;
+    public int 추가마나=0;
+    public int 추가치확=0;
+    public int 추가치피=0;
+    public int 추가회피=0;
+    public int 강화=0;
+    public int 드랍률=0;
 
 
     //장비 아이템 효과, 사용 아이템 효과 적용할 방법 생각해보기
@@ -44,7 +44,7 @@ public class 아이템 { //아이템 정보는 이곳에
     //소모품일경우 : 능력치.소모템적용 메소드에 추가
 
 
-    아이템(int 고유번호){
+    public 아이템(int 고유번호){
         if(고유번호==0){
             this.아이템이름="더미 아이템";
             this.더미아이템();

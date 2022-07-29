@@ -1,11 +1,11 @@
 package java4;
 
 public class 스킬 {
-    int 고유번호; // 100~199: 단일공격 | 200~299:다중공격 | 300~399:광역공격
-    int 타입; //1:단일공격 | 2:다중공격 | 3:광역공격
-    String 스킬명;
-    String 효과;
-    int 소모량;
+    public int 고유번호; // 100~199: 단일공격 | 200~299:다중공격 | 300~399:광역공격
+    public int 타입; //1:단일공격 | 2:다중공격 | 3:광역공격
+    public String 스킬명;
+    public String 효과;
+    public int 소모량;
 
     스킬(int 고유번호) {
         if(고유번호==100){

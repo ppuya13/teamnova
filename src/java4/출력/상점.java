@@ -1,4 +1,6 @@
-package java4;
+package java4.출력;
+
+import java4.아이템;
 
 import java.util.ArrayList;
 
@@ -26,7 +28,7 @@ public class 상점 { // 상점에 관련된 정보는 여기에
     //
     아이템 치트1 = new 아이템(456456);
 
-    상점(){
+    public 상점(){
         리스트.add(체력물약);
         리스트.add(마나물약);
 

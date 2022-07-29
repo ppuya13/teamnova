@@ -1,54 +1,56 @@
 package java4;
 
 
+import java4.출력.상점;
+
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
 public class 캐릭터 { //캐릭터의 능력치나 소지품에 영향을 미치는 메소드는 이곳에
 
-    ArrayList<아이템> 회복물약가방;
-    ArrayList<아이템> 소지품;
-    ArrayList<아이템> 강화목록;
-    ArrayList<아이템> 드랍템;
-    ArrayList<아이템> 사용중;
-    ArrayList<스킬> 스킬목록;
-    int 획득경험치;
-    int 소지금;
-    int 캐릭터레벨;
-    int 캐릭터최대경험치;
-    int 캐릭터현재경험치;
-    int 캐릭터최종체력;
-    int 캐릭터최대체력;
-    int 캐릭터추가체력;
-    int 레벨업추가체력;
-    int 캐릭터현재체력;
-    int 캐릭터최종마나;
-    int 캐릭터최대마나;
-    int 캐릭터추가마나;
-    int 레벨업추가마나;
-    int 캐릭터현재마나;
-    int 캐릭터최종공격력;
-    int 캐릭터공격력;
-    int 캐릭터추가공격력;
-    int 레벨업추가공격력;
-    int 소모품추가공격력;
-    int 캐릭터최종방어력;
-    int 캐릭터방어력;
-    int 캐릭터추가방어력;
-    int 레벨업추가방어력;
-    int 소모품추가방어력;
-    int 캐릭터최종치확;
-    int 캐릭터치명확률;
-    int 캐릭터추가치확;
-    int 레벨업추가치확;
-    int 캐릭터최종치피;
-    int 캐릭터치명피해;
-    int 캐릭터추가치피;
-    int 레벨업추가치피;
-    int 캐릭터최종회피;
-    int 캐릭터회피;
-    int 캐릭터추가회피;
+    public ArrayList<아이템> 회복물약가방;
+    public ArrayList<아이템> 소지품;
+    public ArrayList<아이템> 강화목록;
+    public ArrayList<아이템> 드랍템;
+    public ArrayList<아이템> 사용중;
+    public ArrayList<스킬> 스킬목록;
+    public int 획득경험치;
+    public int 소지금;
+    public int 캐릭터레벨;
+    public int 캐릭터최대경험치;
+    public int 캐릭터현재경험치;
+    public int 캐릭터최종체력;
+    public int 캐릭터최대체력;
+    public int 캐릭터추가체력;
+    public int 레벨업추가체력;
+    public int 캐릭터현재체력;
+    public int 캐릭터최종마나;
+    public int 캐릭터최대마나;
+    public int 캐릭터추가마나;
+    public int 레벨업추가마나;
+    public int 캐릭터현재마나;
+    public int 캐릭터최종공격력;
+    public int 캐릭터공격력;
+    public int 캐릭터추가공격력;
+    public int 레벨업추가공격력;
+    public int 소모품추가공격력;
+    public int 캐릭터최종방어력;
+    public int 캐릭터방어력;
+    public int 캐릭터추가방어력;
+    public int 레벨업추가방어력;
+    public int 소모품추가방어력;
+    public int 캐릭터최종치확;
+    public int 캐릭터치명확률;
+    public int 캐릭터추가치확;
+    public int 레벨업추가치확;
+    public int 캐릭터최종치피;
+    public int 캐릭터치명피해;
+    public int 캐릭터추가치피;
+    public int 레벨업추가치피;
+    public int 캐릭터최종회피;
+    public int 캐릭터회피;
+    public int 캐릭터추가회피;
 
     Random rd = new Random();
     int 정수강화;
@@ -74,7 +76,9 @@ public class 캐릭터 { //캐릭터의 능력치나 소지품에 영향을 미�
         this.캐릭터최종마나 = this.캐릭터최대마나;
         this.캐릭터현재마나 = this.캐릭터최대마나;
         this.캐릭터공격력 = 30;
+        this.캐릭터최종공격력=30;
         this.캐릭터방어력 = 0;
+        this.캐릭터최종방어력=0;
         this.캐릭터치명확률 = 20;
         this.캐릭터최종치확 = 20;
         this.캐릭터치명피해 = 150;
@@ -140,7 +144,7 @@ public class 캐릭터 { //캐릭터의 능력치나 소지품에 영향을 미�
     }
 
 
-    public void 상점구매(int 타겟, 상점 상점,int 스택가능, int 구매개수) throws InterruptedException {
+    public void 상점구매(int 타겟, 상점 상점, int 스택가능, int 구매개수) throws InterruptedException {
         boolean 구매진행=true;
         아이템 구매;
         String 상점구매결과="";
@@ -530,9 +534,11 @@ public class 캐릭터 { //캐릭터의 능력치나 소지품에 영향을 미�
         int 공격력 = (int) Math.ceil(this.캐릭터최종공격력*(Math.random()*0.2+0.9));
         if(rd.nextInt(100)+캐릭터최종치확>99){
             치명타=true;
-//            System.out.println("공격력 : " + 공격력 + ", 공격력*캐릭터최종치피 : " + (int)Math.ceil(공격력*캐릭터최종치피) + ", 100나누면 : " + (int)Math.ceil(공격력*캐릭터최종치피)/100);
+            System.out.println("공격력 : " + 공격력 + ", 공격력*캐릭터최종치피 : " + (int)Math.ceil(공격력*캐릭터최종치피) + ", 100나누면 : " + (int)Math.ceil(공격력*캐릭터최종치피)/100);
             공격력=(int)Math.ceil(공격력*캐릭터최종치피/100);
         }
+        System.out.println("캐릭터.캐릭터공격| 공격력 : " + 공격력 + ", 타겟.방어력 : " + 타겟.방어력);
+        System.out.println("캐릭터.캐릭터공격| 캐릭터최종공격력 : " + this.캐릭터최종공격력);
         int 입힌데미지 = 공격력-타겟.방어력;
         if(입힌데미지<=0){
             입힌데미지=1;

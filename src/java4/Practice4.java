@@ -1,5 +1,7 @@
 package java4;
 
+import java4.출력.출력;
+
 import java.util.ArrayList;
 import java.util.Random;
 

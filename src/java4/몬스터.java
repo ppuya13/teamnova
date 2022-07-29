@@ -5,18 +5,18 @@ import java.util.Random;
 
 public class 몬스터 { //몬스터 정보와 전투는 이곳에
     //몬스터 상속으로 처리하기
-    String 이름;
-    int 공격력;
-    int 방어력;
-    int 최대체력;
-    int 현재체력;
-    int 경험치;
-    int 소지금;
-    String 정보;
-    String 번호;
-    아이템 드랍템;
-    ArrayList<아이템> 드랍테이블 = new ArrayList<>();
-    ArrayList<아이템> 공용드랍테이블 = new ArrayList<>();
+    public String 이름;
+    public int 공격력;
+    public int 방어력;
+    public int 최대체력;
+    public int 현재체력;
+    public int 경험치;
+    public int 소지금;
+    public String 정보;
+    public String 번호;
+    public 아이템 드랍템;
+    public ArrayList<아이템> 드랍테이블 = new ArrayList<>();
+    public ArrayList<아이템> 공용드랍테이블 = new ArrayList<>();
     Random rd = new Random();
     static Random rd2 = new Random();
 
@@ -26,7 +26,7 @@ public class 몬스터 { //몬스터 정보와 전투는 이곳에
 //    }
 
 
-    몬스터(String 이름, String 몬스터종류) {
+    public 몬스터(String 이름, String 몬스터종류) {
         공용드랍테이블();
         this.이름 = 이름;
         if(몬스터종류=="슬라임") {
@@ -133,6 +133,10 @@ public class 몬스터 { //몬스터 정보와 전투는 이곳에
         return 몬스터사망;
     }
 
+
+    public void 몬스터생성(){
+
+    }
     public static boolean 몬스터공격(ArrayList<몬스터> 몬스터어레이, int 몬스터수, 캐릭터 캐릭터) throws InterruptedException {
         boolean 캐릭터사망 = false;
         for (int i=0; i < 몬스터수; i++){
