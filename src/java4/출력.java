@@ -2,7 +2,7 @@ package java4;
 
 import java.util.ArrayList;
 
-public class 메인화면 { //화면에 표시하기 위한 메소드는 이곳에
+public class 출력 { //화면에 표시하기 위한 메소드는 이곳에
     public StringBuilder 능력치창(능력치 캐릭터){
         boolean 소모템있음 = false;
         아이템 아이템;

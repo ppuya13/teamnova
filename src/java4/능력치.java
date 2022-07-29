@@ -772,13 +772,13 @@ public class 능력치 { //캐릭터의 능력치나 소지품에 영향을 미�
 //휩쓸기 데미지공식 : 공격력*0.6-적방어력
 
 //랜덤 사용법
-//rd.nextInt(a)+b //0~a의 난수를 출력(최댓값을 올려줌), b는 출력 범위의 최솟값과 최댓값을 동시에 올려줌(b : 최솟값, a+b : 최댓값)
+//rd.nextInt(a)+b //0~a의 난수를 메인(최댓값을 올려줌), b는 메인 범위의 최솟값과 최댓값을 동시에 올려줌(b : 최솟값, a+b : 최댓값)
 //0.9~1.1을 출력하려면?
-//Math.random(); //0~1사이의 double 난수를 출력
-//Math.random()*0.2 //0~0.2사이의 double 난수를 출력
-//Math.random()*0.2+0.9//0.9~1.1사이의 double 난수를 출력
-//Math.random()*100 //0~100사이의 double 난수를 출력
-//Math.random()*100+5 //5~105사이의 double 난수를 출력
+//Math.random(); //0~1사이의 double 난수를 메인
+//Math.random()*0.2 //0~0.2사이의 double 난수를 메인
+//Math.random()*0.2+0.9//0.9~1.1사이의 double 난수를 메인
+//Math.random()*100 //0~100사이의 double 난수를 메인
+//Math.random()*100+5 //5~105사이의 double 난수를 메인
 
 //
 

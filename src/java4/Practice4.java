@@ -1,12 +1,6 @@
 package java4;
 
-import java4.메인화면;
-import java4.몬스터;
-import java4.상점;
-
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Random;
 
 public class Practice4 {
@@ -25,7 +19,7 @@ public class Practice4 {
 
     public static void main(String[] args) {
         Random rd = new Random();
-        메인화면 메인=new 메인화면();
+        출력 메인=new 출력();
 //        //16진수 생성 예제2 시작
 //        byte[]arr = new byte[4];
 //        new Random().nextBytes(arr);
