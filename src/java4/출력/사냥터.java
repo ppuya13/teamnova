@@ -152,7 +152,7 @@ public class 사냥터 extends 출력 {
         boolean 전투승리 = false;
         if(몬스터머릿수 - 죽은몬스터수 == 0){
             전투승리=true;
-            System.out.println("사냥터.전투종료판정 | 전투승리 : " + 전투승리);
+//            System.out.println("사냥터.전투종료판정 | 전투승리 : " + 전투승리);
             몬스터어레이.clear();
             몬스터머릿수=0;
             죽은몬스터수=0;
@@ -167,6 +167,8 @@ public class 사냥터 extends 출력 {
         Scanner sc = new Scanner(System.in);
         boolean 버림=false;
         if(승리) { //전투 승리 시에만 아이템 루팅이 가능함.
+            System.out.println("전투에서 승리했습니다!");
+            Thread.sleep(1000);
             재시작:
             while (true) {
 //                System.out.println("정산 재시작 루프");

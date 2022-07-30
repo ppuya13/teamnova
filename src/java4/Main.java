@@ -1,7 +1,7 @@
 package java4;
 
 import java4.출력.*;
-import java4.캐릭터.스킬;
+import java4.스킬.스킬;
 import java4.캐릭터.캐릭터;
 
 import java.util.ArrayList;
@@ -83,12 +83,6 @@ public class Main {
         int 죽은몬스터수 = 0; // 몬스터 사망 시 1 상승
         //몬스터변수
 
-//        몬스터 몬스터a = new 몬스터("입력");
-//        몬스터 몬스터b = new 몬스터("b");
-//        몬스터 몬스터c = new 몬스터("c");
-//        몬스터 몬스터d = new 몬스터("d");
-//        몬스터 몬스터e = new 몬스터("e");
-
         //전투변수
         몬스터 몬스터타겟 = null; //몬스터 삭제에 사용되기 때문에 절대 null을 참조하지 말 것
         boolean 몬스터삭제=false;
@@ -100,7 +94,6 @@ public class Main {
         boolean 전투아이템사용=false;
         boolean 최종확인=false;
         int 스킬선택 = 0;
-        스킬 스킬 = null;
         boolean 스킬발동=false;
         int 스킬타겟=0;
         //전투변수
@@ -115,6 +108,11 @@ public class Main {
         boolean 전투행동반복;
         boolean 전투승리=false;
         boolean 전투종료=false;
+        boolean 스킬반복=false;
+        boolean 전투인벤토리반복=false;
+        boolean 반복=false;
+        boolean 전투여부=false;
+        스킬 스킬;
         //출력변수
 
         캐릭터 플레이어2 = new 캐릭터();
@@ -122,6 +120,7 @@ public class Main {
         인벤토리크기= 플레이어.소지품.size();
         회복물약가방크기= 플레이어.회복물약가방.size();
         전체가방크기=인벤토리크기+회복물약가방크기;
+        플레이어.최종능력치적용();
 
         while(true){
 
@@ -187,10 +186,63 @@ public class Main {
                                             }
                                             break;
                                         case 2: //스킬
+                                            스킬반복=true;
+                                            while(스킬반복) {
+                                                System.out.println(메인.능력치창());
+                                                System.out.println("\n보유 중인 스킬 리스트");
+                                                System.out.println(메인.스킬창());
+                                                System.out.print("" +
+                                                        "사용할 스킬을 선택해주세요. " +
+                                                        "\n→");
+                                                입력 = sc.nextInt();
+                                                if(입력==0){
+                                                    break;
+                                                }else if(입력>0 && 입력<=플레이어.스킬목록.size()){
+                                                    몬스터타겟=사냥터.몬스터어레이.get(입력-1);
+                                                    스킬=플레이어.스킬목록.get(입력-1);
+
+                                                    switch (스킬.타입){
+                                                        case 1:
+                                                            플레이어.단일스킬(몬스터타겟, 스킬);
+                                                            몬스터삭제 = true;
+                                                            턴=true;
+                                                            스킬반복=false;
+                                                            break;
+                                                        case 3:
+                                                            플레이어.광역스킬(사냥터.몬스터어레이,스킬);
+                                                            몬스터삭제 = true;
+                                                            턴=true;
+                                                            스킬반복=false;
+                                                            break;
+                                                    }
+                                                }
+                                            }
+                                            break;
                                         case 3: //아이템
+                                            반복=true;
+                                            while(반복){
+                                                System.out.println(메인.능력치창());
+                                                System.out.println("\n아이템 사용하기");
+                                                System.out.println(메인.행동인벤토리());
+                                                System.out.print("" +
+                                                        "아이템을 선택해주세요. " +
+                                                        "\n소모품만을 사용할 수 있으며, 아이템 사용 시 턴을 넘기게됩니다." +
+                                                        "\n→");
+                                                입력 = sc.nextInt();
+                                                if(입력==0){
+                                                    break;
+                                                } else if(입력>0 && 입력<=전체가방크기){
+                                                    System.out.println("아이템사용시작");
+                                                    플레이어.전투아이템사용(플레이어.아이템사용(입력),플레이어.아이템사용2(입력));
+                                                    플레이어.소모템적용();
+                                                    break;
+                                                }
+                                            }
+                                            break;
                                         case 4: //살펴보기
                                         case 5: //도망치기
                                             System.out.println("도망쳤습니다.");
+                                            플레이어.사용중.clear();
                                             전투종료=true;
                                             전투반복=false;
                                             Thread.sleep(1000);
@@ -211,7 +263,6 @@ public class Main {
                                         플레이어.사용중.clear();
                                     }
                                     if(턴){
-                                        플레이어.소모템적용(); //소모템 지속시간도 여기서 감소시킴
                                         턴=false;
                                     }
                                     if(전투종료){//전투가 종료됐다면
@@ -227,10 +278,10 @@ public class Main {
                         }
                     }//사냥터 while문 끝
                     break;
-                case 2:
-                case 3:
-                case 4:
-                case 5:
+                case 2: //인벤토리
+                case 3: //상점
+                case 4: //대장간
+                case 5: //휴식
                     break;
             }
             if(사망) {

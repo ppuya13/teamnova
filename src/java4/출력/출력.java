@@ -1,9 +1,11 @@
 package java4.출력;
 
 import java4.*;
-import java4.캐릭터.스킬;
+import java4.스킬.스킬;
 
-public class 출력 extends Main { //화면에 표시하기 위한 메소드는 이곳에
+import static java4.Main.플레이어;
+
+public class 출력 { //화면에 표시하기 위한 메소드는 이곳에
 
     public StringBuilder 능력치창(){
         boolean 소모템있음 = false;
@@ -293,8 +295,7 @@ public class 출력 extends Main { //화면에 표시하기 위한 메소드는 
                 "";
         return 출력값;
      }
-
-     public StringBuilder 스킬창(){
+    public StringBuilder 스킬창(){
         StringBuilder 스킬창 = new StringBuilder();
         스킬창.append("0.뒤로간다.");
         for(int i = 0; i < 플레이어.스킬목록.size() ; i++){
@@ -302,7 +303,7 @@ public class 출력 extends Main { //화면에 표시하기 위한 메소드는 
             스킬창.append("\n" + (i+1) + "." + 스킬.스킬명 + "(마나 "+ 스킬.소모량 + ") : " + 스킬.효과);
         }
         return 스킬창;
-     }
+    }
 
 
 

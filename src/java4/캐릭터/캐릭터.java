@@ -2,6 +2,9 @@ package java4.캐릭터;
 
 
 import java4.몬스터;
+import java4.스킬.강타;
+import java4.스킬.스킬;
+import java4.스킬.휩쓸기;
 import java4.아이템;
 import java4.출력.상점;
 
@@ -56,7 +59,7 @@ public class 캐릭터 { //캐릭터의 능력치나 소지품에 영향을 미�
 
     Random rd = new Random();
     int 정수강화;
-//    double 실수강화;
+    //    double 실수강화;
     boolean 치명타=false;
 
     Scanner sc = new Scanner(System.in);
@@ -105,16 +108,16 @@ public class 캐릭터 { //캐릭터의 능력치나 소지품에 영향을 미�
         this.회복물약가방.add(마나물약);
 
 //        //이 아래로는 테스트용 아이템생성. 나중에 지우기
-//        아이템 아이템;
-//        아이템 = new 아이템(300);
-//        아이템.스택수=1000;
-//        this.소지품.add(아이템);
-//        아이템= new 아이템(200);
-//        아이템.스택수=1000;
-//        this.소지품.add(아이템);
-//        아이템= new 아이템(201);
-//        아이템.스택수=1000;
-//        this.소지품.add(아이템);
+        아이템 아이템;
+        아이템 = new 아이템(300);
+        아이템.스택수=1000;
+        this.소지품.add(아이템);
+        아이템= new 아이템(200);
+        아이템.스택수=1000;
+        this.소지품.add(아이템);
+        아이템= new 아이템(201);
+        아이템.스택수=1000;
+        this.소지품.add(아이템);
 //
 //        아이템 검 = new 아이템(100);
 //        아이템 방패 = new 아이템(101);
@@ -130,9 +133,9 @@ public class 캐릭터 { //캐릭터의 능력치나 소지품에 영향을 미�
 
     }
     public void 스킬초기화(){
-        스킬 스킬 = new 스킬(100);
+        스킬 스킬 = new 강타();
         this.스킬목록.add(스킬);
-        스킬 = new 스킬(300);
+        스킬 = new 휩쓸기();
         this.스킬목록.add(스킬);
     }
     public void 강화리스트생성(){
@@ -295,7 +298,60 @@ public class 캐릭터 { //캐릭터의 능력치나 소지품에 영향을 미�
             }
         }
     }
-    public void 아이템사용(int 물약여부, int 사용선택) throws InterruptedException {
+    public int 아이템사용(int 입력) throws InterruptedException {
+        int 물약여부;
+        int 사용선택;
+        아이템 아이템정보;
+        int 회복물약가방크기= this.회복물약가방.size();
+        if(입력 <=회복물약가방크기){ //회복물약 내용물을 선택했다면
+            사용선택= 입력 -1;
+            물약여부=1;
+            아이템정보 = this.회복물약가방.get(사용선택);
+            if(아이템정보.스택수==0){ //선택한 물약의 스택수가 0개라면
+//                            System.out.println("스택수0개");
+                System.out.println("\n"+아이템정보.아이템이름+"이 부족합니다.");
+                Thread.sleep(1000);
+//                            세부2=1;
+                물약여부=0;
+                사용선택=-1;
+            } //회복물약 이외의 아이템들은 0개가 되는 순간 인벤정리 메소드에 의해 삭제됨.
+        }
+        else{ //회복물약가방 내용물이 아닌것을 선택했다면
+            사용선택 = 입력 -(회복물약가방크기+1);
+            아이템정보 = this.소지품.get(사용선택);
+            if(아이템정보.사용가능여부) { //사용가능한 물건이라면
+                if(아이템정보.착용가능여부){ //착용가능하면
+                    System.out.println("전투중엔 아이템 장비/해제가 불가능합니다.");
+                    Thread.sleep(1000);
+                    물약여부=0;
+                    사용선택=-1;
+                }
+                else {
+                    물약여부 = 2;
+                }
+            }
+            else{ // 사용 불가능한 물건이라면
+                System.out.println("\n사용할 수 없는 아이템입니다.");
+                Thread.sleep(1000);
+                물약여부=0;
+                사용선택=-1;
+            }
+        }
+        return 물약여부;
+    }
+    public int 아이템사용2(int 입력){
+        int 사용선택;
+        int 회복물약가방크기= this.회복물약가방.size();
+        if(입력 <=회복물약가방크기){ //회복물약 내용물을 선택했다면
+            사용선택= 입력 -1;
+        }
+
+        else{ //회복물약가방 내용물이 아닌것을 선택했다면
+            사용선택 = 입력 -(회복물약가방크기+1);
+        }
+        return 사용선택;
+    }
+    public void 전투외아이템사용(int 물약여부, int 사용선택) throws InterruptedException {
         아이템 타겟;
         if(물약여부==1){ //물약이면
             타겟=this.회복물약가방.get(사용선택);
@@ -308,7 +364,9 @@ public class 캐릭터 { //캐릭터의 능력치나 소지품에 영향을 미�
 
     }
     public void 전투아이템사용(int 물약여부, int 사용선택) throws InterruptedException{
-        if(물약여부==1){ //물약이면
+        if(물약여부==0){
+        }
+        else if(물약여부==1){ //물약이면
             아이템 타겟=this.회복물약가방.get(사용선택);;
             타겟.물약사용(this);
         }
@@ -535,17 +593,19 @@ public class 캐릭터 { //캐릭터의 능력치나 소지품에 영향을 미�
         this.캐릭터현재체력=this.캐릭터최대체력+this.레벨업추가체력;
         this.캐릭터현재마나=this.캐릭터최대마나+this.레벨업추가마나;
     }
+
     public void 캐릭터공격(몬스터 타겟) throws InterruptedException {
 
         //데미지 공식 시작
+
         int 공격력 = (int) Math.ceil(this.캐릭터최종공격력*(Math.random()*0.2+0.9));
         if(rd.nextInt(100)+캐릭터최종치확>99){
             치명타=true;
             System.out.println("공격력 : " + 공격력 + ", 공격력*캐릭터최종치피 : " + (int)Math.ceil(공격력*캐릭터최종치피) + ", 100나누면 : " + (int)Math.ceil(공격력*캐릭터최종치피)/100);
             공격력=(int)Math.ceil(공격력*캐릭터최종치피/100);
         }
-//        System.out.println("캐릭터.캐릭터공격| 공격력 : " + 공격력 + ", 타겟.방어력 : " + 타겟.방어력);
-//        System.out.println("캐릭터.캐릭터공격| 캐릭터최종공격력 : " + this.캐릭터최종공격력);
+        System.out.println("캐릭터.캐릭터공격| 공격력 : " + 공격력 + ", 타겟.방어력 : " + 타겟.방어력);
+        System.out.println("캐릭터.캐릭터공격| 캐릭터최종공격력 : " + this.캐릭터최종공격력);
         int 입힌데미지 = 공격력-타겟.방어력;
         if(입힌데미지<=0){
             입힌데미지=1;
@@ -577,9 +637,81 @@ public class 캐릭터 { //캐릭터의 능력치나 소지품에 영향을 미�
         System.out.println("");
 //        return 타겟;
     }
+    public void 단일스킬(몬스터 타겟, 스킬 스킬) throws InterruptedException {
+        //여기까지 왔다면 무조건 발동함
+        boolean 치명타 = false;
+        System.out.println("");
+        if(스킬.고유번호==100){ //사용한 스킬이 강타라면
 
+            //데미지 공식 시작
+            int 입힌데미지 = 스킬.공격(타겟);
+            if(입힌데미지<=0){
+                입힌데미지=1;
+            }
+            //데미지 공식 끝
 
+            this.캐릭터현재마나=this.캐릭터현재마나-스킬.소모량;
 
+            System.out.println("\n" + 타겟.이름 + "을(를) 공격합니다. (마나 " +스킬.소모량+ " 소모)" +
+                    "\n플레이어의 강타!");
+            타겟.현재체력 = 타겟.현재체력 - 입힌데미지;
+            Thread.sleep(1000);
+            if(치명타){
+                System.out.println("치명타!");
+                Thread.sleep(1000);
+            }
+            System.out.println("" +
+                    타겟.이름 + "에게 " + 입힌데미지 + "만큼의 데미지를 입혔다!");
+            Thread.sleep(1000);
+            if (타겟.현재체력 <= 0) { //공격받은 뒤 타겟의 현재체력이 0이하면
+                System.out.println("" +
+                        "" + 타겟.이름 + "은(는) 쓰러졌다!");
+                Thread.sleep(1000);
+            } else { //공격받은 뒤 타겟의 체력이 남아있으면
+                System.out.println("" +
+                        "" + 타겟.이름 + "의 체력이" + 타겟.현재체력 + " 남았다!");
+                Thread.sleep(1000);
+            }
+        }else if(스킬.고유번호 ==101){ //사용한 스킬이 강타가 아니라 고유번호 101이라면...
+
+        }
+        System.out.println("");
+    }
+    public void 다중스킬(ArrayList<몬스터> 몬스터어레이, 스킬 스킬, int 타겟) throws InterruptedException {
+    }
+    public void 광역스킬(ArrayList<몬스터> 몬스터어레이,스킬 스킬) throws InterruptedException {
+        몬스터 타겟;
+        int 입힌데미지;
+        this.캐릭터현재마나=this.캐릭터현재마나-스킬.소모량;
+        System.out.println(스킬.스킬명 + "을(를) 사용합니다. (마나 " +스킬.소모량+ " 소모)" +
+                "\n플레이어의 "+스킬.스킬명+"!");
+        Thread.sleep(1000);
+        for(int i = 0 ; i <몬스터어레이.size() ; i++){
+            타겟 = 몬스터어레이.get(i);
+
+            //데미지 공식 시작
+            입힌데미지 = 스킬.공격(타겟);
+            if(입힌데미지<=0){
+                입힌데미지=1;
+            }
+            //데미지 공식 끝
+
+            타겟.현재체력 = 타겟.현재체력 - 입힌데미지;
+            System.out.println("" +
+                    타겟.이름 + "에게 " + 입힌데미지 + "만큼의 데미지를 입혔다!");
+            Thread.sleep(200);
+            if (타겟.현재체력 <= 0) { //공격받은 뒤 타겟의 현재체력이 0이하면
+                System.out.println("" +
+                        "" + 타겟.이름 + "은(는) 쓰러졌다!");
+                Thread.sleep(200);
+            } else { //공격받은 뒤 타겟의 체력이 남아있으면
+                System.out.println("" +
+                        "" + 타겟.이름 + "의 체력이" + 타겟.현재체력 + " 남았다!");
+                Thread.sleep(200);
+            }
+        }
+        System.out.println("");
+    }
 
 
 }
