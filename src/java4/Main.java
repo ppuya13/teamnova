@@ -1,6 +1,8 @@
 package java4;
 
 import java4.출력.*;
+import java4.캐릭터.스킬;
+import java4.캐릭터.캐릭터;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -10,7 +12,7 @@ import java.util.Scanner;
 //1안 : 메인 메소드에 모든 메인 정보만 넣고 입력은 이곳에서 받기
 //2안 : 처음시작할때만 이곳에서 입력을 받고 이후부터는 다른 클래스로 이동하여 반복하기
 public class Main {
-    static public java4.캐릭터 플레이어 = new 캐릭터();
+    static public 캐릭터 플레이어 = new 캐릭터();
     public static void main(String[] args) throws InterruptedException {
 
         //캐릭터 초기화
@@ -93,8 +95,6 @@ public class Main {
         ArrayList<아이템> 드랍템 = new ArrayList<>();
         아이템 드랍아이템;
         int 몬스터난수;
-        boolean 전투승리=false;
-        boolean 전투종료=false;
         int 경험치허브 = 0;
         int 소지금허브 = 0;
         boolean 전투아이템사용=false;
@@ -113,6 +113,8 @@ public class Main {
         boolean 사냥터반복;
         boolean 전투반복;
         boolean 전투행동반복;
+        boolean 전투승리=false;
+        boolean 전투종료=false;
         //출력변수
 
         캐릭터 플레이어2 = new 캐릭터();
@@ -188,14 +190,35 @@ public class Main {
                                         case 3: //아이템
                                         case 4: //살펴보기
                                         case 5: //도망치기
+                                            System.out.println("도망쳤습니다.");
+                                            전투종료=true;
                                             전투반복=false;
+                                            Thread.sleep(1000);
                                             break;
                                     }
+                                    if(턴){
+                                        플레이어.소모템적용(); //소모템 지속시간도 여기서 감소시킴
+                                    }
+                                    플레이어.능력치적용();
+
                                     //플레이어의 행동이 끝난 뒤
                                     사냥터.몬스터삭제(몬스터삭제,몬스터타겟);
-                                    if(턴){
-                                        System.out.println("턴이 true임");
+                                    전투승리 = 사냥터.전투종료판정();
+
+                                    if(전투승리){
                                         턴=false;
+                                        전투종료=true;
+                                        플레이어.사용중.clear();
+                                    }
+                                    if(턴){
+                                        플레이어.소모템적용(); //소모템 지속시간도 여기서 감소시킴
+                                        턴=false;
+                                    }
+                                    if(전투종료){//전투가 종료됐다면
+                                        사냥터.전투정산(전투승리, 플레이어);
+                                        전투승리 = false;
+                                        전투종료 = false;
+                                        break;
                                     }
                                 }
                                 break;

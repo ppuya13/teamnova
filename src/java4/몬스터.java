@@ -1,5 +1,7 @@
 package java4;
 
+import java4.캐릭터.캐릭터;
+
 import java.util.ArrayList;
 import java.util.Random;
 

@@ -2,13 +2,15 @@ package java4.출력;
 
 import java4.몬스터;
 import java4.아이템;
+import java4.캐릭터.캐릭터;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
 
 public class 사냥터 extends 출력 {
 
-    public ArrayList<몬스터> 몬스터어레이 = new ArrayList<>();
+    public ArrayList<몬스터> 몬스터어레이;
     public int 몬스터머릿수;
     public int 죽은몬스터수;
     String 몬스터번호; // 각 몬스터마다 고유 번호
@@ -23,6 +25,12 @@ public class 사냥터 extends 출력 {
     int 소지금허브 = 0;
     String 랜덤몬스터결과;
     Random rd = new Random();
+
+    public 사냥터(){
+        this.몬스터어레이 = new ArrayList<>();
+        this.몬스터머릿수 = 0;
+        this.죽은몬스터수 = 0;
+    }
 
 
     public void 사냥터메인() {
@@ -52,9 +60,9 @@ public class 사냥터 extends 출력 {
     }
 
     public void 몬스터생성() throws InterruptedException {
-        몬스터어레이.clear();
-        몬스터머릿수 = rd.nextInt(9)+1;
-        System.out.println(몬스터머릿수 + "마리의 몬스터를 발견했다!!!");
+        this.몬스터어레이.clear();
+        this.몬스터머릿수 = rd.nextInt(9)+1;
+        System.out.println(this.몬스터머릿수 + "마리의 몬스터를 발견했다!!!");
         Thread.sleep(1000);
 
         for (int i = 1; i <= 몬스터머릿수; i++) {
@@ -64,17 +72,18 @@ public class 사냥터 extends 출력 {
 
             몬스터번호 = Integer.toString(i);
             몬스터정보 = new 몬스터(몬스터번호, 랜덤몬스터결과);
-            몬스터어레이.add(몬스터정보);
+            this.몬스터어레이.add(몬스터정보);
         }
     }
 
     public StringBuilder 몬스터목록(){
         StringBuilder 몬스터목록 = new StringBuilder();
         StringBuilder 몬스터목록2 = new StringBuilder();
-        for(int i=1 ; i <= 몬스터머릿수-죽은몬스터수 ; i++) {
-            if (몬스터어레이.get(i-1).현재체력 > 0) {
-                몬스터목록2.append("│ ").append(몬스터어레이.get(i - 1).이름).append(" (체력:").append(몬스터어레이.get(i - 1).현재체력).append("/").append(몬스터어레이.get(i - 1).최대체력)
-                        .append(" │ 공격력:").append(몬스터어레이.get(i - 1).공격력).append(" │ 방어력:").append(몬스터어레이.get(i - 1).방어력).append(")\n");
+        System.out.println("몬스터머릿수 : " + this.몬스터머릿수 + ", 죽은몬스터수 : " + this.죽은몬스터수);
+        for(int i=1 ; i <= this.몬스터머릿수-this.죽은몬스터수 ; i++) {
+            if (this.몬스터어레이.get(i-1).현재체력 > 0) {
+                몬스터목록2.append("│ ").append(this.몬스터어레이.get(i - 1).이름).append(" (체력:").append(this.몬스터어레이.get(i - 1).현재체력).append("/").append(this.몬스터어레이.get(i - 1).최대체력)
+                        .append(" │ 공격력:").append(this.몬스터어레이.get(i - 1).공격력).append(" │ 방어력:").append(this.몬스터어레이.get(i - 1).방어력).append(")\n");
             }
         }
         몬스터목록.append("\n┌────────────────────────────────────\n" ).append(몬스터목록2).append("└────────────────────────────────────\n");
@@ -137,6 +146,101 @@ public class 사냥터 extends 출력 {
             }
 //            아이템정보 = null; //다른데서 쓰던 변수를 가져온거라 밖에서 널참조를 하면 에러가 날 수도 있으니 안에서 실행(선언도 안에서하고 안에서만 사용함)
         }
+    }
+
+    public boolean 전투종료판정(){
+        boolean 전투승리 = false;
+        if(몬스터머릿수 - 죽은몬스터수 == 0){
+            전투승리=true;
+            System.out.println("사냥터.전투종료판정 | 전투승리 : " + 전투승리);
+            몬스터어레이.clear();
+            몬스터머릿수=0;
+            죽은몬스터수=0;
+        }
+        return 전투승리;
+    }
+
+    public void 전투정산(boolean 승리, 캐릭터 플레이어) throws InterruptedException { //만약 드랍템 어레이가 겹치게 바뀐다면 이것도 바꿔야함(안겹칠걸 전제로 스택이 있는 아이템들은 스택수가 1개씩 오르게 해놨음)
+        ArrayList<아이템> 버린템 = new ArrayList<>();
+        아이템 아이템;
+        int 입력;
+        Scanner sc = new Scanner(System.in);
+        boolean 버림=false;
+        if(승리) { //전투 승리 시에만 아이템 루팅이 가능함.
+            재시작:
+            while (true) {
+//                System.out.println("정산 재시작 루프");
+//                System.out.println("재시작 이후 인벤토리 크기 비교용 : " + this.소지품.size());
+                if (드랍템.size() != 0) { //드랍템이 존재하면
+//                    System.out.println("드랍템의 아이템이름 : "+드랍템.get(0).아이템이름 + ", 드랍템의 고유번호 : "+드랍템.get(0).고유번호);
+                    for (int i = 0; i < 드랍템.size(); i++) { //드랍템의 개수만큼 반복
+                        if (드랍템.get(i).고유번호 < 0) { //포션이면
+                            for (int j = 0; j < 플레이어.회복물약가방.size(); j++) { //회복물약가방 사이즈만큼 반복
+                                if (플레이어.회복물약가방.get(j).고유번호 == 드랍템.get(i).고유번호) {//그중에 아이템과 일치하는걸 찾아서 수치를 1올려줌
+                                    System.out.println(드랍템.get(i).아이템이름 + "을(를) 획득했다!");
+                                    플레이어.회복물약가방.get(j).스택수++;
+                                    드랍템.remove(i);
+                                    continue 재시작;
+                                }
+                            }
+                        } else { //포션이 아니면
+                            if (드랍템.get(i).스택가능여부) { //스택가능하면
+                                for (int j = 0; j < 플레이어.소지품.size(); j++) { //소지품가방 사이즈만큼 반복
+//                                    System.out.println("선택템의 아이템이름 : "+this.소지품.get(j).아이템이름 + ", 선택템의 고유번호 : "+this.소지품.get(j).고유번호);
+                                    if (플레이어.소지품.get(j).고유번호 == 드랍템.get(i).고유번호) { //소지품창에 일치하는게 있으면 수치를 1올려줌
+                                        System.out.println(드랍템.get(i).아이템이름 + "을(를) 획득했다!");
+                                        플레이어.소지품.get(j).스택수++;
+                                        드랍템.remove(i);
+                                        continue 재시작;
+                                    }
+                                }
+                            }
+                            //여기에 도달했다는건 스택가능한 템이지만 소지품창에 일치하는게 없었다는 소리임.
+                            if (플레이어.소지품.size() < 20) { //가진 소지품이 20종류 미만이면
+                                아이템 = new 아이템(드랍템.get(i).고유번호);
+                                플레이어.소지품.add(아이템); //드랍템을 소지품에 추가함
+                                System.out.println(드랍템.get(i).아이템이름 + "을(를) 획득했다!");
+                            } else { //가진 소지품이 20종류 이상이면
+                                버린템.add(드랍템.get(i)); //아이템을 버린템 어레이에 추가함
+                                버림 = true;
+                            }
+                            드랍템.remove(i);
+                            continue 재시작;
+                        }
+                    } //아이템드랍 for문 종료
+//                    System.out.println("아이템정산(추가) 완료");
+                    Thread.sleep(1000);
+                } //아이템드랍 제일 밖 if문 종료
+                else { //드랍템이 존재하지 않거나 정산이 끝났다면
+                    if (버림) { //버린템이 존재한다면
+                        for (int i = 0; i < 버린템.size(); i++) { //버린템의 개수만큼 반복
+                            System.out.println("인벤토리가 부족해 " + 버린템.get(i).아이템이름 + "을(를) 들고갈 수 없다.");
+                        }
+                    }
+                }
+                Thread.sleep(1000);
+                플레이어.소지금 = 플레이어.소지금+소지금허브;
+                System.out.println("몬스터가 떨어뜨린 " + 소지금허브 + "골드를 주웠다!");
+                break;
+            } //아이템드랍 제일 밖 while문 종료
+        }//승리판정 끝
+        플레이어.캐릭터현재경험치 = 플레이어.캐릭터현재경험치+경험치허브;
+        System.out.println("경험치가 " + 경험치허브 + " 올라 " + 플레이어.캐릭터현재경험치 + "이(가) 되었다!");
+        Thread.sleep(1000);
+        while(true){
+//            System.out.println("경험치 while문 시작");
+            if(플레이어.캐릭터현재경험치>=플레이어.캐릭터최대경험치){ //현재경험치가 최대경험치보다 많을경우
+                플레이어.레벨업();
+                System.out.print("" +
+                        "계속하려면 아무 숫자나 입력하세요." +
+                        "\n→");
+                입력 = sc.nextInt();
+            }
+            else{
+                break;
+            }
+        }
+        플레이어.최종능력치적용();
     }
 
 

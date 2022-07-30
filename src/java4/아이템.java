@@ -1,5 +1,7 @@
 package java4;
 
+import java4.캐릭터.캐릭터;
+
 public class 아이템 { //아이템 정보는 이곳에
 
     public String 아이템이름;

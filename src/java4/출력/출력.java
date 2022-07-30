@@ -1,8 +1,7 @@
 package java4.출력;
 
 import java4.*;
-
-import java.util.ArrayList;
+import java4.캐릭터.스킬;
 
 public class 출력 extends Main { //화면에 표시하기 위한 메소드는 이곳에
 
