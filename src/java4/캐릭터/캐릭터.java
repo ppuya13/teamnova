@@ -351,17 +351,21 @@ public class 캐릭터 { //캐릭터의 능력치나 소지품에 영향을 미�
         }
         return 사용선택;
     }
-    public void 전투외아이템사용(int 물약여부, int 사용선택) throws InterruptedException {
+    public boolean 전투외아이템사용(int 물약여부, int 사용선택) throws InterruptedException {
         아이템 타겟;
+        boolean 반복=true;
         if(물약여부==1){ //물약이면
             타겟=this.회복물약가방.get(사용선택);
             타겟.물약사용(this);
+            반복 = false;
         }
-        else{
+        else if(물약여부==2){
             System.out.println("\n소모 아이템은 전투중에만 사용할 수 있습니다.");
             Thread.sleep(1000);
+            반복 = true;
         }
-
+        System.out.println(반복);
+        return 반복;
     }
     public void 전투아이템사용(int 물약여부, int 사용선택) throws InterruptedException{
         if(물약여부==0){
@@ -375,7 +379,145 @@ public class 캐릭터 { //캐릭터의 능력치나 소지품에 영향을 미�
             타겟.소모템사용(this);
         }
     }
-    public void 아이템버리기(int 개수, 아이템 아이템) throws InterruptedException {
+
+    public int 아이템버리기(int 입력) throws InterruptedException {
+        boolean 아이템버리기=true;
+        int 물약여부=1; //1:물약이거나 버릴수없음, 2:물약아님
+        int 인벤토리크기= this.소지품.size();
+        int 회복물약가방크기= this.회복물약가방.size();
+        int 사용선택;
+        int 개수;
+        아이템 아이템정보;
+        if (입력 <= 회복물약가방크기) { //회복물약 내용물을 선택했다면
+            System.out.println("\n회복물약은 버릴 수 없습니다.");
+            Thread.sleep(1000);
+            아이템버리기 = false;
+            물약여부 = 1;
+        } else { //회복물약가방 내용물이 아닌것을 선택했다면
+            사용선택 = 입력 - (회복물약가방크기 + 1);
+            아이템정보 = this.소지품.get(사용선택);
+            사용선택 = -1;
+            if (아이템정보.착용여부) { //착용중이라면
+                System.out.println("\n우선 장착을 해제해주세요.");
+                아이템버리기 = false;
+                Thread.sleep(1000);
+                물약여부 = 1;
+            } else if (아이템정보.스택가능여부) { //스택이 가능하다면
+                while (true) {
+                    System.out.print("" +
+                            "\n버릴 개수를 입력해주세요. (0개: 취소)" +
+                            "\n→");
+                    입력 = sc.nextInt();
+                    if (입력 == 0) { //버릴 개수를 0개로 입력한다면
+                        아이템버리기 = false;
+                        break;
+                    } else if (입력 >= 1 && 입력 <= 아이템정보.스택수) { //버릴 개수를 1이상, 스택수 이하로 입력했다면
+                        개수 = 입력;
+                        break;
+                    } else if (입력 > 아이템정보.스택수) { //버릴 개수를 스택수 보다 많게 입력했다면
+                        System.out.println("" +
+                                "\n가진 양보다 많은 양을 버릴 수는 없습니다.");
+                        Thread.sleep(1000);
+                        아이템버리기 = false;
+                        break;
+                    }
+                }
+                if (아이템버리기) { //선택한 아이템을 선택한 만큼 버릴건지 최종 확인
+                    while (true) { // 0과 1 이외의 숫자를 입력할 경우 무한루프함
+                        System.out.println("" +
+                                "\n정말 " + 아이템정보.아이템이름 + " " + 개수 + " 개를 버리겠습니까?" +
+                                "\n0.취소한다." +
+                                "\n1.버린다.");
+                        입력 = sc.nextInt();
+                        if (입력 == 0) {
+                            아이템버리기 = false;
+                            break;
+                        } else if (입력 == 1) {
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        return 물약여부;
+    }
+    /////////////////////////
+    public boolean 아이템버리기0(int 입력) throws InterruptedException {
+        int 인벤토리크기= this.소지품.size();
+        int 회복물약가방크기= this.회복물약가방.size();
+        int 전체가방크기=인벤토리크기+회복물약가방크기;
+        int 사용선택;
+        boolean 아이템버리기 = false; //아이템 버리기 스크립트 실행용
+        if (입력 <= 회복물약가방크기) { //회복물약 내용물을 선택했다면
+            System.out.println("\n회복물약은 버릴 수 없습니다.");
+            Thread.sleep(1000);
+            아이템버리기 = false;
+            사용선택 = -1;
+        } else { //회복물약가방 내용물이 아닌것을 선택했다면
+            사용선택 = 입력 - (회복물약가방크기 + 1);
+            아이템정보 = 캐릭터.소지품.get(사용선택);
+            사용선택 = -1;
+            if (아이템정보.착용여부) { //착용중이라면
+                System.out.println("\n우선 장착을 해제해주세요.");
+                아이템버리기 = false;
+                Thread.sleep(1000);
+                물약여부 = 0;
+            } else if (아이템정보.스택가능여부) { //스택이 가능하다면
+                while (true) {
+                    System.out.print("" +
+                            "\n버릴 개수를 입력해주세요. (0개: 취소)" +
+                            "\n→");
+                    입력 = sc.nextInt();
+                    if (입력 == 0) { //버릴 개수를 0개로 입력한다면
+                        아이템버리기 = false;
+                        break;
+                    } else if (입력 >= 1 && 입력 <= 아이템정보.스택수) { //버릴 개수를 1이상, 스택수 이하로 입력했다면
+                        개수 = 입력;
+                        break;
+                    } else if (입력 > 아이템정보.스택수) { //버릴 개수를 스택수 보다 많게 입력했다면
+                        System.out.println("" +
+                                "\n가진 양보다 많은 양을 버릴 수는 없습니다.");
+                        Thread.sleep(1000);
+                        아이템버리기 = false;
+                        break;
+                    }
+                }
+                if (아이템버리기) { //선택한 아이템을 선택한 만큼 버릴건지 최종 확인
+                    while (true) { // 0과 1 이외의 숫자를 입력할 경우 무한루프함
+                        System.out.println("" +
+                                "\n정말 " + 아이템정보.아이템이름 + " " + 개수 + " 개를 버리겠습니까?" +
+                                "\n0.취소한다." +
+                                "\n1.버린다.");
+                        입력 = sc.nextInt();
+                        if (입력 == 0) {
+                            아이템버리기 = false;
+                            break;
+                        } else if (입력 == 1) {
+                            break;
+                        }
+                    }
+                }
+            } else { //스택이 불가능하다면
+                개수 = 1;
+                while (true) { // 0과 1 이외의 숫자를 입력할 경우 무한루프함
+                    System.out.println("" +
+                            "\n정말 " + 아이템정보.아이템이름 + "을(를) 버리겠습니까?" +
+                            "\n0.취소한다." +
+                            "\n1.버린다.");
+                    입력 = sc.nextInt();
+                    if (입력 == 0) {
+                        아이템버리기 = false;
+                        break;
+                    } else if (입력 == 1) {
+                        break;
+                    }
+                }
+            }
+//            a = -1;
+        }
+        return 아이템버리기;
+    }
+    public void 아이템버리기실행(int 개수, 아이템 아이템) throws InterruptedException {
 //        System.out.println("버리기전 아이템.스택수 : "+ 아이템.스택수 + ", 개수 : "+개수);
         if(개수>1) {
             System.out.println(아이템.아이템이름 + "을 " + 개수 + "개 버립니다.");

@@ -13,4 +13,14 @@ public abstract class 스킬 {
     Random rd = new Random();
 
     public abstract int 공격(몬스터 타겟) throws InterruptedException ;
+
+    public String 스킬사용확인(){
+        String 메시지 = "";
+        if(this.타입==1){
+            메시지=this.스킬명 + "(마나 "+ this.소모량 + ") : " + this.효과;
+        } else if (this.타입 == 3){
+
+        }
+        return 메시지;
+    }
 }
