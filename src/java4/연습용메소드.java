@@ -1,11 +1,11 @@
 package java4;
 
-import java4.출력.출력;
+import java4.사냥터.몬스터;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Practice4 {
+public class 연습용메소드 {
     String 스트링;
     int 인트;
 

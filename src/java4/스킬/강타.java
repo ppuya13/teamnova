@@ -1,7 +1,7 @@
 package java4.스킬;
 
 
-import java4.몬스터;
+import java4.사냥터.몬스터;
 
 import static java4.Main.플레이어;
 

@@ -1,12 +1,12 @@
 package java4.캐릭터;
 
 
-import java4.몬스터;
+import java4.사냥터.몬스터;
 import java4.스킬.강타;
 import java4.스킬.스킬;
 import java4.스킬.휩쓸기;
-import java4.아이템;
-import java4.출력.상점;
+import java4.아이템.상점;
+import java4.아이템.아이템;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -119,10 +119,10 @@ public class 캐릭터 { //캐릭터의 능력치나 소지품에 영향을 미�
         아이템.스택수=1000;
         this.소지품.add(아이템);
 //
-//        아이템 검 = new 아이템(100);
+        아이템 검 = new 아이템(100);
 //        아이템 방패 = new 아이템(101);
 //        아이템 갑옷 = new 아이템(102);
-//        this.소지품.add(검);
+        this.소지품.add(검);
 //        this.소지품.add(방패);
 //        this.소지품.add(갑옷);
 //        System.out.println("첫번째검 : " + this.소지품.get(1).착용여부 + ", 두번째검 : " + this. 소지품. get(2).착용여부);
@@ -148,26 +148,51 @@ public class 캐릭터 { //캐릭터의 능력치나 소지품에 영향을 미�
         }
     }
 
+    public void 휴식() throws InterruptedException {
+        System.out.println("\n휴식합니다.");
+        Thread.sleep(1000);
+        if (this.캐릭터최종체력 - this.캐릭터현재체력 >= 300) {
+            this.캐릭터현재체력 = this.캐릭터현재체력 + 300;
+            System.out.print("\n체력이 300회복되어 " + this.캐릭터현재체력 + "이(가) 되었습니다.");
 
-    public void 상점구매(int 타겟, 상점 상점, int 스택가능, int 구매개수) throws InterruptedException {
+        } else {
+            System.out.print("\n체력이 " + (this.캐릭터최종체력 - this.캐릭터현재체력) + "회복되어 ");
+            this.캐릭터현재체력 = this.캐릭터최종체력;
+            System.out.print(this.캐릭터현재체력 + "이(가) 되었습니다.");
+        }
+        if (this.캐릭터최종마나 - this.캐릭터현재마나 >= 30) {
+            this.캐릭터현재마나 = this.캐릭터현재마나 + 30;
+            System.out.print("\n체력이 30회복되어 " + this.캐릭터현재마나 + "이(가) 되었습니다.");
+
+        } else {
+            System.out.print("\n체력이 " + (this.캐릭터최종마나 - this.캐릭터현재마나) + "회복되어 ");
+            this.캐릭터현재마나 = this.캐릭터최종마나;
+            System.out.print(this.캐릭터현재마나 + "이(가) 되었습니다.");
+        }
+        System.out.print("" +
+                "\n계속하려면 아무 숫자나 입력하세요." +
+                "\n→");
+        입력 = sc.nextInt();
+    }
+    public void 상점구매(int 타겟, 상점 상점, int 구매개수) throws InterruptedException {
         boolean 구매진행=true;
         아이템 구매;
         String 상점구매결과="";
         구매 = new 아이템(상점.리스트.get(타겟-1).고유번호); // 선택한 아이템을 객체로 새로 생성한다.
-        if(스택가능==1){ //선택한 타겟이 스택가능이면
+        if(구매.스택가능여부){ //선택한 타겟이 스택가능이면
             if(구매개수>=1 && 구매진행) {
                 System.out.print(구매.아이템이름 + "을 " + 구매개수 + "개 구매하시겠습니까?" +
                         "\n(총 " +(구매.구매가격*구매개수)+"골드)" +
-                        "\n1.구매한다" +
-                        "\n2.취소한다"+
+                        "\n0.취소한다."+
+                        "\n1.구매한다."+
                         "\n→");
                 입력=sc.nextInt();
             }//구매갯수만큼 구매가격을 띄워주고 진짜 구매할건지 물은 뒤 입력받음.
-            else{
+            if (입력 == 0) {
                 System.out.println("취소합니다.");
                 Thread.sleep(1000);
-                상점구매결과="구매취소함";
-                구매진행=false;
+                상점구매결과 = "구매취소함";
+                구매진행 = false;
             }
             if(입력==1 &&구매진행 && (타겟==1 || 타겟==2)){//진짜구매한다고 했을때(인벤토리안에 고유번호가 같은 아이템이 존재하는지 확인)(체력물약과 마나물약은 같은 아이템이 항상 존재하므로 따로 확인 안하게 하기)
                 //타겟이 체력물약이거나 마나물약일 경우
@@ -232,7 +257,7 @@ public class 캐릭터 { //캐릭터의 능력치나 소지품에 영향을 미�
                 }
             }
         }
-        else if(스택가능==2){ //스택불가능 아이템이면
+        else{ //스택불가능 아이템이면
             if(this.소지금>=구매.구매가격 &&구매진행) { //소지금이 구매금액 이상인지 확인
                 //이상이면
                 if(this.소지품.size()>=20){ //또한 소지품의 개수가 20개 이상이라면
@@ -257,33 +282,59 @@ public class 캐릭터 { //캐릭터의 능력치나 소지품에 영향을 미�
             }
         }//구매 메소드 완성.
     }
-    public void 상점판매(int 타겟,int 스택가능, int 판매개수, int 물약여부) throws InterruptedException {
-        String 상점판매결과="";
-        if(물약여부 == 1){ //물약이면
-            this.회복물약가방.get(타겟-1).스택수=this.회복물약가방.get(타겟-1).스택수-판매개수;
-            this.소지금=this.소지금+(this.회복물약가방.get(타겟-1).판매가격*판매개수);
-            System.out.println(this.회복물약가방.get(타겟-1).아이템이름+"을(를) "+
-                    판매개수+"개 판매하여 "+(this.회복물약가방.get(타겟-1).판매가격*판매개수) +
-                    "골드를 받았습니다.");
-            Thread.sleep(1000);
-        }
-        else if(스택가능==1) {//물약이 아니고 스택가능하면
-            this.소지품.get(타겟-3).스택수=this.소지품.get(타겟-3).스택수-판매개수;
-            this.소지금=this.소지금+(this.소지품.get(타겟-3).판매가격*판매개수);
-            System.out.println(this.소지품.get(타겟-3).아이템이름+"을(를) "+
-                    판매개수+"개 판매하여 "+(this.소지품.get(타겟-3).판매가격*판매개수) +
-                    "골드를 받았습니다.");
-            Thread.sleep(1000);
-        }
-        else if(스택가능==2) { //물약이 아니고 스택불가능이면
-            if(!this.소지품.get(타겟-3).착용여부) { //착용중이 아니면
-                this.소지품.get(타겟 - 3).스택수 = 0;
-                this.소지금 = this.소지금 + this.소지품.get(타겟 - 3).판매가격;
-                System.out.println(this.소지품.get(타겟 - 3).아이템이름 + "을(를) 판매하여 " +
-                        this.소지품.get(타겟 - 3).판매가격 + "골드를 받았습니다.");
+    public void 상점판매(아이템 타겟, int 판매개수) throws InterruptedException {
+        if(타겟.아이템분류==4){//물약이면
+            if(판매개수>타겟.스택수) { //판매개수가 스택수보다 많으면
+                System.out.println("소지 개수 이상을 판매할 수는 없습니다.");
                 Thread.sleep(1000);
             }
             else{
+                타겟.스택수 = 타겟.스택수 - 판매개수;
+                this.소지금 = this.소지금 + (타겟.판매가격 * 판매개수);
+                System.out.println(타겟.아이템이름 + "을(를) " +
+                        판매개수 + "개 판매하여 " + (타겟.판매가격 * 판매개수) +
+                        "골드를 받았습니다.");
+                Thread.sleep(1000);
+            }
+        }
+        else if(타겟.스택가능여부) {//물약이 아니고 스택가능하면
+            if(판매개수>타겟.스택수) { //판매개수가 스택수보다 많으면
+                System.out.println("소지 개수 이상을 판매할 수는 없습니다.");
+                Thread.sleep(1000);
+            }
+            else {
+                타겟.스택수 = 타겟.스택수 - 판매개수;
+                this.소지금 = this.소지금 + (타겟.판매가격 * 판매개수);
+                System.out.println(타겟.아이템이름 + "을(를) " +
+                        판매개수 + "개 판매하여 " + (타겟.판매가격 * 판매개수) +
+                        "골드를 받았습니다.");
+                Thread.sleep(1000);
+            }
+        }
+        else { //물약이 아니고 스택불가능이면
+            if (!타겟.착용여부) { //착용중이 아니면
+                boolean 반복 = true;
+                while (반복){
+                    System.out.print("정말 " + 타겟.아이템이름 + "(판매가: " + 타겟.판매가격 + "골드) 을(를) 판매하시겠습니까?" +
+                            "\n0.취소한다." +
+                            "\n1.판매한다." +
+                            "\n→");
+                    입력 = sc.nextInt();
+                    switch (입력) {
+                        case 0:
+                            반복=false;
+                            break;
+                        case 1:
+                            타겟.스택수 = 0;
+                            this.소지금 = this.소지금 + 타겟.판매가격;
+                            System.out.println(타겟.아이템이름 + "을(를) 판매하여 " +
+                                    타겟.판매가격 + "골드를 받았습니다.");
+                            Thread.sleep(1000);
+                            반복=false;
+                            break;
+                    }
+                }
+            } else {
                 System.out.println("착용 중인 아이템은 판매할 수 없습니다.");
                 Thread.sleep(1000);
             }
@@ -320,42 +371,31 @@ public class 캐릭터 { //캐릭터의 능력치나 소지품에 영향을 미�
             사용선택 = 입력 -(회복물약가방크기+1);
             아이템정보 = this.소지품.get(사용선택);
             if(아이템정보.사용가능여부) { //사용가능한 물건이라면
-                if(아이템정보.착용가능여부){ //착용가능하면
-                    System.out.println("전투중엔 아이템 장비/해제가 불가능합니다.");
-                    Thread.sleep(1000);
-                    물약여부=0;
-                    사용선택=-1;
-                }
-                else {
-                    물약여부 = 2;
-                }
+                물약여부=2;
             }
             else{ // 사용 불가능한 물건이라면
                 System.out.println("\n사용할 수 없는 아이템입니다.");
                 Thread.sleep(1000);
                 물약여부=0;
-                사용선택=-1;
             }
         }
         return 물약여부;
     }
-    public int 아이템사용2(int 입력){
-        int 사용선택;
+    public 아이템 아이템사용2(int 입력){
+        아이템 타겟;
         int 회복물약가방크기= this.회복물약가방.size();
         if(입력 <=회복물약가방크기){ //회복물약 내용물을 선택했다면
-            사용선택= 입력 -1;
+            타겟= this.회복물약가방.get(입력 -1);
         }
 
         else{ //회복물약가방 내용물이 아닌것을 선택했다면
-            사용선택 = 입력 -(회복물약가방크기+1);
+            타겟 = this.소지품.get(입력 -(회복물약가방크기+1));
         }
-        return 사용선택;
+        return 타겟;
     }
-    public boolean 전투외아이템사용(int 물약여부, int 사용선택) throws InterruptedException {
-        아이템 타겟;
+    public boolean 전투외아이템사용(int 물약여부, 아이템 타겟) throws InterruptedException {
         boolean 반복=true;
         if(물약여부==1){ //물약이면
-            타겟=this.회복물약가방.get(사용선택);
             타겟.물약사용(this);
             반복 = false;
         }
@@ -367,130 +407,70 @@ public class 캐릭터 { //캐릭터의 능력치나 소지품에 영향을 미�
         System.out.println(반복);
         return 반복;
     }
-    public void 전투아이템사용(int 물약여부, int 사용선택) throws InterruptedException{
+    public void 전투아이템사용(int 물약여부, 아이템 타겟) throws InterruptedException{
         if(물약여부==0){
         }
         else if(물약여부==1){ //물약이면
-            아이템 타겟=this.회복물약가방.get(사용선택);;
             타겟.물약사용(this);
         }
         else{ //
-            아이템 타겟=this.소지품.get(사용선택);;
             타겟.소모템사용(this);
         }
     }
-
     public int 아이템버리기(int 입력) throws InterruptedException {
-        boolean 아이템버리기=true;
-        int 물약여부=1; //1:물약이거나 버릴수없음, 2:물약아님
-        int 인벤토리크기= this.소지품.size();
+        int 물약여부=2; //1:물약이거나 버릴수없음, 2:물약아님
         int 회복물약가방크기= this.회복물약가방.size();
         int 사용선택;
-        int 개수;
         아이템 아이템정보;
         if (입력 <= 회복물약가방크기) { //회복물약 내용물을 선택했다면
             System.out.println("\n회복물약은 버릴 수 없습니다.");
             Thread.sleep(1000);
-            아이템버리기 = false;
             물약여부 = 1;
         } else { //회복물약가방 내용물이 아닌것을 선택했다면
             사용선택 = 입력 - (회복물약가방크기 + 1);
             아이템정보 = this.소지품.get(사용선택);
-            사용선택 = -1;
             if (아이템정보.착용여부) { //착용중이라면
                 System.out.println("\n우선 장착을 해제해주세요.");
-                아이템버리기 = false;
                 Thread.sleep(1000);
                 물약여부 = 1;
-            } else if (아이템정보.스택가능여부) { //스택이 가능하다면
-                while (true) {
-                    System.out.print("" +
-                            "\n버릴 개수를 입력해주세요. (0개: 취소)" +
-                            "\n→");
-                    입력 = sc.nextInt();
-                    if (입력 == 0) { //버릴 개수를 0개로 입력한다면
-                        아이템버리기 = false;
-                        break;
-                    } else if (입력 >= 1 && 입력 <= 아이템정보.스택수) { //버릴 개수를 1이상, 스택수 이하로 입력했다면
-                        개수 = 입력;
-                        break;
-                    } else if (입력 > 아이템정보.스택수) { //버릴 개수를 스택수 보다 많게 입력했다면
-                        System.out.println("" +
-                                "\n가진 양보다 많은 양을 버릴 수는 없습니다.");
-                        Thread.sleep(1000);
-                        아이템버리기 = false;
-                        break;
-                    }
-                }
-                if (아이템버리기) { //선택한 아이템을 선택한 만큼 버릴건지 최종 확인
-                    while (true) { // 0과 1 이외의 숫자를 입력할 경우 무한루프함
-                        System.out.println("" +
-                                "\n정말 " + 아이템정보.아이템이름 + " " + 개수 + " 개를 버리겠습니까?" +
-                                "\n0.취소한다." +
-                                "\n1.버린다.");
-                        입력 = sc.nextInt();
-                        if (입력 == 0) {
-                            아이템버리기 = false;
-                            break;
-                        } else if (입력 == 1) {
-                            break;
-                        }
-                    }
-                }
             }
         }
         return 물약여부;
     }
-    /////////////////////////
-    public boolean 아이템버리기0(int 입력) throws InterruptedException {
-        int 인벤토리크기= this.소지품.size();
-        int 회복물약가방크기= this.회복물약가방.size();
-        int 전체가방크기=인벤토리크기+회복물약가방크기;
-        int 사용선택;
-        boolean 아이템버리기 = false; //아이템 버리기 스크립트 실행용
-        if (입력 <= 회복물약가방크기) { //회복물약 내용물을 선택했다면
-            System.out.println("\n회복물약은 버릴 수 없습니다.");
-            Thread.sleep(1000);
-            아이템버리기 = false;
-            사용선택 = -1;
-        } else { //회복물약가방 내용물이 아닌것을 선택했다면
-            사용선택 = 입력 - (회복물약가방크기 + 1);
-            아이템정보 = 캐릭터.소지품.get(사용선택);
-            사용선택 = -1;
-            if (아이템정보.착용여부) { //착용중이라면
-                System.out.println("\n우선 장착을 해제해주세요.");
-                아이템버리기 = false;
-                Thread.sleep(1000);
-                물약여부 = 0;
-            } else if (아이템정보.스택가능여부) { //스택이 가능하다면
+    public int 아이템버리기2(int 물약여부, int 입력) throws InterruptedException {
+        int 개수 = 1;
+        boolean 진행 = true;
+        if(물약여부 == 2) {//물약도 아니고 장착중도 아닐경우
+            아이템 타겟 = this.소지품.get(입력-(this.회복물약가방.size() + 1));
+            if (타겟.스택가능여부) {//스택가능이면
                 while (true) {
                     System.out.print("" +
                             "\n버릴 개수를 입력해주세요. (0개: 취소)" +
                             "\n→");
                     입력 = sc.nextInt();
                     if (입력 == 0) { //버릴 개수를 0개로 입력한다면
-                        아이템버리기 = false;
+                        개수 = 0;
                         break;
-                    } else if (입력 >= 1 && 입력 <= 아이템정보.스택수) { //버릴 개수를 1이상, 스택수 이하로 입력했다면
+                    } else if (입력 >= 1 && 입력 <= 타겟.스택수) { //버릴 개수를 1이상, 스택수 이하로 입력했다면
                         개수 = 입력;
                         break;
-                    } else if (입력 > 아이템정보.스택수) { //버릴 개수를 스택수 보다 많게 입력했다면
+                    } else if (입력 > 타겟.스택수) { //버릴 개수를 스택수 보다 많게 입력했다면
                         System.out.println("" +
                                 "\n가진 양보다 많은 양을 버릴 수는 없습니다.");
                         Thread.sleep(1000);
-                        아이템버리기 = false;
+                        개수 = 0;
                         break;
                     }
                 }
-                if (아이템버리기) { //선택한 아이템을 선택한 만큼 버릴건지 최종 확인
+                if (개수 > 0) { //개수가 0보다 많다면 선택한 아이템을 선택한 만큼 버릴건지 최종 확인
                     while (true) { // 0과 1 이외의 숫자를 입력할 경우 무한루프함
                         System.out.println("" +
-                                "\n정말 " + 아이템정보.아이템이름 + " " + 개수 + " 개를 버리겠습니까?" +
+                                "\n정말 " + 타겟.아이템이름 + " " + 개수 + " 개를 버리겠습니까?" +
                                 "\n0.취소한다." +
                                 "\n1.버린다.");
                         입력 = sc.nextInt();
                         if (입력 == 0) {
-                            아이템버리기 = false;
+                            개수 = 0;
                             break;
                         } else if (입력 == 1) {
                             break;
@@ -501,36 +481,39 @@ public class 캐릭터 { //캐릭터의 능력치나 소지품에 영향을 미�
                 개수 = 1;
                 while (true) { // 0과 1 이외의 숫자를 입력할 경우 무한루프함
                     System.out.println("" +
-                            "\n정말 " + 아이템정보.아이템이름 + "을(를) 버리겠습니까?" +
+                            "\n정말 " + 타겟.아이템이름 + "을(를) 버리겠습니까?" +
                             "\n0.취소한다." +
                             "\n1.버린다.");
                     입력 = sc.nextInt();
                     if (입력 == 0) {
-                        아이템버리기 = false;
+                        개수 = 0;
                         break;
                     } else if (입력 == 1) {
                         break;
                     }
                 }
             }
-//            a = -1;
+        }else{ //물약여부가 1이면
+            개수=0;
         }
-        return 아이템버리기;
+        return 개수;
     }
-    public void 아이템버리기실행(int 개수, 아이템 아이템) throws InterruptedException {
+    public void 아이템버리기실행(int 개수, int 입력) throws InterruptedException {
 //        System.out.println("버리기전 아이템.스택수 : "+ 아이템.스택수 + ", 개수 : "+개수);
-        if(개수>1) {
-            System.out.println(아이템.아이템이름 + "을 " + 개수 + "개 버립니다.");
+        if (개수 != 0) {
+            아이템 아이템 = this.소지품.get(입력-(this.회복물약가방.size() + 1));
+            if(개수>1) {
+                System.out.println(아이템.아이템이름 + "을 " + 개수 + "개 버립니다.");
+            }
+            else if(개수==1){
+                System.out.println(아이템.아이템이름 + "을 버립니다.");
+            }
+            Thread.sleep(1000);
+            아이템.스택수 = 아이템.스택수-개수;
         }
-        else{
-            System.out.println(아이템.아이템이름 + "을 버립니다.");
-        }
-        Thread.sleep(1000);
-        아이템.스택수 = 아이템.스택수-개수;
 //        System.out.println("버린후 아이템.스택수 : "+ 아이템.스택수 + ", 개수 : "+개수);
     }
-    public void 아이템장착(int 사용선택) throws InterruptedException {
-        아이템 타겟 = this.소지품.get(사용선택);
+    public void 아이템장착(아이템 타겟) throws InterruptedException {
         int 인벤토리크기=this.소지품.size()-1;
         boolean 속행=true;
         if(타겟.착용여부){//착용중이면
@@ -554,50 +537,6 @@ public class 캐릭터 { //캐릭터의 능력치나 소지품에 영향을 미�
             }
         }
     }
-    public void 아이템강화(아이템 아이템) throws InterruptedException {
-        int 랜덤값=rd.nextInt(70); //0~9체력 | 10~19마나 | 20~29공격력 | 30~39방어력 | 40~49치확 | 50~59치피 | 60~69회피
-        if(랜덤값<=9){ //0~9체력
-            정수강화=rd.nextInt(11)+20; //20~30 상승
-            System.out.println(아이템.아이템이름+"을(를) 강화하여 체력이 "+정수강화+" 상승하였습니다.");
-            아이템.추가체력=아이템.추가체력+정수강화;
-        }
-        else if(랜덤값<=19){ //10~19마나
-            정수강화=rd.nextInt(6)+5; //5~10 상승
-            System.out.println(아이템.아이템이름+"을(를) 강화하여 마나가 "+정수강화+" 상승하였습니다.");
-            아이템.추가마나=아이템.추가마나+정수강화;
-        }
-        else if(랜덤값<=29){ //20~29공격력
-            정수강화=rd.nextInt(6)+5;
-            System.out.println(아이템.아이템이름+"을(를) 강화하여 공격력이 "+정수강화+" 상승하였습니다.");
-            아이템.추가공격력=아이템.추가공격력+정수강화;
-        }
-        else if(랜덤값<=39){ //30~39방어력
-            정수강화=rd.nextInt(3)+1;
-            System.out.println(아이템.아이템이름+"을(를) 강화하여 방어력이 "+정수강화+" 상승하였습니다.");
-            아이템.추가방어력=아이템.추가방어력+정수강화;
-        }
-        else if(랜덤값<=49){ //40~49치확
-            정수강화=rd.nextInt(3)+1;
-            System.out.println(아이템.아이템이름+"을(를) 강화하여 치명확률이 "+정수강화+" 상승하였습니다.");
-            아이템.추가치확=아이템.추가치확+정수강화;
-        }
-        else if(랜덤값<=59){ //50~59치피
-            정수강화=rd.nextInt(6)+5;
-            System.out.println(아이템.아이템이름+"을(를) 강화하여 치명피해가 "+정수강화+" 상승하였습니다.");
-            아이템.추가치피=아이템.추가치피+정수강화;
-        }
-        else if(랜덤값<=69){ //60~69회피
-            정수강화=rd.nextInt(3)+1;
-            System.out.println(아이템.아이템이름+"을(를) 강화하여 회피율이 "+정수강화+" 상승하였습니다.");
-            아이템.추가회피=아이템.추가회피+정수강화;
-        }
-        아이템.강화=아이템.강화+1;
-        this.소지금=this.소지금-100;
-        아이템.아이템이름="+" + 아이템.강화 + " " + 아이템.임시이름;
-        Thread.sleep(1000);
-//        System.out.println("아이템 강화수치 : " + 아이템.강화 + ", 강화수치 + 이름 : " +아이템.아이템이름);
-    }
-
     public void 능력치적용(){
         this.장비능력치적용();
         this.최종능력치적용();
@@ -735,7 +674,6 @@ public class 캐릭터 { //캐릭터의 능력치나 소지품에 영향을 미�
         this.캐릭터현재체력=this.캐릭터최대체력+this.레벨업추가체력;
         this.캐릭터현재마나=this.캐릭터최대마나+this.레벨업추가마나;
     }
-
     public void 캐릭터공격(몬스터 타겟) throws InterruptedException {
 
         //데미지 공식 시작
@@ -746,8 +684,8 @@ public class 캐릭터 { //캐릭터의 능력치나 소지품에 영향을 미�
             System.out.println("공격력 : " + 공격력 + ", 공격력*캐릭터최종치피 : " + (int)Math.ceil(공격력*캐릭터최종치피) + ", 100나누면 : " + (int)Math.ceil(공격력*캐릭터최종치피)/100);
             공격력=(int)Math.ceil(공격력*캐릭터최종치피/100);
         }
-        System.out.println("캐릭터.캐릭터공격| 공격력 : " + 공격력 + ", 타겟.방어력 : " + 타겟.방어력);
-        System.out.println("캐릭터.캐릭터공격| 캐릭터최종공격력 : " + this.캐릭터최종공격력);
+//        System.out.println("캐릭터.캐릭터공격| 공격력 : " + 공격력 + ", 타겟.방어력 : " + 타겟.방어력);
+//        System.out.println("캐릭터.캐릭터공격| 캐릭터최종공격력 : " + this.캐릭터최종공격력);
         int 입힌데미지 = 공격력-타겟.방어력;
         if(입힌데미지<=0){
             입힌데미지=1;

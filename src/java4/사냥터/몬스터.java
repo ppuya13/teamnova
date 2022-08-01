@@ -1,5 +1,6 @@
-package java4;
+package java4.사냥터;
 
+import java4.아이템.아이템;
 import java4.캐릭터.캐릭터;
 
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ public class 몬스터 { //몬스터 정보와 전투는 이곳에
 //        return 랜덤몬스터결과;
 //    }
 
-
+    public 몬스터(){}
     public 몬스터(String 이름, String 몬스터종류) {
         공용드랍테이블();
         this.이름 = 이름;

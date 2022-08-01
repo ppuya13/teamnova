@@ -1,4 +1,4 @@
-package java4;
+package java4.아이템;
 
 import java4.캐릭터.캐릭터;
 

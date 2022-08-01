@@ -1,14 +1,18 @@
-package java4.출력;
+package java4.사냥터;
 
-import java4.몬스터;
-import java4.아이템;
+import java4.스킬.스킬;
+import java4.아이템.아이템;
+import java4.캐릭터.인벤토리;
+import java4.출력;
 import java4.캐릭터.캐릭터;
 
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
-public class 사냥터 extends 출력 {
+import static java4.Main.플레이어;
+
+public class 사냥터 {
 
     public ArrayList<몬스터> 몬스터어레이;
     public int 몬스터머릿수;
@@ -30,6 +34,236 @@ public class 사냥터 extends 출력 {
         this.몬스터어레이 = new ArrayList<>();
         this.몬스터머릿수 = 0;
         this.죽은몬스터수 = 0;
+    }
+
+    public void 사냥터() throws InterruptedException {
+        boolean 반복 = true;
+        boolean 몬스터삭제 = false;
+        boolean 턴 = false;
+        boolean 전투승리 = false;
+        boolean 전투종료 = false;
+        boolean 사망 = false;
+        int 입력;
+        Scanner sc = new Scanner(System.in);
+        출력 메인 = new 출력();
+        몬스터 몬스터타겟 = new 몬스터();
+        아이템 아이템정보;
+        스킬 스킬;
+        인벤토리 인벤토리 = new 인벤토리();
+
+
+        사냥터:
+        while (반복) {
+            입력 = -1;
+            System.out.println(메인.능력치창());
+            this.사냥터메인();
+            입력 = sc.nextInt();
+            switch (입력) {
+                case 0: //나가기
+                    반복 = false;
+                    break;
+                case 1: //탐색(전투시작)
+                    반복 = true;
+                    this.몬스터생성();
+                    전투:
+                    while (반복) {
+                        입력 = -1;
+                        System.out.println(메인.능력치창());
+                        System.out.println(this.몬스터목록());
+                        this.사냥터행동();
+                        입력 = sc.nextInt();
+                        switch (입력) {
+                            case 1: //공격
+                                반복 = true;
+                                while (반복) {
+                                    입력 = -1;
+                                    System.out.println(메인.능력치창());
+                                    System.out.println("\n공격할 몬스터를 선택하세요.");
+                                    System.out.print(this.행동몬스터목록());
+                                    System.out.print("\n→");
+                                    입력 = sc.nextInt();
+                                    if (입력 == 0) {
+                                        break;
+                                    } else if (입력 > 0 && 입력 <= this.몬스터머릿수 - this.죽은몬스터수) {
+                                        몬스터타겟 = this.몬스터어레이.get(입력 - 1);
+                                        플레이어.캐릭터공격(몬스터타겟);
+                                        몬스터삭제 = true;
+                                        턴 = true;
+                                        반복 = false;
+                                    }
+                                }
+                                break;
+                            case 2: //스킬
+                                boolean 스킬반복 = true;
+                                while (스킬반복) {
+                                    System.out.println(메인.능력치창());
+                                    System.out.println("\n보유 중인 스킬 리스트");
+                                    System.out.println(메인.스킬창());
+                                    System.out.print("" +
+                                            "사용할 스킬을 선택해주세요. " +
+                                            "\n→");
+                                    입력 = sc.nextInt();
+                                    if (입력 == 0) {
+                                        break;
+                                    } else if (입력 > 0 && 입력 <= 플레이어.스킬목록.size()) {
+                                        스킬 = 플레이어.스킬목록.get(입력 - 1);
+
+                                        switch (스킬.타입) {
+                                            case 1: //단일스킬이면
+                                                반복 = true;
+                                                while (반복) {
+                                                    System.out.print("\n" + 스킬.스킬명 + "(마나 " + 스킬.소모량 + ") : " + 스킬.효과);
+                                                    System.out.println(this.행동몬스터목록());
+                                                    System.out.print("" +
+                                                            스킬.스킬명 + "을(를) 사용할 대상을 선택하세요." +
+                                                            "\n→");
+                                                    입력 = sc.nextInt();
+                                                    if (입력 == 0) {
+                                                        break;
+                                                    } else if (입력 > 0 && 입력 <= this.몬스터어레이.size()) {
+                                                        몬스터타겟 = this.몬스터어레이.get(입력 - 1);
+                                                        플레이어.단일스킬(몬스터타겟, 스킬);
+                                                        몬스터삭제 = true;
+                                                        턴 = true;
+                                                        break;
+                                                        //타겟선택
+                                                    }
+                                                }
+                                                스킬반복 = false;
+                                                break;
+                                            case 3: //광역스킬이면
+                                                System.out.print("\n" + 스킬.스킬명 + "(마나 " + 스킬.소모량 + ") : " + 스킬.효과);
+                                                System.out.println(this.행동몬스터목록());
+                                                System.out.print("" +
+                                                        스킬.스킬명 + "을(를) 사용하시겠습니까?" +
+                                                        "\n0.취소한다." +
+                                                        "\n1.사용한다." +
+                                                        "\n→");
+                                                입력 = sc.nextInt();
+                                                switch (입력) {
+                                                    case 0:
+                                                        break;
+                                                    case 1:
+                                                        플레이어.광역스킬(this.몬스터어레이, 스킬);
+                                                        몬스터삭제 = true;
+                                                        턴 = true;
+                                                        스킬반복 = false;
+                                                        break;
+                                                }
+                                        }
+                                    }
+                                }
+                                break;
+                            case 3: //아이템
+                                반복 = true;
+                                while (반복) {
+                                    System.out.println(메인.능력치창());
+                                    System.out.println("\n아이템 사용하기");
+                                    System.out.println(메인.행동인벤토리());
+                                    System.out.print("" +
+                                            "아이템을 선택해주세요. " +
+                                            "\n소모품만을 사용할 수 있으며, 아이템 사용 시 턴을 넘기게됩니다." +
+                                            "\n→");
+                                    입력 = sc.nextInt();
+                                    if (입력 == 0) {
+                                        break;
+                                    } else if (입력 > 0 && 입력 <= 플레이어.소지품.size() + 플레이어.회복물약가방.size()) {
+                                        아이템정보 = 플레이어.아이템사용2(입력);
+                                        if (아이템정보.착용가능여부) { //선택한 아이템이 착용가능하면
+                                            System.out.println("전투중엔 아이템 장착/해제를 할 수 없습니다.");
+                                            Thread.sleep(1000);
+                                        } else {
+//                                                    System.out.println("아이템사용시작");
+                                            플레이어.전투아이템사용(플레이어.아이템사용(입력), 아이템정보);
+                                            플레이어.소모템적용();
+                                            플레이어.인벤정리();
+                                            break;
+                                        }
+                                    }
+                                }
+                                break;
+                            case 4: //살펴보기
+                                반복 = true;
+                                while (반복) {
+                                    System.out.println(메인.능력치창());
+                                    System.out.println("\n살펴볼 몬스터를 선택하세요.");
+                                    System.out.println(this.행동몬스터목록());
+                                    System.out.print("\n→");
+                                    if (입력 == 0) {
+                                        break;
+                                    } else if (입력 > 0 && 입력 <= this.몬스터어레이.size()) {
+                                        몬스터타겟 = this.몬스터어레이.get(입력 - 1);
+                                        System.out.println(메인.정보출력(몬스터타겟));
+                                        System.out.print("" +
+                                                "\n계속하려면 아무 숫자나 입력하세요." +
+                                                "\n→");
+                                        입력 = sc.nextInt();
+                                        break;
+                                    }
+                                }
+                                break;
+                            case 5: //도망치기
+                                반복 = true;
+                                while (반복) {
+                                    System.out.println("" +
+                                            "정말 도망치시겠습니까?" +
+                                            "\n0.취소한다." +
+                                            "\n1.도망친다.");
+                                    입력 = sc.nextInt();
+                                    switch (입력) {
+                                        case 0:
+                                            break;
+                                        case 1:
+                                            System.out.println("도망쳤습니다.");
+                                            플레이어.사용중.clear();
+                                            전투종료 = true;
+                                            반복 = false;
+                                            Thread.sleep(1000);
+                                            break;
+                                    }
+                                }
+                                break;
+                        }
+                        if (턴) {
+                            플레이어.소모템적용(); //소모템 지속시간도 여기서 감소시킴
+                        }
+                        플레이어.능력치적용();
+
+                        //플레이어의 행동이 끝난 뒤
+                        this.몬스터삭제(몬스터삭제, 몬스터타겟);
+                        전투승리 = this.전투종료판정();
+
+                        if (전투승리) {
+                            턴 = false;
+                            전투종료 = true;
+                            플레이어.사용중.clear();
+                        }
+                        if (턴) {
+                            사망 = 몬스터.몬스터공격(this.몬스터어레이, this.몬스터머릿수 - this.죽은몬스터수, 플레이어);
+                            턴 = false;
+                            if (사망) {
+                                System.out.println("사망판정");
+                            }
+                        }
+                        if (전투종료) {//전투가 종료됐다면
+                            this.전투정산(전투승리, 플레이어);
+                            반복 = true;
+                            전투승리 = false;
+                            전투종료 = false;
+                            continue 사냥터;
+                        }
+                        반복 = true;
+                    }
+                    break;
+                case 2: //탐색 인벤토리
+                    if (인벤토리.인벤토리()) {
+                        continue 사냥터;
+                    }
+                case 3: //휴식
+                    플레이어.휴식();
+                    break;
+            }
+        }//사냥터 while문 끝
     }
 
 
@@ -152,7 +386,7 @@ public class 사냥터 extends 출력 {
         boolean 전투승리 = false;
         if(몬스터머릿수 - 죽은몬스터수 == 0){
             전투승리=true;
-//            System.out.println("사냥터.전투종료판정 | 전투승리 : " + 전투승리);
+//            System.out.println("this.전투종료판정 | 전투승리 : " + 전투승리);
             몬스터어레이.clear();
             몬스터머릿수=0;
             죽은몬스터수=0;
@@ -228,6 +462,7 @@ public class 사냥터 extends 출력 {
         }//승리판정 끝
         플레이어.캐릭터현재경험치 = 플레이어.캐릭터현재경험치+경험치허브;
         System.out.println("경험치가 " + 경험치허브 + " 올라 " + 플레이어.캐릭터현재경험치 + "이(가) 되었다!");
+        경험치허브 = 0;
         Thread.sleep(1000);
         while(true){
 //            System.out.println("경험치 while문 시작");
