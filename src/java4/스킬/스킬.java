@@ -1,6 +1,6 @@
 package java4.스킬;
 
-import java4.사냥터.몬스터;
+import java4.사냥터.몬스터.몬스터;
 
 import java.util.Random;
 

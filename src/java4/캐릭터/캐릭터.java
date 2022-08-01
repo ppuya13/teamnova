@@ -1,7 +1,7 @@
 package java4.캐릭터;
 
 
-import java4.사냥터.몬스터;
+import java4.사냥터.몬스터.몬스터;
 import java4.스킬.강타;
 import java4.스킬.스킬;
 import java4.스킬.휩쓸기;
@@ -82,7 +82,7 @@ public class 캐릭터 { //캐릭터의 능력치나 소지품에 영향을 미�
         this.캐릭터현재마나 = this.캐릭터최대마나;
         this.캐릭터공격력 = 300;
         this.캐릭터최종공격력=30;
-        this.캐릭터방어력 = 10;
+        this.캐릭터방어력 = 0;
         this.캐릭터최종방어력=0;
         this.캐릭터치명확률 = 20;
         this.캐릭터최종치확 = 20;

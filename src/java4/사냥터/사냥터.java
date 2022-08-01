@@ -1,5 +1,9 @@
 package java4.사냥터;
 
+import java4.사냥터.몬스터.몬스터;
+import java4.사냥터.몬스터.스킬.기본공격;
+import java4.사냥터.몬스터.슬라임.*;
+import java4.사냥터.몬스터.고블린.*;
 import java4.스킬.스킬;
 import java4.아이템.아이템;
 import java4.캐릭터.인벤토리;
@@ -19,7 +23,7 @@ public class 사냥터 {
     public int 죽은몬스터수;
     String 몬스터번호; // 각 몬스터마다 고유 번호
     몬스터 몬스터정보; // 몬스터의 이름과 능력치가 들어있음
-    String[] 몬스터종류배열 = {"슬라임","고블린","오크"};
+    String[] 몬스터종류배열 = {"슬라임","고블린"};
     double 몬스터생성난수;
     ArrayList<아이템> 드랍템 = new ArrayList<>();
     아이템 드랍아이템;
@@ -29,6 +33,7 @@ public class 사냥터 {
     int 소지금허브 = 0;
     String 랜덤몬스터결과;
     Random rd = new Random();
+    java4.사냥터.몬스터.스킬.기본공격 기본공격 = new 기본공격();
 
     public 사냥터(){
         this.몬스터어레이 = new ArrayList<>();
@@ -46,7 +51,7 @@ public class 사냥터 {
         int 입력;
         Scanner sc = new Scanner(System.in);
         출력 메인 = new 출력();
-        몬스터 몬스터타겟 = new 몬스터();
+        몬스터 몬스터타겟;
         아이템 아이템정보;
         스킬 스킬;
         인벤토리 인벤토리 = new 인벤토리();
@@ -194,6 +199,9 @@ public class 사냥터 {
                                     } else if (입력 > 0 && 입력 <= this.몬스터어레이.size()) {
                                         몬스터타겟 = this.몬스터어레이.get(입력 - 1);
                                         System.out.println(메인.정보출력(몬스터타겟));
+                                        for(int i = 0 ; i < this.몬스터어레이.get(입력-1).스킬리스트.size() ; i++){
+                                            System.out.println(this.몬스터어레이.get(입력-1).이름+"의 스킬 " + i + ": " + this.몬스터어레이.get(입력-1).스킬리스트.get(i).스킬명);
+                                        }
                                         System.out.print("" +
                                                 "\n계속하려면 아무 숫자나 입력하세요." +
                                                 "\n→");
@@ -230,7 +238,7 @@ public class 사냥터 {
                         플레이어.능력치적용();
 
                         //플레이어의 행동이 끝난 뒤
-                        this.몬스터삭제(몬스터삭제, 몬스터타겟);
+                        this.몬스터삭제(몬스터삭제);
                         전투승리 = this.전투종료판정();
 
                         if (전투승리) {
@@ -239,7 +247,13 @@ public class 사냥터 {
                             플레이어.사용중.clear();
                         }
                         if (턴) {
-                            사망 = 몬스터.몬스터공격(this.몬스터어레이, this.몬스터머릿수 - this.죽은몬스터수, 플레이어);
+                            for(int i = 0 ; i < this.몬스터어레이.size() ; i++) {
+                                몬스터정보 = this.몬스터어레이.get(i);
+                                if (!사망) {
+                                    사망 = 몬스터정보.몬스터행동(this.몬스터어레이, this.몬스터머릿수 - this.죽은몬스터수, 플레이어);
+                                }
+                            }
+                            this.몬스터삭제(몬스터삭제);
                             턴 = false;
                             if (사망) {
                                 System.out.println("사망판정");
@@ -262,6 +276,8 @@ public class 사냥터 {
                 case 3: //휴식
                     플레이어.휴식();
                     break;
+                case 4: //디버그용
+                    몬스터 몬스터 = new 빨간슬라임("1");
             }
         }//사냥터 while문 끝
     }
@@ -300,12 +316,27 @@ public class 사냥터 {
         Thread.sleep(1000);
 
         for (int i = 1; i <= 몬스터머릿수; i++) {
+            몬스터번호 = Integer.toString(i);
             몬스터생성난수 = Math.random();
             num = (int) Math.floor(몬스터생성난수 * 몬스터종류배열.length);
             랜덤몬스터결과 = 몬스터종류배열[num];
-
-            몬스터번호 = Integer.toString(i);
-            몬스터정보 = new 몬스터(몬스터번호, 랜덤몬스터결과);
+            if(랜덤몬스터결과.equals("슬라임")){
+                num= rd.nextInt(4)+1;
+                if(num<=2){
+                    몬스터정보 = new 빨간슬라임(몬스터번호);
+                }else{
+                    몬스터정보 = new 초록슬라임(몬스터번호);
+                }
+            }else if(랜덤몬스터결과.equals("고블린")){
+                num= rd.nextInt(9)+1; //1~10
+                if(num<=4){
+                    몬스터정보 = new 고블린궁수(몬스터번호);
+                }else if(num<=8){
+                    몬스터정보 = new 고블린전사(몬스터번호);
+                }else{
+                    몬스터정보 = new 보물고블린(몬스터번호);
+                }
+            }
             this.몬스터어레이.add(몬스터정보);
         }
     }
@@ -337,7 +368,7 @@ public class 사냥터 {
         return 몬스터목록;
     }
 
-    public void 몬스터삭제(boolean 몬스터삭제, 몬스터 몬스터타겟) throws InterruptedException {
+    public void 몬스터삭제(boolean 몬스터삭제) throws InterruptedException {
         while (몬스터삭제) {
 //                    System.out.println("몬스터삭제 while문 시작");
 //                    System.out.println(몬스터어레이.size());
