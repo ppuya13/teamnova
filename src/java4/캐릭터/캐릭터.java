@@ -82,7 +82,7 @@ public class 캐릭터 { //캐릭터의 능력치나 소지품에 영향을 미�
         this.캐릭터현재마나 = this.캐릭터최대마나;
         this.캐릭터공격력 = 30;
         this.캐릭터최종공격력=30;
-        this.캐릭터방어력 = 130;
+        this.캐릭터방어력 = 0;
         this.캐릭터최종방어력=0;
         this.캐릭터치명확률 = 20;
         this.캐릭터최종치확 = 20;
@@ -108,21 +108,21 @@ public class 캐릭터 { //캐릭터의 능력치나 소지품에 영향을 미�
         this.회복물약가방.add(마나물약);
 
 //        //이 아래로는 테스트용 아이템생성. 나중에 지우기
-        아이템 아이템;
-        아이템 = new 아이템(300);
-        아이템.스택수=1000;
-        this.소지품.add(아이템);
-        아이템= new 아이템(200);
-        아이템.스택수=1000;
-        this.소지품.add(아이템);
-        아이템= new 아이템(201);
-        아이템.스택수=1000;
-        this.소지품.add(아이템);
+//        아이템 아이템;
+//        아이템 = new 아이템(300);
+//        아이템.스택수=1000;
+//        this.소지품.add(아이템);
+//        아이템= new 아이템(200);
+//        아이템.스택수=1000;
+//        this.소지품.add(아이템);
+//        아이템= new 아이템(201);
+//        아이템.스택수=1000;
+//        this.소지품.add(아이템);
 //
-        아이템 검 = new 아이템(100);
+//        아이템 검 = new 아이템(100);
 //        아이템 방패 = new 아이템(101);
 //        아이템 갑옷 = new 아이템(102);
-        this.소지품.add(검);
+//        this.소지품.add(검);
 //        this.소지품.add(방패);
 //        this.소지품.add(갑옷);
 //        System.out.println("첫번째검 : " + this.소지품.get(1).착용여부 + ", 두번째검 : " + this. 소지품. get(2).착용여부);
@@ -681,7 +681,7 @@ public class 캐릭터 { //캐릭터의 능력치나 소지품에 영향을 미�
         int 공격력 = (int) Math.ceil(this.캐릭터최종공격력*(Math.random()*0.2+0.9));
         if(rd.nextInt(100)+캐릭터최종치확>99){
             치명타=true;
-            System.out.println("공격력 : " + 공격력 + ", 공격력*캐릭터최종치피 : " + (int)Math.ceil(공격력*캐릭터최종치피) + ", 100나누면 : " + (int)Math.ceil(공격력*캐릭터최종치피)/100);
+//            System.out.println("공격력 : " + 공격력 + ", 공격력*캐릭터최종치피 : " + (int)Math.ceil(공격력*캐릭터최종치피) + ", 100나누면 : " + (int)Math.ceil(공격력*캐릭터최종치피)/100);
             공격력=(int)Math.ceil(공격력*캐릭터최종치피/100);
         }
 //        System.out.println("캐릭터.캐릭터공격| 공격력 : " + 공격력 + ", 타겟.방어력 : " + 타겟.방어력);
@@ -695,14 +695,14 @@ public class 캐릭터 { //캐릭터의 능력치나 소지품에 영향을 미�
         System.out.println("\n"+타겟.이름 + "을(를) 공격합니다." +
                 "\n플레이어의 기본공격!");
         타겟.현재체력 = 타겟.현재체력-입힌데미지;
-        Thread.sleep(1000);
+        Thread.sleep(500);
         if(치명타){
             System.out.println("치명타!");
-            Thread.sleep(1000);
+            Thread.sleep(500);
         }
         System.out.println("" +
                 타겟.이름 + "에게 " + 입힌데미지 + "만큼의 데미지를 입혔다!");
-        Thread.sleep(1000);
+        Thread.sleep(500);
         if(타겟.현재체력<=0){ //공격받은 뒤 타겟의 현재체력이 0이하면
             System.out.println("" +
                     "" + 타겟.이름 + "은(는) 쓰러졌다!");
@@ -735,14 +735,14 @@ public class 캐릭터 { //캐릭터의 능력치나 소지품에 영향을 미�
             System.out.println("\n" + 타겟.이름 + "을(를) 공격합니다. (마나 " +스킬.소모량+ " 소모)" +
                     "\n플레이어의 강타!");
             타겟.현재체력 = 타겟.현재체력 - 입힌데미지;
-            Thread.sleep(1000);
+            Thread.sleep(500);
             if(치명타){
                 System.out.println("치명타!");
-                Thread.sleep(1000);
+                Thread.sleep(500);
             }
             System.out.println("" +
                     타겟.이름 + "에게 " + 입힌데미지 + "만큼의 데미지를 입혔다!");
-            Thread.sleep(1000);
+            Thread.sleep(500);
             if (타겟.현재체력 <= 0) { //공격받은 뒤 타겟의 현재체력이 0이하면
                 System.out.println("" +
                         "" + 타겟.이름 + "은(는) 쓰러졌다!");
@@ -783,11 +783,11 @@ public class 캐릭터 { //캐릭터의 능력치나 소지품에 영향을 미�
             if (타겟.현재체력 <= 0) { //공격받은 뒤 타겟의 현재체력이 0이하면
                 System.out.println("" +
                         "" + 타겟.이름 + "은(는) 쓰러졌다!");
-                Thread.sleep(200);
+                Thread.sleep(400);
             } else { //공격받은 뒤 타겟의 체력이 남아있으면
                 System.out.println("" +
                         "" + 타겟.이름 + "의 체력이" + 타겟.현재체력 + " 남았다!");
-                Thread.sleep(200);
+                Thread.sleep(400);
             }
         }
         System.out.println("");

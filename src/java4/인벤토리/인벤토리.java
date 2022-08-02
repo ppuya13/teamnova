@@ -1,4 +1,4 @@
-package java4.캐릭터;
+package java4.인벤토리;
 
 import java4.아이템.아이템;
 import java4.출력;

@@ -36,7 +36,7 @@ public abstract class 몬스터 { //몬스터 정보와 전투는 이곳에
 
     public 몬스터(){
         몬스터스킬 기본공격 = new 기본공격();
-        for(int i = 0; i < 1 ; i++) {
+        for(int i = 0; i < 10 ; i++) {
             this.스킬리스트.add(기본공격);
         }
         공용드랍테이블();
@@ -104,6 +104,18 @@ public abstract class 몬스터 { //몬스터 정보와 전투는 이곳에
 //            System.out.println("몬스터.몬스터행동 | 지속스킬판정" + this.이름 + "은(는) 적용중인 지속스킬이 있음.");
             for(int i = 0 ; i < this.지속스킬.size() ; i++){ //지속스킬 수만큼 반복
                 this.지속스킬.get(i).지속효과(this,플레이어,몬스터어레이);
+            }
+            재시작:
+            while(true){
+                if(this.지속스킬.size()>0) {//계속 지워줘야하기 때문에 지속스킬 개수 판정을 다시함
+                    for (int i = 0; i < this.지속스킬.size(); i++) {
+                        if(this.지속스킬.get(i).지속효과삭제(this)){//스킬을 하나 지웠으면
+                            continue 재시작; //재시작함
+                        }
+                    }
+                }
+                //지속스킬이 더이상 없거나 지울 스킬이 없다면
+                break;
             }
         }
 //        System.out.println("몬스터.몬스터행동 | 지속스킬판정");

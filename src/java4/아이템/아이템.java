@@ -365,7 +365,7 @@ public class 아이템 { //아이템 정보는 이곳에
         }
         Thread.sleep(1000);
     }
-    public void 소모템사용(캐릭터 캐릭터){
+    public void 소모템사용(캐릭터 캐릭터) throws InterruptedException {
         아이템 소모템 = new 아이템(this.고유번호);
         boolean 사용완료 = false;
 //        System.out.println("(아이템.소모템사용) if문 진입");
@@ -378,7 +378,7 @@ public class 아이템 { //아이템 정보는 이곳에
                     this.스택수--;
                 }
             }
-            if(!사용완료){ //앞에서 사용되지 않았다면(사용중인 아이템 중에 선택된 아이템과 동일한 템이 없다면)
+            if(!사용완료){ //앞에서 사용되지 않았다면(지속중인 아이템 중에 선택된 아이템과 동일한 템이 없다면)
 //                System.out.println("(아이템.소모템사용) 동일한템없음");
                 캐릭터.사용중.add(소모템);
                 this.스택수--;
@@ -389,6 +389,8 @@ public class 아이템 { //아이템 정보는 이곳에
             캐릭터.사용중.add(소모템);
             this.스택수--;
         }
+        System.out.println(this.아이템이름+"을(를) 사용했습니다.");
+        Thread.sleep(1000);
     }
 
 //    public void 소모품사용(능력치 캐릭터) throws InterruptedException {

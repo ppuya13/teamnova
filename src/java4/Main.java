@@ -3,7 +3,7 @@ package java4;
 import java4.사냥터.사냥터;
 import java4.아이템.대장간;
 import java4.아이템.상점;
-import java4.캐릭터.인벤토리;
+import java4.인벤토리.인벤토리;
 import java4.캐릭터.캐릭터;
 import java.util.Scanner;
 
@@ -50,7 +50,12 @@ public class Main {
 
             입력 = sc.nextInt();
 
-            switch (입력) {
+
+            //캐릭터 클래스 용도 나누기(super 사용해보기)
+            //객체지향 재사용성에 대해 공부하기
+            //그 밖에 과중한 업무를 맡고 있는 클래스가 있다면 조각내기
+            //오버라이딩 알아보기
+           switch (입력) {
                 case 0: //디버깅용
                     System.out.println(플레이어.캐릭터공격력);
                     break;

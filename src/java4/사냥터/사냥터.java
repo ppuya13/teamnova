@@ -2,13 +2,14 @@ package java4.사냥터;
 
 import java4.사냥터.몬스터.몬스터;
 import java4.사냥터.몬스터.스킬.기본공격;
+import java4.사냥터.몬스터.스킬.몬스터스킬;
 import java4.사냥터.몬스터.슬라임.*;
 import java4.사냥터.몬스터.고블린.*;
-import java4.사냥터.몬스터.오크.오크샤먼;
+import java4.사냥터.몬스터.오크.오크주술사;
 import java4.사냥터.몬스터.오크.오크전사;
 import java4.스킬.스킬;
 import java4.아이템.아이템;
-import java4.캐릭터.인벤토리;
+import java4.인벤토리.인벤토리;
 import java4.출력;
 import java4.캐릭터.캐릭터;
 
@@ -223,7 +224,7 @@ public class 사냥터 {
                                     입력 = sc.nextInt();
                                     switch (입력) {
                                         case 0:
-                                            break;
+                                            continue 전투;
                                         case 1:
                                             System.out.println("도망쳤습니다.");
                                             플레이어.사용중.clear();
@@ -279,8 +280,8 @@ public class 사냥터 {
                 case 3: //휴식
                     플레이어.휴식();
                     break;
-                case 4: //디버그용
-                    몬스터 몬스터 = new 빨간슬라임("1");
+//                case 4: //디버그용
+//                    몬스터 몬스터 = new 빨간슬라임("1");
             }
         }//사냥터 while문 끝
     }
@@ -312,7 +313,7 @@ public class 사냥터 {
     public void 몬스터생성() throws InterruptedException {
         this.몬스터어레이.clear();
 //        this.몬스터머릿수 = rd.nextInt(9) + 1;
-        this.몬스터머릿수 = rd.nextInt(1) + 10;
+        this.몬스터머릿수 = rd.nextInt(9) + 2;
         System.out.println(this.몬스터머릿수 + "마리의 몬스터를 발견했다!!!");
         Thread.sleep(1000);
 
@@ -322,51 +323,55 @@ public class 사냥터 {
             num = (int) Math.floor(몬스터생성난수 * 몬스터종류배열.length);
             랜덤몬스터결과 = 몬스터종류배열[num];
             if (랜덤몬스터결과.equals("슬라임")) {
-                System.out.println("몬스터번호 : " + 몬스터번호);;
-                num = rd.nextInt(4) + 1;
+                num = rd.nextInt(5) + 1;
                 if (num <= 2) {
-//                    몬스터정보 = new 빨간슬라임(몬스터번호);
-                    몬스터정보 = new 오크전사(몬스터번호);
+                    몬스터정보 = new 빨간슬라임(몬스터번호);
                 } else {
-//                    몬스터정보 = new 초록슬라임(몬스터번호);
-                    몬스터정보 = new 오크전사(몬스터번호);
+                    몬스터정보 = new 초록슬라임(몬스터번호);
                 }
             } else if (랜덤몬스터결과.equals("고블린")) {
-                num = rd.nextInt(9) + 1; //1~10
+                num = rd.nextInt(10) + 1; //1~10
                 if (num <= 4) {
-//                    몬스터정보 = new 고블린궁수(몬스터번호);
-                    몬스터정보 = new 오크전사(몬스터번호);
+                    몬스터정보 = new 고블린궁수(몬스터번호);
                 } else if (num <= 8) {
-//                    몬스터정보 = new 고블린전사(몬스터번호);
-                    몬스터정보 = new 오크전사(몬스터번호);
+                    몬스터정보 = new 고블린전사(몬스터번호);
                 } else {
-//                    몬스터정보 = new 보물고블린(몬스터번호);
-                    몬스터정보 = new 오크전사(몬스터번호);
+                    몬스터정보 = new 보물고블린(몬스터번호);
                 }
             } else if (랜덤몬스터결과.equals("오크")) {
-                num = rd.nextInt(9) + 1; //1~10
+                num = rd.nextInt(10) + 1; //1~10
                 if(num<=4){
+                    몬스터정보 = new 오크전사(몬스터번호);
                 }else if(num<=8){
                     몬스터정보 = new 오크전사(몬스터번호);
                 }else{
-                    몬스터정보 = new 오크샤먼(몬스터번호);
+                    몬스터정보 = new 오크주술사(몬스터번호);
                 }
             }
             this.몬스터어레이.add(몬스터정보);
         }
     }
 
-
     public StringBuilder 몬스터목록(){
         StringBuilder 몬스터목록 = new StringBuilder();
         StringBuilder 몬스터목록2 = new StringBuilder();
+        몬스터 타겟;
+        몬스터스킬 스킬;
 //        System.out.println("몬스터머릿수 : " + this.몬스터머릿수 + ", 죽은몬스터수 : " + this.죽은몬스터수);
         for(int i=1 ; i <= this.몬스터머릿수-this.죽은몬스터수 ; i++) {
+            타겟 = this.몬스터어레이.get(i-1);
 //            System.out.println(this.몬스터머릿수 + "-" + this.죽은몬스터수 + "i : " +i);
 //            System.out.println("this.몬스터어레이.size() : " + this.몬스터어레이.size());
             if (this.몬스터어레이.get(i-1).현재체력 > 0) {
-                몬스터목록2.append("│ ").append(this.몬스터어레이.get(i - 1).이름).append(" (체력:").append(this.몬스터어레이.get(i - 1).현재체력).append("/").append(this.몬스터어레이.get(i - 1).최대체력)
-                        .append(" │ 공격력:").append(this.몬스터어레이.get(i - 1).공격력).append("+").append(this.몬스터어레이.get(i - 1).추가공격력).append(" │ 방어력:").append(this.몬스터어레이.get(i - 1).방어력).append("+").append(this.몬스터어레이.get(i - 1).추가방어력).append(")\n");
+                몬스터목록2.append("│ "+타겟.이름+" (체력:" + 타겟.현재체력 + "/" + 타겟.최대체력 + ") │ 공격력: " + 타겟.공격력 + "+" + 타겟.추가공격력 + " │ 방어력: " + 타겟.방어력 + "+" + 타겟.추가방어력);
+                if(this.몬스터어레이.get(i-1).지속스킬.size()>0){
+                    몬스터목록2.append(" 지속중: ");
+                    for(int j = 0; j < 타겟.지속스킬.size();j++) {
+                        스킬 = 타겟.지속스킬.get(j);
+                        몬스터목록2.append(스킬.스킬명+"("+(스킬.지속시간)+"턴) ");
+                    }
+                }
+                몬스터목록2.append("\n");
             }
         }
         몬스터목록.append("\n┌────────────────────────────────────\n" ).append(몬스터목록2).append("└────────────────────────────────────\n");
@@ -376,13 +381,23 @@ public class 사냥터 {
     public StringBuilder 행동몬스터목록(){
         StringBuilder 몬스터목록 = new StringBuilder();
         StringBuilder 몬스터목록2 = new StringBuilder();
+        몬스터 타겟;
+        몬스터스킬 스킬;
         for(int i=1 ; i <= 몬스터머릿수-죽은몬스터수 ; i++) {
+            타겟 = this.몬스터어레이.get(i-1);
             if (몬스터어레이.get(i-1).현재체력 > 0) {
-                몬스터목록2.append("│").append(i).append(". ").append(몬스터어레이.get(i - 1).이름).append(" (체력:").append(몬스터어레이.get(i - 1).현재체력).append("/").append(몬스터어레이.get(i - 1).최대체력)
-                        .append(" │ 공격력:").append(this.몬스터어레이.get(i - 1).공격력).append("+").append(this.몬스터어레이.get(i - 1).추가공격력).append(" │ 방어력:").append(this.몬스터어레이.get(i - 1).방어력).append("+").append(this.몬스터어레이.get(i - 1).추가방어력).append(")\n");
+                몬스터목록2.append("│ "+i+ ". " +타겟.이름+" (체력:" + 타겟.현재체력 + "/" + 타겟.최대체력 + ") │ 공격력: " + 타겟.공격력 + "+" + 타겟.추가공격력 + " │ 방어력: " + 타겟.방어력 + "+" + 타겟.추가방어력);
+                if(this.몬스터어레이.get(i-1).지속스킬.size()>0){
+                    몬스터목록2.append(" 지속중: ");
+                    for(int j = 0; j < 타겟.지속스킬.size();j++) {
+                        스킬 = 타겟.지속스킬.get(j);
+                        몬스터목록2.append(스킬.스킬명+"("+(스킬.지속시간)+"턴) ");
+                    }
+                }
+                몬스터목록2.append("\n");
             }
         }
-        몬스터목록.append("\n┌────────────────────────────────────\n" ).append("│0. 취소\n").append(몬스터목록2).append("└────────────────────────────────────\n");
+        몬스터목록.append("\n┌────────────────────────────────────\n" ).append("│ 0. 취소\n").append(몬스터목록2).append("└────────────────────────────────────\n");
         return 몬스터목록;
     }
 
