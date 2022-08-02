@@ -6,7 +6,7 @@ import java4.캐릭터.캐릭터;
 import java.util.ArrayList;
 import java.util.Random;
 
-public abstract class 몬스터스킬 extends 몬스터{
+public abstract class 몬스터스킬{
 
     public String 스킬명;
     public String 효과;

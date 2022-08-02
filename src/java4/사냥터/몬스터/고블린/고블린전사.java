@@ -16,5 +16,10 @@ public class 고블린전사 extends 고블린{
                 this.소지금 = rd.nextInt(5) + 10; //10~15
                 this.정보 = "근접 무기를 든 고블린입니다. 가벼운 갑옷으로 무장해 쓰러뜨리기 쉽지 않습니다.";
                 this.스킬리스트.add(연속공격);
+                this.스킬리스트.add(연속공격);
+                this.스킬리스트.add(연속공격);
+                this.스킬리스트.add(연속공격);
+                this.스킬리스트.add(연속공격);
+                this.스킬리스트.add(연속공격);
         }
 }
