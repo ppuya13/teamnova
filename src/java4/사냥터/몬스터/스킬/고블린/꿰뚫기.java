@@ -14,9 +14,9 @@ public class 꿰뚫기 extends 몬스터스킬 {
     }
 
     @Override
-    public boolean 효과(몬스터 몬스터, 캐릭터 플레이어, ArrayList<몬스터> 몬스터어레이) throws InterruptedException {
+    public boolean 사용효과(몬스터 몬스터, 캐릭터 플레이어, ArrayList<몬스터> 몬스터어레이) throws InterruptedException {
         Random rd = new Random();
-        int 데미지 = (int) Math.ceil(몬스터.공격력(몬스터.공격력) * 1.2);
+        int 데미지 = (int) Math.ceil(몬스터.공격력() * 1.2);
         if(플레이어.캐릭터최종방어력>=10) {
             데미지=데미지+10;
         }

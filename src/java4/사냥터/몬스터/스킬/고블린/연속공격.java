@@ -15,11 +15,11 @@ public class 연속공격 extends 몬스터스킬 {
 
 
     @Override
-    public boolean 효과(몬스터 몬스터, 캐릭터 플레이어, ArrayList<몬스터> 몬스터어레이) throws InterruptedException {
+    public boolean 사용효과(몬스터 몬스터, 캐릭터 플레이어, ArrayList<몬스터> 몬스터어레이) throws InterruptedException {
         Random rd = new Random();
         System.out.println("\n" + 몬스터.이름 + "의 연속공격!");
         for(int i = 0 ; i <= 1 ; i++) {
-            int 데미지 = (int)Math.ceil(몬스터.공격력(몬스터.공격력)*0.7);
+            int 데미지 = (int)Math.ceil(몬스터.공격력()*0.7);
             if (플레이어.캐릭터현재체력 >= 1) { //캐릭터가 살아있으면
                 if (rd.nextInt(100) + 플레이어.캐릭터최종회피 > 99) {//회피판정 성공시
                     System.out.println("플레이어는 회피했다!");

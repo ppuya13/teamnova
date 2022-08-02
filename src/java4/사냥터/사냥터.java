@@ -4,6 +4,8 @@ import java4.사냥터.몬스터.몬스터;
 import java4.사냥터.몬스터.스킬.기본공격;
 import java4.사냥터.몬스터.슬라임.*;
 import java4.사냥터.몬스터.고블린.*;
+import java4.사냥터.몬스터.오크.오크샤먼;
+import java4.사냥터.몬스터.오크.오크전사;
 import java4.스킬.스킬;
 import java4.아이템.아이템;
 import java4.캐릭터.인벤토리;
@@ -23,7 +25,7 @@ public class 사냥터 {
     public int 죽은몬스터수;
     String 몬스터번호; // 각 몬스터마다 고유 번호
     몬스터 몬스터정보; // 몬스터의 이름과 능력치가 들어있음
-    String[] 몬스터종류배열 = {"슬라임","고블린"};
+    String[] 몬스터종류배열 = {"슬라임","고블린", "오크"};
     double 몬스터생성난수;
     ArrayList<아이템> 드랍템 = new ArrayList<>();
     아이템 드랍아이템;
@@ -306,13 +308,11 @@ public class 사냥터 {
                 "\n5.도망치기" +
                 "\n→");
     }
-    public void 공격선택(){
-
-    }
 
     public void 몬스터생성() throws InterruptedException {
         this.몬스터어레이.clear();
-        this.몬스터머릿수 = rd.nextInt(9)+1;
+//        this.몬스터머릿수 = rd.nextInt(9) + 1;
+        this.몬스터머릿수 = rd.nextInt(1) + 10;
         System.out.println(this.몬스터머릿수 + "마리의 몬스터를 발견했다!!!");
         Thread.sleep(1000);
 
@@ -321,35 +321,52 @@ public class 사냥터 {
             몬스터생성난수 = Math.random();
             num = (int) Math.floor(몬스터생성난수 * 몬스터종류배열.length);
             랜덤몬스터결과 = 몬스터종류배열[num];
-            if(랜덤몬스터결과.equals("슬라임")){
-                num= rd.nextInt(4)+1;
-                if(num<=2){
-                    몬스터정보 = new 빨간슬라임(몬스터번호);
-                }else{
-                    몬스터정보 = new 초록슬라임(몬스터번호);
+            if (랜덤몬스터결과.equals("슬라임")) {
+                System.out.println("몬스터번호 : " + 몬스터번호);;
+                num = rd.nextInt(4) + 1;
+                if (num <= 2) {
+//                    몬스터정보 = new 빨간슬라임(몬스터번호);
+                    몬스터정보 = new 오크전사(몬스터번호);
+                } else {
+//                    몬스터정보 = new 초록슬라임(몬스터번호);
+                    몬스터정보 = new 오크전사(몬스터번호);
                 }
-            }else if(랜덤몬스터결과.equals("고블린")){
-                num= rd.nextInt(9)+1; //1~10
+            } else if (랜덤몬스터결과.equals("고블린")) {
+                num = rd.nextInt(9) + 1; //1~10
+                if (num <= 4) {
+//                    몬스터정보 = new 고블린궁수(몬스터번호);
+                    몬스터정보 = new 오크전사(몬스터번호);
+                } else if (num <= 8) {
+//                    몬스터정보 = new 고블린전사(몬스터번호);
+                    몬스터정보 = new 오크전사(몬스터번호);
+                } else {
+//                    몬스터정보 = new 보물고블린(몬스터번호);
+                    몬스터정보 = new 오크전사(몬스터번호);
+                }
+            } else if (랜덤몬스터결과.equals("오크")) {
+                num = rd.nextInt(9) + 1; //1~10
                 if(num<=4){
-                    몬스터정보 = new 고블린궁수(몬스터번호);
                 }else if(num<=8){
-                    몬스터정보 = new 고블린전사(몬스터번호);
+                    몬스터정보 = new 오크전사(몬스터번호);
                 }else{
-                    몬스터정보 = new 보물고블린(몬스터번호);
+                    몬스터정보 = new 오크샤먼(몬스터번호);
                 }
             }
             this.몬스터어레이.add(몬스터정보);
         }
     }
 
+
     public StringBuilder 몬스터목록(){
         StringBuilder 몬스터목록 = new StringBuilder();
         StringBuilder 몬스터목록2 = new StringBuilder();
-        System.out.println("몬스터머릿수 : " + this.몬스터머릿수 + ", 죽은몬스터수 : " + this.죽은몬스터수);
+//        System.out.println("몬스터머릿수 : " + this.몬스터머릿수 + ", 죽은몬스터수 : " + this.죽은몬스터수);
         for(int i=1 ; i <= this.몬스터머릿수-this.죽은몬스터수 ; i++) {
+//            System.out.println(this.몬스터머릿수 + "-" + this.죽은몬스터수 + "i : " +i);
+//            System.out.println("this.몬스터어레이.size() : " + this.몬스터어레이.size());
             if (this.몬스터어레이.get(i-1).현재체력 > 0) {
                 몬스터목록2.append("│ ").append(this.몬스터어레이.get(i - 1).이름).append(" (체력:").append(this.몬스터어레이.get(i - 1).현재체력).append("/").append(this.몬스터어레이.get(i - 1).최대체력)
-                        .append(" │ 공격력:").append(this.몬스터어레이.get(i - 1).공격력).append(" │ 방어력:").append(this.몬스터어레이.get(i - 1).방어력).append(")\n");
+                        .append(" │ 공격력:").append(this.몬스터어레이.get(i - 1).공격력).append("+").append(this.몬스터어레이.get(i - 1).추가공격력).append(" │ 방어력:").append(this.몬스터어레이.get(i - 1).방어력).append("+").append(this.몬스터어레이.get(i - 1).추가방어력).append(")\n");
             }
         }
         몬스터목록.append("\n┌────────────────────────────────────\n" ).append(몬스터목록2).append("└────────────────────────────────────\n");
@@ -362,7 +379,7 @@ public class 사냥터 {
         for(int i=1 ; i <= 몬스터머릿수-죽은몬스터수 ; i++) {
             if (몬스터어레이.get(i-1).현재체력 > 0) {
                 몬스터목록2.append("│").append(i).append(". ").append(몬스터어레이.get(i - 1).이름).append(" (체력:").append(몬스터어레이.get(i - 1).현재체력).append("/").append(몬스터어레이.get(i - 1).최대체력)
-                        .append(" │ 공격력:").append(몬스터어레이.get(i - 1).공격력).append(" │ 방어력:").append(몬스터어레이.get(i - 1).방어력).append(")\n");
+                        .append(" │ 공격력:").append(this.몬스터어레이.get(i - 1).공격력).append("+").append(this.몬스터어레이.get(i - 1).추가공격력).append(" │ 방어력:").append(this.몬스터어레이.get(i - 1).방어력).append("+").append(this.몬스터어레이.get(i - 1).추가방어력).append(")\n");
             }
         }
         몬스터목록.append("\n┌────────────────────────────────────\n" ).append("│0. 취소\n").append(몬스터목록2).append("└────────────────────────────────────\n");

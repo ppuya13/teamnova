@@ -15,7 +15,7 @@ public class 도망치기 extends 몬스터스킬 {
     }
 
     @Override
-    public boolean 효과(몬스터 몬스터, 캐릭터 플레이어, ArrayList<몬스터> 몬스터어레이) throws InterruptedException {
+    public boolean 사용효과(몬스터 몬스터, 캐릭터 플레이어, ArrayList<몬스터> 몬스터어레이) throws InterruptedException {
         if(this.카운트==0) {
             System.out.println(몬스터.이름+"이(가) 도망을 준비중이다!");
             this.카운트=this.카운트+1;

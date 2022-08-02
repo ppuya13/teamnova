@@ -1,13 +1,13 @@
 package java4.사냥터.몬스터.고블린;
 
-import java4.아이템.아이템;
-
 public class 보물고블린 extends 고블린{
     public 보물고블린(String 이름){
         this.번호 = 이름;
-        this.이름 = "보물고블린" + 번호;
+        this.이름 = "보물 고블린 " + 번호;
         this.공격력 = rd.nextInt(2) + 2; //2~4
+        this.최종공격력 = this.공격력;
         this.방어력 = rd.nextInt(2) + 2; //2~4
+        this.최종방어력 = this.방어력;
         this.최대체력 = rd.nextInt(30) + 130; //130~160
         this.현재체력 = this.최대체력;
         this.경험치 = rd.nextInt(5) + 25; //25~30

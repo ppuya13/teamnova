@@ -5,9 +5,11 @@ public class 빨간슬라임 extends 슬라임{
 
         System.out.println("다음");
         this.번호 = 이름;
-        this.이름 = "빨간슬라임" + 번호;
+        this.이름 = "빨간슬라임 " + 번호;
         this.공격력 = rd.nextInt(3) + 6; //6~9
+        this.최종공격력 = this.공격력;
         this.방어력 = rd.nextInt(2) + 2; //2~4
+        this.최종방어력 = this.방어력;
         this.최대체력 = rd.nextInt(10) + 35; //35~45
         this.현재체력 = this.최대체력;
         this.경험치 = rd.nextInt(2) + 12; //12~14
