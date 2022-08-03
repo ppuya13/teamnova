@@ -14,6 +14,7 @@ import java.util.Scanner;
 
 public class 캐릭터 { //캐릭터의 능력치나 소지품에 영향을 미치는 메소드는 이곳에
 
+
     public ArrayList<아이템> 회복물약가방;
     public ArrayList<아이템> 소지품;
     public ArrayList<아이템> 강화목록;
