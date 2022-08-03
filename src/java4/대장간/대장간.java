@@ -1,5 +1,6 @@
-package java4.아이템;
+package java4.대장간;
 
+import java4.아이템.아이템;
 import java4.출력;
 
 import java.util.Random;

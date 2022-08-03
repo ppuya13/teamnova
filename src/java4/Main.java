@@ -1,8 +1,8 @@
 package java4;
 
 import java4.사냥터.사냥터;
-import java4.아이템.대장간;
-import java4.아이템.상점;
+import java4.대장간.대장간;
+import java4.상점.상점;
 import java4.인벤토리.인벤토리;
 import java4.캐릭터.캐릭터;
 import java.util.Scanner;

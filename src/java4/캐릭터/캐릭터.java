@@ -5,14 +5,14 @@ import java4.사냥터.몬스터.몬스터;
 import java4.스킬.강타;
 import java4.스킬.스킬;
 import java4.스킬.휩쓸기;
-import java4.아이템.상점;
+import java4.상점.상점;
 import java4.아이템.아이템;
 
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
-public class 캐릭터 { //캐릭터의 능력치나 소지품에 영향을 미치는 메소드는 이곳에
+public class 캐릭터 extends 캐릭터전투 { //캐릭터의 능력치나 소지품에 영향을 미치는 메소드는 이곳에
 
 
     public ArrayList<아이템> 회복물약가방;
@@ -99,6 +99,26 @@ public class 캐릭터 { //캐릭터의 능력치나 소지품에 영향을 미�
         this.스킬목록 = new ArrayList<>();
     }
 
+    //현재 캐릭터 클래스의 용도
+    //능력치관련
+    //아이템관련(인벤토리)
+    //아이템관련(상점)
+    //스킬사용관련
+
+    //개편 후
+    //클래스 구조 예상
+    //abstract 능력치(변수선언)
+    //abstract 캐릭인벤토리(아이템 사용 등 인벤토리 동작들이 담긴 클래스)
+    //abstract 캐릭터전투(스킬 사용, 공격 등 행동들이 담긴 클래스)
+    //class 캐릭터
+    //이후에 직업같은게 추가되면 캐릭터 대신 직업을 넣음
+
+    //상점 관련 메소드는 전부 상점 클래스로 이동
+    //아이템 메소드는 아이템 마다 클래스 생성
+    //abstract 아이템(변수선언)
+    //class 각각아이템
+
+
 
     public void 인벤토리초기화 (){
         아이템 체력물약 = new 아이템(-1);
@@ -133,12 +153,6 @@ public class 캐릭터 { //캐릭터의 능력치나 소지품에 영향을 미�
 //        }//더미아이템 15개를 캐릭터의 소지품에 넣음
 
     }
-    public void 스킬초기화(){
-        스킬 스킬 = new 강타();
-        this.스킬목록.add(스킬);
-        스킬 = new 휩쓸기();
-        this.스킬목록.add(스킬);
-    }
     public void 강화리스트생성(){
 //        System.out.println("강화리스트생성");
         this.강화목록.clear();
@@ -148,7 +162,12 @@ public class 캐릭터 { //캐릭터의 능력치나 소지품에 영향을 미�
             }
         }
     }
-
+    public void 스킬초기화(){
+        스킬 스킬 = new 강타();
+        this.스킬목록.add(스킬);
+        스킬 = new 휩쓸기();
+        this.스킬목록.add(스킬);
+    }
     public void 휴식() throws InterruptedException {
         System.out.println("\n휴식합니다.");
         Thread.sleep(1000);
@@ -341,15 +360,6 @@ public class 캐릭터 { //캐릭터의 능력치나 소지품에 영향을 미�
             }
         }
     }
-    public void 인벤정리(){
-        for(int i = 0; i<=this.소지품.size()-1 ; i++){
-            if(this.소지품.get(i).스택수 == 0){
-//                System.out.println(this.소지품.size()-1);
-                this.소지품.remove(i);
-                break;
-            }
-        }
-    }
     public int 아이템사용(int 입력) throws InterruptedException {
         int 물약여부;
         int 사용선택;
@@ -393,6 +403,15 @@ public class 캐릭터 { //캐릭터의 능력치나 소지품에 영향을 미�
             타겟 = this.소지품.get(입력 -(회복물약가방크기+1));
         }
         return 타겟;
+    }
+    public void 인벤정리(){
+        for(int i = 0; i<=this.소지품.size()-1 ; i++){
+            if(this.소지품.get(i).스택수 == 0){
+//                System.out.println(this.소지품.size()-1);
+                this.소지품.remove(i);
+                break;
+            }
+        }
     }
     public boolean 전투외아이템사용(int 물약여부, 아이템 타겟) throws InterruptedException {
         boolean 반복=true;
