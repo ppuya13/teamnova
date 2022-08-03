@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class Main {
     static public 캐릭터 플레이어 = new 캐릭터();
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, CloneNotSupportedException {
 
         //캐릭터 초기화
         플레이어.인벤토리초기화();
@@ -56,6 +56,26 @@ public class Main {
             //그 밖에 과중한 업무를 맡고 있는 클래스가 있다면 조각내기
             //오버라이딩 알아보기
             //플레이어가 static이면 멀티쓰레딩에 안좋을 수 있으니 고려하기
+
+            //현재 캐릭터 클래스의 용도
+            //능력치관련
+            //아이템관련(인벤토리)
+            //아이템관련(상점)
+            //스킬사용관련
+
+            //개편 후
+            //클래스 구조 예상
+            //abstract 능력치(변수선언)
+            //abstract 캐릭인벤토리(아이템 사용 등 인벤토리 동작들이 담긴 클래스)
+            //abstract 캐릭터전투(스킬 사용, 공격 등 행동들이 담긴 클래스)
+            //class 캐릭터
+            //이후에 직업같은게 추가되면 캐릭터 대신 직업을 넣음
+
+            //상점 관련 메소드는 전부 상점 클래스로 이동
+            //아이템 메소드는 아이템 마다 클래스 생성
+            //abstract 아이템(변수선언)
+            //class 각각아이템
+
            switch (입력) {
                 case 0: //디버깅용
                     System.out.println(플레이어.캐릭터공격력);

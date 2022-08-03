@@ -44,7 +44,7 @@ public class 사냥터 {
         this.죽은몬스터수 = 0;
     }
 
-    public void 사냥터() throws InterruptedException {
+    public void 사냥터() throws InterruptedException, CloneNotSupportedException {
         boolean 반복 = true;
         boolean 몬스터삭제 = false;
         boolean 턴 = false;
@@ -181,14 +181,16 @@ public class 사냥터 {
                                             System.out.println("전투중엔 아이템 장착/해제를 할 수 없습니다.");
                                             Thread.sleep(1000);
                                         } else {
-//                                                    System.out.println("아이템사용시작");
-                                            플레이어.전투아이템사용(플레이어.아이템사용(입력), 아이템정보);
+////                                                    System.out.println("아이템사용시작");
+//                                            플레이어.전투아이템사용(플레이어.아이템사용(입력), 아이템정보);
+                                            아이템정보.사용효과(플레이어);
                                             플레이어.소모템적용();
                                             플레이어.인벤정리();
                                             턴 = true;
                                             break;
                                         }
                                     }
+
                                 }
                                 break;
                             case 4: //살펴보기
@@ -401,7 +403,7 @@ public class 사냥터 {
         return 몬스터목록;
     }
 
-    public void 몬스터삭제(boolean 몬스터삭제) throws InterruptedException {
+    public void 몬스터삭제(boolean 몬스터삭제) throws InterruptedException, CloneNotSupportedException {
         while (몬스터삭제) {
 //                    System.out.println("몬스터삭제 while문 시작");
 //                    System.out.println(몬스터어레이.size());
@@ -421,7 +423,7 @@ public class 사냥터 {
 //                                        System.out.println("난수 : " + 몬스터난수 + ", 드랍테이블의 드랍률 : "+몬스터어레이.get(i).드랍테이블.get(j).드랍률);
                             if(몬스터난수<몬스터어레이.get(i).드랍테이블.get(j).드랍률){ //드랍률이 10이면 0~9까지가 성공
                                 System.out.println("" + 몬스터어레이.get(i).이름 + "이(가) 쓰러지며 " + 몬스터어레이.get(i).드랍테이블.get(j).아이템이름 + "을(를) 남겼다.");
-                                드랍아이템 = new 아이템(몬스터어레이.get(i).드랍테이블.get(j).고유번호); //난수판정이 성공한 아이템과 동일한 아이템을 새로운 객체로 생성
+                                드랍아이템 = (아이템)몬스터어레이.get(i).드랍테이블.get(j).clone(); //난수판정이 성공한 아이템과 동일한 아이템을 새로운 객체로 생성 //복제
                                 드랍템.add(드랍아이템); //생성한 아이템을 드랍템 어레이에 넣음
                             }
                         }
@@ -458,7 +460,7 @@ public class 사냥터 {
         return 전투승리;
     }
 
-    public void 전투정산(boolean 승리, 캐릭터 플레이어) throws InterruptedException { //만약 드랍템 어레이가 겹치게 바뀐다면 이것도 바꿔야함(안겹칠걸 전제로 스택이 있는 아이템들은 스택수가 1개씩 오르게 해놨음)
+    public void 전투정산(boolean 승리, 캐릭터 플레이어) throws InterruptedException, CloneNotSupportedException { //만약 드랍템 어레이가 겹치게 바뀐다면 이것도 바꿔야함(안겹칠걸 전제로 스택이 있는 아이템들은 스택수가 1개씩 오르게 해놨음)
         ArrayList<아이템> 버린템 = new ArrayList<>();
         아이템 아이템;
         int 입력;
@@ -497,7 +499,7 @@ public class 사냥터 {
                             }
                             //여기에 도달했다는건 스택가능한 템이지만 소지품창에 일치하는게 없었다는 소리임.
                             if (플레이어.소지품.size() < 20) { //가진 소지품이 20종류 미만이면
-                                아이템 = new 아이템(드랍템.get(i).고유번호);
+                                아이템 = (아이템)드랍템.get(i).clone(); //복제
                                 플레이어.소지품.add(아이템); //드랍템을 소지품에 추가함
                                 System.out.println(드랍템.get(i).아이템이름 + "을(를) 획득했다!");
                             } else { //가진 소지품이 20종류 이상이면

@@ -2,6 +2,7 @@ package java4.대장간;
 
 import java4.아이템.아이템;
 import java4.출력;
+import java4.캐릭터.캐릭터;
 
 import java.util.Random;
 import java.util.Scanner;
@@ -17,8 +18,8 @@ public class 대장간 {
     아이템 아이템정보;
 
     public void 대장간() throws InterruptedException {
-        플레이어.강화리스트생성();
-        아이템정보=new 아이템(0);
+        this.강화리스트생성(플레이어);
+        아이템정보=null;
         StringBuilder 강화능력치표시 = new StringBuilder();
         boolean 마을=false;
         대장간:
@@ -200,4 +201,16 @@ public class 대장간 {
         아이템.아이템이름="+" + 아이템.강화 + " " + 아이템.임시이름;
         Thread.sleep(1000);
     }
+
+    public void 강화리스트생성(캐릭터 플레이어){
+//        System.out.println("강화리스트생성");
+        플레이어.강화목록.clear();
+        for(int i=0 ; i<=플레이어.소지품.size()-1 ; i++){
+            if(플레이어.소지품.get(i).착용가능여부){ //착용가능하면(현재는 착용가능한템이 전부 강화가 가능함)
+                플레이어.강화목록.add(플레이어.소지품.get(i));
+            }
+        }
+    }
+
+
 }
