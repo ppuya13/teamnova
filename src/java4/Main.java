@@ -35,6 +35,7 @@ public class Main {
         //출력변수
         플레이어.최종능력치적용();
 
+
         마을:
         while (true) {
 
