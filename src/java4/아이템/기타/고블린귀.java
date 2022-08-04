@@ -11,9 +11,4 @@ public class 고블린귀 extends 기타아이템{
         this.아이템효과="고블린을 토벌한 전리품입니다. 상점에 팔 수 있을 것 같습니다.";
         this.드랍률=50;
     }
-
-    @Override
-    public void 사용효과(캐릭터 캐릭터) throws InterruptedException {
-
-    }
 }

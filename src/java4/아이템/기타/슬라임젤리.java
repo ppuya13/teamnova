@@ -11,9 +11,4 @@ public class 슬라임젤리 extends 기타아이템{
         this.아이템효과="죽은 슬라임의 파편입니다. 상점에 팔 수 있을 것 같습니다.";
         this.드랍률=5;
     }
-
-    @Override
-    public void 사용효과(캐릭터 캐릭터) throws InterruptedException {
-
-    }
 }

@@ -14,7 +14,7 @@ public class 인벤토리 {
     Scanner sc = new Scanner(System.in);
     아이템 아이템정보;
 
-    public boolean 인벤토리() throws InterruptedException {
+    public boolean 인벤토리() throws InterruptedException, CloneNotSupportedException {
         boolean 뒤로가기 = false;
         반복 = true;
         while (반복) {
@@ -37,6 +37,7 @@ public class 인벤토리 {
                     break;
                 case 1: //탐색 인벤토리 사용, 장착, 해제
                     반복 = true;
+                    사용:
                     while (반복) {
                         System.out.println(메인.능력치창());
                         System.out.println("\n사용하기 / 장착하기 / 장착 해제하기");
@@ -50,7 +51,9 @@ public class 인벤토리 {
                         } else if (입력 > 0 && 입력 <= 플레이어.회복물약가방.size() + 플레이어.소지품.size()) {
                             아이템정보 = 플레이어.아이템사용2(입력);
                             if (아이템정보.착용가능여부) { //선택한 아이템이 착용가능하면
-                                아이템정보.사용효과(플레이어);
+                                if(아이템정보.사용효과(플레이어)){
+                                    continue 사용;
+                                }
                                 플레이어.능력치적용();
                             } else {//착용불가능하면
                                 반복 = 플레이어.전투외아이템사용(플레이어.아이템사용(입력), 아이템정보);

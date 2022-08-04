@@ -17,7 +17,7 @@ public abstract class 장비아이템 extends 아이템 {
     }
 
     @Override
-    public void 사용효과(캐릭터 캐릭터) throws InterruptedException {
+    public boolean 사용효과(캐릭터 캐릭터) throws InterruptedException {
         int 인벤토리크기=캐릭터.소지품.size()-1;
         boolean 속행=true;
         if(this.착용여부){//착용중이면
@@ -40,5 +40,6 @@ public abstract class 장비아이템 extends 아이템 {
                 Thread.sleep(1000);
             }
         }
+        return false;
     }
 }

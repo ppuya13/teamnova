@@ -13,7 +13,7 @@ public class 체력물약 extends 회복형 {
     }
 
     @Override
-    public void 사용효과(캐릭터 캐릭터) throws InterruptedException {
+    public boolean 사용효과(캐릭터 캐릭터) throws InterruptedException {
         if(this.스택수>0) {
             if (캐릭터.캐릭터최종체력 - 캐릭터.캐릭터현재체력 >= 300) {
                 캐릭터.캐릭터현재체력 = 캐릭터.캐릭터현재체력 + 300;
@@ -26,7 +26,10 @@ public class 체력물약 extends 회복형 {
             this.스택수--;
         } else{
             System.out.println("물약을 모두 소모했습니다.");
+            Thread.sleep(1000);
+            return true;
         }
         Thread.sleep(1000);
+        return false;
     }
 }
