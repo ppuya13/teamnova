@@ -16,11 +16,10 @@ public class 공격력물약 extends 지속형 {
         this.드랍률=10;
     }
 
-
     @Override
     public void 효과적용(캐릭터 캐릭터) throws InterruptedException {
         if(this.적용){ //지속 첫턴에 일어나는 일
-            System.out.println("공격력물약 | 아이템 지속 첫턴 발동");
+//            System.out.println("공격력물약 | 아이템 지속 첫턴 발동");
             this.적용 = false;
             캐릭터.소모품추가공격력 = 캐릭터.소모품추가공격력+this.추가능력치;
             System.out.println("공격력물약 | this.지속시간 : " + this.지속시간);
