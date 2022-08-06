@@ -282,7 +282,7 @@ public class 사냥터출력 {
                             this.몬스터삭제(몬스터삭제);
                             턴 = false;
                             if (사망) {
-                                System.out.println("사망판정");
+                                System.exit(0);
                             }
                         }
                         if (전투종료) {//전투가 종료됐다면
