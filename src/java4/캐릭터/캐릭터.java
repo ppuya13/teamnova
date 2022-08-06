@@ -13,7 +13,6 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class 캐릭터 extends 캐릭터전투 { //캐릭터의 능력치나 소지품에 영향을 미치는 메소드는 이곳에
-    //    double 실수강화;
 
     Scanner sc = new Scanner(System.in);
     int 입력 = 0;

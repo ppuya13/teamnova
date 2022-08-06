@@ -92,6 +92,7 @@ public abstract class 몬스터 { //몬스터 정보와 전투는 이곳에
         }
         return 몬스터사망;
     }
+
     public boolean 몬스터행동(ArrayList<몬스터> 몬스터어레이, int 몬스터수, 캐릭터 캐릭터) throws InterruptedException {
         boolean 캐릭터사망 = false;
         boolean 리롤=true;
