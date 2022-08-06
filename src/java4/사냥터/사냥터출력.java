@@ -10,7 +10,7 @@ import java4.사냥터.몬스터.오크.오크전사;
 import java4.스킬.스킬;
 import java4.아이템.소모.지속형.지속형;
 import java4.아이템.아이템;
-import java4.인벤토리.인벤토리;
+import java4.인벤토리.인벤토리출력;
 import java4.출력;
 import java4.캐릭터.캐릭터;
 
@@ -20,7 +20,7 @@ import java.util.Scanner;
 
 import static java4.Main.플레이어;
 
-public class 사냥터 {
+public class 사냥터출력 {
 
     public ArrayList<몬스터> 몬스터어레이;
     public int 몬스터머릿수;
@@ -39,7 +39,7 @@ public class 사냥터 {
     Random rd = new Random();
     java4.사냥터.몬스터.스킬.기본공격 기본공격 = new 기본공격();
 
-    public 사냥터(){
+    public 사냥터출력(){
         this.몬스터어레이 = new ArrayList<>();
         this.몬스터머릿수 = 0;
         this.죽은몬스터수 = 0;
@@ -58,7 +58,7 @@ public class 사냥터 {
         몬스터 몬스터타겟;
         아이템 아이템정보;
         스킬 스킬;
-        인벤토리 인벤토리 = new 인벤토리();
+        인벤토리출력 인벤토리출력 = new 인벤토리출력();
 
 
         사냥터:
@@ -296,9 +296,8 @@ public class 사냥터 {
                     }
                     break;
                 case 2: //탐색 인벤토리
-                    if (인벤토리.인벤토리()) {
-                        continue 사냥터;
-                    }
+                    인벤토리출력.인벤토리();
+                    break;
                 case 3: //휴식
                     플레이어.휴식();
                     break;

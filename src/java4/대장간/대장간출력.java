@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 import static java4.Main.플레이어;
 
-public class 대장간 {
+public class 대장간출력 {
     Random rd = new Random();
     int 정수강화;
     int 입력;

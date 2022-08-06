@@ -30,6 +30,6 @@ public class 체력물약 extends 회복형 {
             return true;
         }
         Thread.sleep(1000);
-        return false;
+        return true;
     }
 }

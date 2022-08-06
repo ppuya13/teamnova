@@ -7,17 +7,15 @@ import java.util.Scanner;
 
 import static java4.Main.플레이어;
 
-public class 인벤토리 {
+public class 인벤토리출력 {
     출력 메인 = new 출력();
-    boolean 반복;
     int 입력;
     Scanner sc = new Scanner(System.in);
     아이템 아이템정보;
 
-    public boolean 인벤토리() throws InterruptedException, CloneNotSupportedException {
-        boolean 뒤로가기 = false;
-        반복 = true;
-        while (반복) {
+    public void 인벤토리() throws InterruptedException, CloneNotSupportedException {
+        인벤토리:
+        while (true) {
             System.out.println(메인.능력치창());
             System.out.println("인벤토리를 열어봅니다." +
                     "\n체력, 마나물약을 제외한 아이템은 20종류까지만 보관 가능합니다.");
@@ -32,13 +30,10 @@ public class 인벤토리 {
             입력 = sc.nextInt();
             switch (입력) {
                 case 0:
-                    뒤로가기 = true;
-                    반복=false;
-                    break;
+                    return;
                 case 1: //탐색 인벤토리 사용, 장착, 해제
-                    반복 = true;
                     사용:
-                    while (반복) {
+                    while (true) {
                         System.out.println(메인.능력치창());
                         System.out.println("\n사용하기 / 장착하기 / 장착 해제하기");
                         System.out.println(메인.행동인벤토리());
@@ -47,23 +42,23 @@ public class 인벤토리 {
                                 "\n→");
                         입력 = sc.nextInt();
                         if (입력 == 0) {
-                            break;
+                            continue 인벤토리;
                         } else if (입력 > 0 && 입력 <= 플레이어.회복물약가방.size() + 플레이어.소지품.size()) {
                             아이템정보 = 플레이어.아이템사용2(입력);
                             if (아이템정보.착용가능여부) { //선택한 아이템이 착용가능하면
                                 if(아이템정보.사용효과(플레이어)){
-                                    continue 사용;
+                                    continue;
                                 }
                                 플레이어.능력치적용();
                             } else {//착용불가능하면
-                                반복 = 플레이어.전투외아이템사용(플레이어.아이템사용(입력), 아이템정보);
+                                플레이어.전투외아이템사용(플레이어.아이템사용(입력), 아이템정보);
+                                continue;
                             }
                         }
                     }
-                    break;
                 case 2: //탐색 인벤토리 버리기
-                    반복 = true;
-                    while (반복) {
+                    버리기:
+                    while (true) {
                         System.out.println(메인.능력치창());
                         System.out.println("\n아이템 버리기");
                         System.out.println(메인.행동인벤토리());
@@ -72,7 +67,7 @@ public class 인벤토리 {
                                 "\n→");
                         입력 = sc.nextInt();
                         if (입력 == 0) {
-                            break;
+                            continue 인벤토리;
                         } else if (입력 > 0 && 입력 <= 플레이어.소지품.size() + 플레이어.회복물약가방.size()) {
                             //처음 하나로 버릴 수 있는 아이템인지만 판별하고 버릴 수 있는지 여부랑 물약여부만 한꺼번에 boolean으로 남김
                             //아이템버리기 : 고른게 버릴 수 있는템인지 확인(회복물약여부와 장착여부를 확인)후 결과를 돌려줌
@@ -83,10 +78,9 @@ public class 인벤토리 {
                         }
 
                     }
-                    break;
                 case 3: //탐색 인벤토리 살펴보기
-                    반복 = true;
-                    while (반복) {
+                    살펴보기:
+                    while (true) {
                         System.out.println(메인.능력치창());
                         System.out.println(메인.행동상점판매목록());
                         System.out.print("" +
@@ -94,7 +88,7 @@ public class 인벤토리 {
                                 "\n→");
                         입력 = sc.nextInt();
                         if (입력 == 0) {
-                            break;
+                            continue 인벤토리;
                         } else if (입력 > 0 && 입력 <= 플레이어.회복물약가방.size()) {
                             System.out.println(메인.살펴보기(플레이어.회복물약가방.get(입력 - 1)));
                             System.out.print("넘기려면 아무 숫자나 입력하세요." +
@@ -107,9 +101,7 @@ public class 인벤토리 {
                             입력 = sc.nextInt();
                         }
                     }
-                    break;
             }
         }
-        return 뒤로가기;
     }
 }

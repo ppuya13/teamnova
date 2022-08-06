@@ -1,9 +1,9 @@
 package java4;
 
-import java4.사냥터.사냥터;
-import java4.대장간.대장간;
+import java4.사냥터.사냥터출력;
+import java4.대장간.대장간출력;
 import java4.상점.상점;
-import java4.인벤토리.인벤토리;
+import java4.인벤토리.인벤토리출력;
 import java4.캐릭터.캐릭터;
 import java.util.Scanner;
 
@@ -29,9 +29,9 @@ public class Main {
 
         //출력변수
         출력 메인 = new 출력();
-        인벤토리 인벤토리 = new 인벤토리();
-        사냥터 사냥터 = new 사냥터();
-        대장간 대장간 = new 대장간();
+        인벤토리출력 인벤토리출력 = new 인벤토리출력();
+        사냥터출력 사냥터출력 = new 사냥터출력();
+        대장간출력 대장간출력 = new 대장간출력();
         //출력변수
         플레이어.최종능력치적용();
 
@@ -56,16 +56,16 @@ public class Main {
                     System.out.println("디버깅용");
                     break;
                 case 1: //사냥터
-                    사냥터.사냥터();
+                    사냥터출력.사냥터();
                     break;
                 case 2: //인벤토리
-                    인벤토리.인벤토리();
+                    인벤토리출력.인벤토리();
                     break;
                 case 3: //상점
                     상점.상점();
                     break;
                 case 4: //대장간
-                    대장간.대장간();
+                    대장간출력.대장간();
                     break;
                 case 5: //휴식
                     플레이어.휴식();
