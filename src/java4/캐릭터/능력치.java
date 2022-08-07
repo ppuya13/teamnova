@@ -15,7 +15,9 @@ public abstract class 능력치 {
     public ArrayList<아이템> 드랍템;
     public ArrayList<아이템> 사용중;
     public ArrayList<스킬> 스킬목록;
-    public int 획득경험치;
+    public int 사망횟수 = 0;
+    public int 획득경험치; //몬스터를 잡은 경험치는 전투 종료 시 획득경험치에 누적된다.
+    public int 강화용경험치; //획득경험치는 사망 시 일정 비율 강화용경험치로 바뀜
     public int 소지금;
     public int 캐릭터레벨;
     public int 캐릭터최대경험치;
@@ -24,21 +26,25 @@ public abstract class 능력치 {
     public int 캐릭터최대체력;
     public int 캐릭터추가체력;
     public int 레벨업추가체력;
+    public int 영구체력;
     public int 캐릭터현재체력;
     public int 캐릭터최종마나;
     public int 캐릭터최대마나;
     public int 캐릭터추가마나;
     public int 레벨업추가마나;
+    public int 영구마나;
     public int 캐릭터현재마나;
     public int 캐릭터최종공격력;
     public int 캐릭터공격력;
     public int 캐릭터추가공격력;
     public int 레벨업추가공격력;
+    public int 영구공격력;
     public int 소모품추가공격력;
     public int 캐릭터최종방어력;
     public int 캐릭터방어력;
     public int 캐릭터추가방어력;
     public int 레벨업추가방어력;
+    public int 영구방어력;
     public int 소모품추가방어력;
     public int 캐릭터최종치확;
     public int 캐릭터치명확률;
@@ -48,9 +54,31 @@ public abstract class 능력치 {
     public int 캐릭터치명피해;
     public int 캐릭터추가치피;
     public int 레벨업추가치피;
+    public int 영구치피;
     public int 캐릭터최종회피;
     public int 캐릭터회피;
     public int 캐릭터추가회피;
+
+    public int 활력;
+    public int 활력최대;
+    public int 명상;
+    public int 명상최대;
+    public int 완력강화;
+    public int 완력강화최대;
+    public int 두꺼운피부;
+    public int 두꺼운피부최대;
+    public int 기회포착;
+    public int 기회포착최대;
+    public int 상업의재능;
+    public int 상업의재능최대;
+    public int 장비다루기;
+    public int 장비다루기최대;
+    public int 대기만성;
+    public int 대기만성최대;
+    public int 소매치기;
+    public int 소매치기최대;
+    public int 불굴;
+    public int 불굴최대;
 
     Random rd = new Random();
 
@@ -130,12 +158,12 @@ public abstract class 능력치 {
         }
     }
     public void 최종능력치적용(){
-        this.캐릭터최종체력=1000+this.캐릭터추가체력+this.레벨업추가체력;
-        this.캐릭터최종마나=100+this.캐릭터추가마나+this.레벨업추가마나;
-        this.캐릭터최종공격력=this.캐릭터공격력+this.캐릭터추가공격력+this.레벨업추가공격력+this.소모품추가공격력;
-        this.캐릭터최종방어력=this.캐릭터방어력+this.캐릭터추가방어력+this.레벨업추가방어력+this.소모품추가방어력;
+        this.캐릭터최종체력=1000+this.캐릭터추가체력+this.레벨업추가체력+this.영구체력;
+        this.캐릭터최종마나=100+this.캐릭터추가마나+this.레벨업추가마나+this.영구마나;
+        this.캐릭터최종공격력=this.캐릭터공격력+this.캐릭터추가공격력+this.레벨업추가공격력+this.소모품추가공격력+this.영구공격력;
+        this.캐릭터최종방어력=this.캐릭터방어력+this.캐릭터추가방어력+this.레벨업추가방어력+this.소모품추가방어력+this.영구방어력;
         this.캐릭터최종치확=this.캐릭터치명확률+this.캐릭터추가치확+this.레벨업추가치확;
-        this.캐릭터최종치피=this.캐릭터치명피해+this.캐릭터추가치피+this.레벨업추가치피;
+        this.캐릭터최종치피=this.캐릭터치명피해+this.캐릭터추가치피+this.레벨업추가치피+this.영구치피;
         this.캐릭터최종회피=this.캐릭터회피+this.캐릭터추가회피;
         if(this.캐릭터최종체력<캐릭터현재체력){//최종체력보다 현재체력이 클경우
             this.캐릭터현재체력=this.캐릭터최종체력;

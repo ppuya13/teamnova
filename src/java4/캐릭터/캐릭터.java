@@ -45,6 +45,17 @@ public class 캐릭터 extends 캐릭터전투 { //캐릭터의 능력치나 소
         this.드랍템 = new ArrayList<>();
         this.사용중 = new ArrayList<>();
         this.스킬목록 = new ArrayList<>();
+
+        this.활력=0;
+        this.명상=0;
+        this.완력강화=0;
+        this.두꺼운피부=0;
+        this.기회포착=0;
+        this.상업의재능=0;
+        this.장비다루기=0;
+        this.대기만성=0;
+        this.소매치기=0;
+        this.불굴=0;
     }
 
     public void 스킬초기화(){ //초기 보유 스킬을 설정

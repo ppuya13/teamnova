@@ -102,6 +102,7 @@ public abstract class 몬스터 { //몬스터 정보와 전투는 이곳에
 
             if (캐릭터.캐릭터현재체력 <= 0) {
                 System.out.println("플레이어는 쓰러졌다.");
+                캐릭터.사망횟수++;
                 캐릭터사망 = true;
                 Thread.sleep(1000);
             }
