@@ -1,7 +1,7 @@
 package java4.아이템.기타;
 
 import java4.아이템.아이템;
-import java4.캐릭터.캐릭터;
+import java4.캐릭터.플레이어;
 
 public abstract class 기타아이템 extends 아이템 {
     public 기타아이템(){
@@ -12,7 +12,7 @@ public abstract class 기타아이템 extends 아이템 {
         this.사용가능여부 = false;
     }
     @Override
-    public boolean 사용효과(캐릭터 캐릭터) throws InterruptedException {
+    public boolean 사용효과(플레이어 플레이어) throws InterruptedException {
         System.out.println("사용할 수 없는 아이템입니다.");
         Thread.sleep(1000);
         return true;

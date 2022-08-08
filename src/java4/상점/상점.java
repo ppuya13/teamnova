@@ -7,7 +7,6 @@ import java4.아이템.소모.회복형.체력물약;
 import java4.아이템.아이템;
 import java4.아이템.장비.*;
 import java4.출력;
-import java4.캐릭터.캐릭터;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -190,7 +189,7 @@ public class 상점 { // 상점에 관련된 정보는 여기에
     }
 
 
-    public void 상점구매(캐릭터 플레이어, int 타겟, int 구매개수) throws InterruptedException, CloneNotSupportedException {
+    public void 상점구매(java4.캐릭터.플레이어 플레이어, int 타겟, int 구매개수) throws InterruptedException, CloneNotSupportedException {
         boolean 구매진행=true;
         아이템 구매;
         String 상점구매결과="";
@@ -298,7 +297,7 @@ public class 상점 { // 상점에 관련된 정보는 여기에
             }
         }//구매 메소드 완성.
     }
-    public void 상점판매(캐릭터 플레이어, 아이템 타겟, int 판매개수) throws InterruptedException {
+    public void 상점판매(java4.캐릭터.플레이어 플레이어, 아이템 타겟, int 판매개수) throws InterruptedException {
         if(타겟.아이템분류==4){//물약이면
             if(판매개수>타겟.스택수) { //판매개수가 스택수보다 많으면
                 System.out.println("소지 개수 이상을 판매할 수는 없습니다.");

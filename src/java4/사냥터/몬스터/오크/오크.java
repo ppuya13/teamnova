@@ -8,8 +8,6 @@ import java4.아이템.기타.오크이빨;
 import java4.아이템.아이템;
 
 public class 오크 extends 몬스터{
-
-    기본공격 기본공격 = new 기본공격();
     전투의포효 전투의포효 = new 전투의포효();
     오크(){
         드랍템 = new 오크이빨("오크이빨");

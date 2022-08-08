@@ -8,8 +8,7 @@ public class 오크주술사 extends 오크{
     즉석치료 즉석치료 = new 즉석치료();
 
     public 오크주술사(String 이름) {
-        this.번호 = 이름;
-        this.이름 = "오크 주술사 " + 번호;
+        this.이름 = "오크 주술사 " + 이름;
         this.공격력 = rd.nextInt(11) + 20; //20~30
         this.최종공격력 = this.공격력;
         this.방어력 = rd.nextInt(3) + 2; //2~4

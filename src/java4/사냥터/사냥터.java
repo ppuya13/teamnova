@@ -4,17 +4,14 @@ import java4.사냥터.몬스터.고블린.고블린궁수;
 import java4.사냥터.몬스터.고블린.고블린전사;
 import java4.사냥터.몬스터.고블린.보물고블린;
 import java4.사냥터.몬스터.몬스터;
-import java4.사냥터.몬스터.스킬.기본공격;
 import java4.사냥터.몬스터.슬라임.빨간슬라임;
 import java4.사냥터.몬스터.슬라임.초록슬라임;
 import java4.사냥터.몬스터.오크.오크로드;
 import java4.사냥터.몬스터.오크.오크전사;
 import java4.사냥터.몬스터.오크.오크주술사;
-import java4.스킬.스킬;
 import java4.아이템.아이템;
 import java4.인벤토리.인벤토리출력;
 import java4.출력;
-import java4.캐릭터.캐릭터;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -151,8 +148,6 @@ public class 사냥터{
         몬스터정보 = new 오크전사(Integer.toString(5));
         this.몬스터어레이.add(몬스터정보);
     }
-
-
     public void 몬스터삭제(boolean 몬스터삭제) throws InterruptedException, CloneNotSupportedException {
         while (몬스터삭제) {
 //                    System.out.println("몬스터삭제 while문 시작");
@@ -199,7 +194,6 @@ public class 사냥터{
 //            아이템정보 = null; //다른데서 쓰던 변수를 가져온거라 밖에서 널참조를 하면 에러가 날 수도 있으니 안에서 실행(선언도 안에서하고 안에서만 사용함)
         }
     }
-
     public boolean 전투종료판정(ArrayList<몬스터> 몬스터어레이, boolean 보스전){
         boolean 전투승리 = false;
         if(!보스전) {//보스전이 아닐경우 살아남은 몬스터가 0마리면 전투승리를 리턴함
@@ -227,8 +221,7 @@ public class 사냥터{
         }
         return 전투승리;
     }
-
-    public void 전투정산(boolean 승리, 캐릭터 플레이어) throws InterruptedException, CloneNotSupportedException { //만약 드랍템 어레이가 겹치게 바뀐다면 이것도 바꿔야함(안겹칠걸 전제로 스택이 있는 아이템들은 스택수가 1개씩 오르게 해놨음)
+    public void 전투정산(boolean 승리, java4.캐릭터.플레이어 플레이어) throws InterruptedException, CloneNotSupportedException { //만약 드랍템 어레이가 겹치게 바뀐다면 이것도 바꿔야함(안겹칠걸 전제로 스택이 있는 아이템들은 스택수가 1개씩 오르게 해놨음)
         ArrayList<아이템> 버린템 = new ArrayList<>();
         아이템 아이템;
         int 입력;

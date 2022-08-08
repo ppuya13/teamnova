@@ -114,7 +114,11 @@ public class 사냥터출력 extends 사냥터{
             입력 = sc.nextInt();
             switch (입력) {
                 case 1: //공격
-                    this.공격();
+                    if(플레이어.캐릭터공격(몬스터어레이, this)){
+                        continue 전투;
+                    }
+                    몬스터삭제 = true;
+                    턴 = true;
                     break;
                 case 2: //스킬
                     this.스킬();
@@ -211,27 +215,28 @@ public class 사냥터출력 extends 사냥터{
             반복 = true;
         }
     }
-    public void 공격() throws InterruptedException {
-        while(true) {
-            System.out.println(메인.능력치창());
-            System.out.println("\n공격할 몬스터를 선택하세요.");
-            System.out.print(this.행동몬스터목록());
-            System.out.print("\n→");
-            입력 = sc.nextInt();
-            if (입력 == 0) {
-                return;
-            } else if (입력 > 0 && 입력 <= 몬스터어레이.size()) {
-                몬스터타겟 = this.몬스터어레이.get(입력 - 1);
-                플레이어.캐릭터공격(몬스터타겟);
-                몬스터삭제 = true;
-                턴 = true;
-                반복 = false;
-                break;
-            }
-        }
-    }
+//    public void 공격() throws InterruptedException {
+//        while(true) {
+//            System.out.println(메인.능력치창());
+//            System.out.println("\n공격할 몬스터를 선택하세요.");
+//            System.out.print(this.행동몬스터목록());
+//            System.out.print("\n→");
+//            입력 = sc.nextInt();
+//            if (입력 == 0) {
+//                return;
+//            } else if (입력 > 0 && 입력 <= 몬스터어레이.size()) {
+//                몬스터타겟 = this.몬스터어레이.get(입력 - 1);
+//                플레이어.캐릭터공격(몬스터타겟, );
+//                몬스터삭제 = true;
+//                턴 = true;
+//                반복 = false;
+//                break;
+//            }
+//        }
+//    }
     public void 스킬() throws InterruptedException {
         boolean 스킬반복 = true;
+        스킬:
         while (스킬반복) {
             System.out.println(메인.능력치창());
             System.out.println("\n보유 중인 스킬 리스트");
@@ -244,50 +249,12 @@ public class 사냥터출력 extends 사냥터{
                 break;
             } else if (입력 > 0 && 입력 <= 플레이어.스킬목록.size()) {
                 스킬 = 플레이어.스킬목록.get(입력 - 1);
-
-                switch (스킬.타입) {
-                    case 1: //단일스킬이면
-                        반복 = true;
-                        while (반복) {
-                            System.out.print("\n" + 스킬.스킬명 + "(마나 " + 스킬.소모량 + ") : " + 스킬.효과);
-                            System.out.println(this.행동몬스터목록());
-                            System.out.print("" +
-                                    스킬.스킬명 + "을(를) 사용할 대상을 선택하세요." +
-                                    "\n→");
-                            입력 = sc.nextInt();
-                            if (입력 == 0) {
-                                break;
-                            } else if (입력 > 0 && 입력 <= this.몬스터어레이.size()) {
-                                몬스터타겟 = this.몬스터어레이.get(입력 - 1);
-                                플레이어.단일스킬(몬스터타겟, 스킬);
-                                몬스터삭제 = true;
-                                턴 = true;
-                                break;
-                                //타겟선택
-                            }
-                        }
-                        스킬반복 = false;
-                        break;
-                    case 3: //광역스킬이면
-                        System.out.print("\n" + 스킬.스킬명 + "(마나 " + 스킬.소모량 + ") : " + 스킬.효과);
-                        System.out.println(this.행동몬스터목록());
-                        System.out.print("" +
-                                스킬.스킬명 + "을(를) 사용하시겠습니까?" +
-                                "\n0.취소한다." +
-                                "\n1.사용한다." +
-                                "\n→");
-                        입력 = sc.nextInt();
-                        switch (입력) {
-                            case 0:
-                                break;
-                            case 1:
-                                플레이어.광역스킬(this.몬스터어레이, 스킬);
-                                몬스터삭제 = true;
-                                턴 = true;
-                                스킬반복 = false;
-                                break;
-                        }
+                if(스킬.사용확인(몬스터어레이,플레이어,this)){
+                    continue 스킬; //true면 취소했다는 뜻이기 때문에 스킬선택창으로 돌아감
                 }
+                몬스터삭제 = true;
+                턴 = true;
+                스킬반복=false;
             }
         }
     }

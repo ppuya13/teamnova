@@ -4,7 +4,6 @@ import java4.사냥터.몬스터.몬스터;
 import java4.캐릭터.캐릭터;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public abstract class 몬스터스킬{
 

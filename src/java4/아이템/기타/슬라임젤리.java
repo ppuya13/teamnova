@@ -1,7 +1,5 @@
 package java4.아이템.기타;
 
-import java4.캐릭터.캐릭터;
-
 public class 슬라임젤리 extends 기타아이템{
     public 슬라임젤리(String 이름) {
         this.아이템이름=이름;

@@ -4,11 +4,11 @@ import java4.사냥터.사냥터출력;
 import java4.대장간.대장간출력;
 import java4.상점.상점;
 import java4.인벤토리.인벤토리출력;
-import java4.캐릭터.캐릭터;
+import java4.캐릭터.플레이어;
 import java.util.Scanner;
 
 public class Main {
-    static public 캐릭터 플레이어 = new 캐릭터();
+    static public java4.캐릭터.플레이어 플레이어 = new 플레이어();
 
     public static void main(String[] args) throws InterruptedException, CloneNotSupportedException {
 
@@ -84,6 +84,11 @@ public class Main {
     }//psvm 닫힘
 }//class 닫힘
 
+//0808 피드백(배희진 파트장님) (상속통과)
+//캐릭터의 상속 구조가 이상하다.(이유가 없는 상속)
+//유연함, 확장성 등을 고려하여 개선을 해보자...
+//다음에 검사 받을 때 캐릭터 부분을 재검사받아보기
+
 //0806 피드백(손동오 파트장님)
 //1.결말을 완성하기.
 //2.발표에 커서 사용을 줄이기(난잡해 보일 수 있음)
@@ -96,12 +101,14 @@ public class Main {
 
 
 
-
+//중간검사 피드백
 //캐릭터 클래스 용도 나누기(super 사용해보기)
 //객체지향 재사용성에 대해 공부하기
 //그 밖에 과중한 업무를 맡고 있는 클래스가 있다면 조각내기
 //오버라이딩 알아보기
 //플레이어가 static이면 멀티쓰레딩에 안좋을 수 있으니 고려하기
+
+
 
 //현재 캐릭터 클래스의 용도
 //능력치관련

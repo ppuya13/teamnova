@@ -2,7 +2,6 @@ package java4.대장간;
 
 import java4.아이템.아이템;
 import java4.출력;
-import java4.캐릭터.캐릭터;
 
 import java.util.Random;
 import java.util.Scanner;
@@ -202,7 +201,7 @@ public class 대장간출력 {
         Thread.sleep(1000);
     }
 
-    public void 강화리스트생성(캐릭터 플레이어){
+    public void 강화리스트생성(java4.캐릭터.플레이어 플레이어){
 //        System.out.println("강화리스트생성");
         플레이어.강화목록.clear();
         for(int i=0 ; i<=플레이어.소지품.size()-1 ; i++){

@@ -2,8 +2,7 @@ package java4.사냥터.몬스터.슬라임;
 
 public class 초록슬라임 extends 슬라임{
     public 초록슬라임(String 이름) {
-        this.번호 = 이름;
-        this.이름 = "초록슬라임 " + 번호;
+        this.이름 = "초록슬라임 " + 이름;
         this.공격력 = rd.nextInt(2) + 5; //5~6
         this.최종공격력 = this.공격력;
         this.방어력 = rd.nextInt(3) + 1; //1~3

@@ -1,5 +1,4 @@
 package java4.사냥터.몬스터.스킬.오크;
-import com.sun.jdi.event.ThreadStartEvent;
 import java4.사냥터.몬스터.몬스터;
 import java4.사냥터.몬스터.스킬.지속스킬;
 import java4.캐릭터.캐릭터;

@@ -1,7 +1,5 @@
 package java4.아이템.기타;
 
-import java4.캐릭터.캐릭터;
-
 public class 고블린귀 extends 기타아이템{
     public 고블린귀(String 이름) {
         this.아이템이름=이름;

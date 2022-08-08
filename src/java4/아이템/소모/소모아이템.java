@@ -1,7 +1,6 @@
 package java4.아이템.소모;
 
 import java4.아이템.아이템;
-import java4.캐릭터.캐릭터;
 
 public abstract class 소모아이템 extends 아이템 {
     public 소모아이템(){

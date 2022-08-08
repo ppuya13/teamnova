@@ -1,5 +1,6 @@
 package java4.사냥터.몬스터;
 
+import java4.Main;
 import java4.사냥터.몬스터.스킬.기본공격;
 import java4.사냥터.몬스터.스킬.몬스터스킬;
 import java4.사냥터.몬스터.스킬.지속스킬;
@@ -11,8 +12,6 @@ import java4.캐릭터.캐릭터;
 
 import java.util.ArrayList;
 import java.util.Random;
-
-import static java4.Main.플레이어;
 
 public abstract class 몬스터 {
     public String 이름;
@@ -35,7 +34,6 @@ public abstract class 몬스터 {
     public ArrayList<아이템> 드랍테이블 = new ArrayList<>();
     public ArrayList<아이템> 공용드랍테이블 = new ArrayList<>();
     public Random rd = new Random();
-    static Random rd2 = new Random();
 
     public 몬스터(){
         this.소환됨 = false;
@@ -72,38 +70,16 @@ public abstract class 몬스터 {
         return 공격력;
     }
 
-
-    //전투방식 갈아엎음. 현재 사용되지 않는 메소드.
-    public static int 공격(ArrayList<몬스터> 몬스터어레이, int 타겟, 캐릭터 캐릭터) throws InterruptedException {
-        int 몬스터사망=0;
-        몬스터 타겟몬스터=몬스터어레이.get(타겟-1);
-        타겟몬스터.현재체력 = 타겟몬스터.현재체력-(캐릭터.캐릭터최종공격력-타겟몬스터.최종방어력);
-        System.out.println(타겟몬스터.이름 + "을(를) 공격합니다.");
-        Thread.sleep(1000);
-        System.out.println(타겟몬스터.이름+"에게 "+(캐릭터.캐릭터최종공격력-타겟몬스터.최종방어력)+"의 데미지!");
-        Thread.sleep(1000);
-
-        if(몬스터어레이.get(타겟-1).현재체력<=0){
-            몬스터사망=1;
-            System.out.println(몬스터어레이.get(타겟-1).이름+"은(는) 쓰러졌다!");
-            Thread.sleep(1000);
-        }
-        else{
-            System.out.println(몬스터어레이.get(타겟-1).이름+"의 남은 체력은 "+몬스터어레이.get(타겟-1).현재체력+"이다.");
-        }
-        return 몬스터사망;
-    }
-
-    public boolean 몬스터행동(ArrayList<몬스터> 몬스터어레이, int 몬스터수, 캐릭터 캐릭터) throws InterruptedException {
+    public boolean 몬스터행동(ArrayList<몬스터> 몬스터어레이, int 몬스터수, 캐릭터 플레이어) throws InterruptedException {
         boolean 캐릭터사망 = false;
         boolean 리롤=true;
         while(리롤) {
             int 스킬선택 = rd.nextInt(this.스킬리스트.size());
-            리롤 = this.스킬리스트.get(스킬선택).사용효과(this, 플레이어, 몬스터어레이);
+            리롤 = this.스킬리스트.get(스킬선택).사용효과(this, Main.플레이어, 몬스터어레이);
 
-            if (캐릭터.캐릭터현재체력 <= 0) {
+            if (플레이어.캐릭터현재체력 <= 0) {
                 System.out.println("플레이어는 쓰러졌다.");
-                캐릭터.사망횟수++;
+                플레이어.사망횟수++;
                 캐릭터사망 = true;
                 Thread.sleep(1000);
             }
@@ -111,7 +87,7 @@ public abstract class 몬스터 {
         if(this.지속스킬.size()>0){//적용중인 지속스킬이 있다면
 //            System.out.println("몬스터.몬스터행동 | 지속스킬판정" + this.이름 + "은(는) 적용중인 지속스킬이 있음.");
             for(int i = 0 ; i < this.지속스킬.size() ; i++){ //지속스킬 수만큼 반복
-                this.지속스킬.get(i).지속효과(this,플레이어,몬스터어레이);
+                this.지속스킬.get(i).지속효과(this, Main.플레이어,몬스터어레이);
             }
             재시작:
             while(true){
@@ -129,7 +105,6 @@ public abstract class 몬스터 {
 //        System.out.println("몬스터.몬스터행동 | 지속스킬판정");
         return 캐릭터사망;
     }
-
 }
 
 
