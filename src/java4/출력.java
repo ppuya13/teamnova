@@ -5,6 +5,8 @@ import java4.스킬.스킬;
 import java4.상점.상점;
 import java4.아이템.아이템;
 
+import java.util.ArrayList;
+
 import static java4.Main.플레이어;
 
 public class 출력 { //화면에 표시하기 위한 메소드는 이곳에
@@ -284,7 +286,7 @@ public class 출력 { //화면에 표시하기 위한 메소드는 이곳에
         return 장비살펴보기표기;
     }
 
-     public String 정보출력(몬스터 타겟){
+    public String 정보출력(몬스터 타겟){
         //굳이 메소드 쓸 필요 없을 것 같음.
         String 출력값 = "" +
                 "\n이름 : " + 타겟.이름 +
@@ -304,6 +306,89 @@ public class 출력 { //화면에 표시하기 위한 메소드는 이곳에
             스킬창.append("\n" + (i+1) + "." + 스킬.스킬명 + "(마나 "+ 스킬.소모량 + ") : " + 스킬.효과);
         }
         return 스킬창;
+    }
+
+    public void 엔딩() throws InterruptedException {
+        boolean 착용템있음=false;
+        ArrayList<아이템> 착용목록 = new ArrayList<>();
+        StringBuilder 착용템표기 = new StringBuilder();
+        아이템 아이템;
+
+        StringBuilder 엔딩 = new StringBuilder();
+        Thread.sleep(2000);
+        System.out.println("게임 클리어!");
+        Thread.sleep(1000);
+        System.out.print("인카운터 조우 횟수: ");
+        Thread.sleep(1000);
+        System.out.println(플레이어.전투횟수 + "회");
+        Thread.sleep(1000);
+        System.out.print("전투 승리 횟수: ");
+        Thread.sleep(1000);
+        System.out.println(플레이어.전투승리횟수 + "회");
+        Thread.sleep(1000);
+        System.out.print("총 얻은 경험치: ");
+        Thread.sleep(1000);
+        System.out.println(플레이어.획득경험치);
+        Thread.sleep(1000);
+        System.out.println("착용 중인 아이템: ");
+        Thread.sleep(1000);
+        if(플레이어.소지품==null){//소지품창이 비어있으면
+            System.out.println("없음");
+        }else{//소지품창에 뭔가 있으면
+            for(int i = 0 ; i < 플레이어.소지품.size() ; i++){
+                if(플레이어.소지품.get(i).착용여부){//착용한 템이 있으면
+                    착용템있음=true;
+                    break;
+                }
+            }
+            if(!착용템있음){//소지품창에 뭔가 있지만 착용한 템이 없으면
+                System.out.println("없음");
+            }
+            else {//착용한 템이 있으면
+                for(int i = 0 ; i < 플레이어.소지품.size() ; i++){
+                    if(플레이어.소지품.get(i).착용여부){ //선택된 템이 착용한템이면
+                        착용목록.add(플레이어.소지품.get(i)); //해당 아이템을 착용목록에 넣음
+                    }
+                }
+                for(int i = 0; i < 착용목록.size() ; i++){
+                    아이템 = 착용목록.get(i);
+                    착용템표기.append("\n" + 아이템.아이템이름 +
+                            "\n"+아이템.아이템효과+"\n");
+                    if (아이템.추가체력 >= 1) { //선택한 아이템이 추가체력이 1 이상일 때
+                        착용템표기.append("추가 체력: " + 아이템.추가체력 + "\n");
+                    }
+                    if (아이템.추가마나 >= 1) {
+                        착용템표기.append("추가 마나: " + 아이템.추가마나 + "\n");
+                    }
+                    if (아이템.추가공격력 >= 1) {
+                        착용템표기.append("추가 공격력: " + 아이템.추가공격력 + "\n");
+                    }
+                    if (아이템.추가방어력 >= 1) {
+                        착용템표기.append("추가 방어력: " + 아이템.추가방어력 + "\n");
+                    }
+                    if (아이템.추가치확 >= 1) {
+                        착용템표기.append("추가 치명확률: " + 아이템.추가치확 + "\n");
+                    }
+                    if (아이템.추가치피 >= 1) {
+                        착용템표기.append("추가 치명피해: " + 아이템.추가치피 + "\n");
+                    }
+                    if (아이템.추가회피 >= 1) {
+                        착용템표기.append("추가 회피율: " + 아이템.추가회피 + "\n");
+                    }
+                    System.out.println(착용템표기 + "\n");
+                    Thread.sleep(1000);
+                    착용템표기.setLength(0);
+                }
+            }
+        }
+        System.out.print("최종 능력치: ");
+        Thread.sleep(1000);
+        System.out.println(능력치창());
+        Thread.sleep(2000);
+
+        System.out.println("플레이해 주셔서 감사합니다!");
+        Thread.sleep(2000);
+        System.exit(0);
     }
 
 

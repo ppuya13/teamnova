@@ -15,6 +15,6 @@ public abstract class 기타아이템 extends 아이템 {
     public boolean 사용효과(캐릭터 캐릭터) throws InterruptedException {
         System.out.println("사용할 수 없는 아이템입니다.");
         Thread.sleep(1000);
-        return false;
+        return true;
     }
 }

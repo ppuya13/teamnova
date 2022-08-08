@@ -70,6 +70,10 @@ public class Main {
                 case 5: //휴식
                     플레이어.휴식();
                     break;
+               case 456456:
+                   System.out.println("show me the money!!!");
+                   플레이어.소지금=플레이어.소지금+5000;
+                   Thread.sleep(1000);
             }
             if (사망) {
                 System.out.println("플레이어는 쓰러졌다.");

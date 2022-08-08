@@ -16,7 +16,7 @@ public class 즉석치료 extends 몬스터스킬{
 
     @Override
     public boolean 사용효과(몬스터 몬스터, 캐릭터 플레이어, ArrayList<몬스터> 몬스터어레이) throws InterruptedException {
-        int 회복량 = 20;
+        int 회복량 = (int)Math.ceil(몬스터.최대체력*0.15);
         boolean 사용가능 = false;
         ArrayList<몬스터> 대상리스트 = new ArrayList<>();
         Random rd = new Random();

@@ -14,9 +14,9 @@ import java.util.Random;
 
 import static java4.Main.플레이어;
 
-public abstract class 몬스터 { //몬스터 정보와 전투는 이곳에
-    //몬스터 상속으로 처리하기
+public abstract class 몬스터 {
     public String 이름;
+    public boolean 소환됨; //소환된 턴엔 행동하지 못하게 하기 위함.
     public int 공격력;
     public int 추가공격력 = 0;
     public int 최종공격력;
@@ -38,6 +38,7 @@ public abstract class 몬스터 { //몬스터 정보와 전투는 이곳에
     static Random rd2 = new Random();
 
     public 몬스터(){
+        this.소환됨 = false;
         몬스터스킬 기본공격 = new 기본공격();
         for(int i = 0; i < 10 ; i++) {
             this.스킬리스트.add(기본공격);

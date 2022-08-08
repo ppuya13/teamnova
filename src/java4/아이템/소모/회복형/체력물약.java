@@ -24,12 +24,12 @@ public class 체력물약 extends 회복형 {
                 System.out.println(캐릭터.캐릭터현재체력 + "이(가) 되었습니다.");
             }
             this.스택수--;
+            Thread.sleep(1000);
+            return false;
         } else{
             System.out.println("물약을 모두 소모했습니다.");
             Thread.sleep(1000);
             return true;
         }
-        Thread.sleep(1000);
-        return true;
     }
 }

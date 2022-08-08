@@ -1,7 +1,6 @@
 package java4.캐릭터;
 
-import java4.아이템.소모.소모아이템;
-import java4.아이템.소모.지속형.*;
+import java4.아이템.기타.슬라임젤리;
 import java4.아이템.소모.회복형.*;
 import java4.아이템.아이템;
 
@@ -9,29 +8,23 @@ public abstract class 캐릭인벤토리 extends 능력치 {
 
     public void 인벤토리초기화 () { //프로그램 시작 시 가방에 물약을 넣어주는 일회성 메소드
         체력물약 체력물약 = new 체력물약("체력물약");
-        체력물약.스택수 = 3;
+        체력물약.스택수 = 300;
         마나물약 마나물약 = new 마나물약("마나물약");
         마나물약.스택수 = 3;
         this.회복물약가방.add(체력물약);
         this.회복물약가방.add(마나물약);
 
 //        //이 아래로는 테스트용 아이템생성. 나중에 지우기
-//        아이템 아이템;
+        아이템 아이템;
 //        아이템 = new 공격력물약("공격력물약");
 //        아이템.스택수=1000;
 //        this.소지품.add(아이템);
 //        아이템 = new 방어력물약("방어력물약");
 //        아이템.스택수=1000;
 //        this.소지품.add(아이템);
-//        아이템 = new 아이템(300);
-//        아이템.스택수=1000;
-//        this.소지품.add(아이템);
-//        아이템= new 아이템(200);
-//        아이템.스택수=1000;
-//        this.소지품.add(아이템);
-//        아이템= new 아이템(201);
-//        아이템.스택수=1000;
-//        this.소지품.add(아이템);
+        아이템 = new 슬라임젤리("슬라임젤리");
+        아이템.스택수=20;
+        this.소지품.add(아이템);
 //
 //        아이템 검 = new 아이템(100);
 //        아이템 방패 = new 아이템(101);
@@ -46,40 +39,9 @@ public abstract class 캐릭인벤토리 extends 능력치 {
 //        }//더미아이템 15개를 캐릭터의 소지품에 넣음
     }
 
-    public int 아이템사용(int 입력) throws InterruptedException {
-        int 물약여부;
-        int 사용선택;
-        아이템 아이템정보;
-        int 회복물약가방크기= this.회복물약가방.size();
-        if(입력 <=회복물약가방크기){ //회복물약 내용물을 선택했다면
-            사용선택= 입력 -1;
-            물약여부=1;
-            아이템정보 = this.회복물약가방.get(사용선택);
-            if(아이템정보.스택수==0){ //선택한 물약의 스택수가 0개라면
-//                            System.out.println("스택수0개");
-                System.out.println("\n"+아이템정보.아이템이름+"이 부족합니다.");
-                Thread.sleep(1000);
-//                            세부2=1;
-                물약여부=0;
-                사용선택=-1;
-            } //회복물약 이외의 아이템들은 0개가 되는 순간 인벤정리 메소드에 의해 삭제됨.
-        }
-        else{ //회복물약가방 내용물이 아닌것을 선택했다면
-            사용선택 = 입력 -(회복물약가방크기+1);
-            아이템정보 = this.소지품.get(사용선택);
-            if(아이템정보.사용가능여부) { //사용가능한 물건이라면
-                물약여부=2;
-            }
-            else{ // 사용 불가능한 물건이라면
-                System.out.println("\n사용할 수 없는 아이템입니다.");
-                Thread.sleep(1000);
-                물약여부=0;
-            }
-        }
-        return 물약여부;
-    }
 
-    public 아이템 아이템사용2(int 입력){
+
+    public 아이템 아이템사용(int 입력){
         아이템 타겟;
         int 회복물약가방크기= this.회복물약가방.size();
         if(입력 <=회복물약가방크기){ //회복물약 내용물을 선택했다면
@@ -101,33 +63,6 @@ public abstract class 캐릭인벤토리 extends 능력치 {
             }
         }
     }
-
-    public boolean 전투외아이템사용(int 물약여부, 아이템 타겟) throws InterruptedException {
-        boolean 반복=true;
-        if(물약여부==1){ //물약이면
-            타겟.물약사용((캐릭터) this);
-            반복 = false;
-        }
-        else if(물약여부==2){
-            System.out.println("\n소모 아이템은 전투중에만 사용할 수 있습니다.");
-            Thread.sleep(1000);
-            반복 = true;
-        }
-//        System.out.println(반복);
-        return 반복;
-    }
-
-//    public void 전투아이템사용(int 물약여부, 아이템 타겟) throws InterruptedException{
-//
-//        if(물약여부==0){
-//        }
-//        else if(물약여부==1){ //물약이면
-//            타겟.물약사용((캐릭터) this);
-//        }
-//        else{ //
-//            타겟.지속템사용((캐릭터) this);
-//        }
-//    }
 
     public int 아이템버리기(int 입력) throws InterruptedException {
         int 물약여부=2; //1:물약이거나 버릴수없음, 2:물약아님
@@ -227,6 +162,65 @@ public abstract class 캐릭인벤토리 extends 능력치 {
         }
 //        System.out.println("버린후 아이템.스택수 : "+ 아이템.스택수 + ", 개수 : "+개수);
     }
+
+    //    public void 전투아이템사용(int 물약여부, 아이템 타겟) throws InterruptedException{
+//
+//        if(물약여부==0){
+//        }
+//        else if(물약여부==1){ //물약이면
+//            타겟.물약사용((캐릭터) this);
+//        }
+//        else{ //
+//            타겟.지속템사용((캐릭터) this);
+//        }
+//    }
+//    public int 아이템사용(int 입력) throws InterruptedException {
+//        int 물약여부;
+//        int 사용선택;
+//        아이템 아이템정보;
+//        int 회복물약가방크기= this.회복물약가방.size();
+//        if(입력 <=회복물약가방크기){ //회복물약 내용물을 선택했다면
+//            사용선택= 입력 -1;
+//            물약여부=1;
+//            아이템정보 = this.회복물약가방.get(사용선택);
+//            if(아이템정보.스택수==0){ //선택한 물약의 스택수가 0개라면
+////                            System.out.println("스택수0개");
+//                System.out.println("\n"+아이템정보.아이템이름+"이 부족합니다.");
+//                Thread.sleep(1000);
+////                            세부2=1;
+//                물약여부=0;
+//                사용선택=-1;
+//            } //회복물약 이외의 아이템들은 0개가 되는 순간 인벤정리 메소드에 의해 삭제됨.
+//        }
+//        else{ //회복물약가방 내용물이 아닌것을 선택했다면
+//            사용선택 = 입력 -(회복물약가방크기+1);
+//            아이템정보 = this.소지품.get(사용선택);
+//            if(아이템정보.사용가능여부) { //사용가능한 물건이라면
+//                물약여부=2;
+//            }
+//            else{ // 사용 불가능한 물건이라면
+//                System.out.println("\n사용할 수 없는 아이템입니다.");
+//                Thread.sleep(1000);
+//                물약여부=0;
+//            }
+//        }
+//        return 물약여부;
+//    }
+//
+//    public boolean 전투외아이템사용(int 물약여부, 아이템 타겟) throws InterruptedException {
+//        boolean 반복=true;
+//        if(물약여부==1){ //물약이면
+//            타겟.물약사용((캐릭터) this);
+//            반복 = false;
+//        }
+//        else if(물약여부==2){
+//            System.out.println("\n소모 아이템은 전투중에만 사용할 수 있습니다.");
+//            Thread.sleep(1000);
+//            반복 = true;
+//        }
+////        System.out.println(반복);
+//        return 반복;
+//    }
 
 //    public void 아이템장착(아이템 타겟) throws InterruptedException {
 //        int 인벤토리크기=this.소지품.size()-1;

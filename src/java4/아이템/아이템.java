@@ -59,35 +59,36 @@ public abstract class 아이템 implements Cloneable{ //아이템 정보는 이�
         this.추가치피=0;
         this.추가회피=0;
     }
-    public void 물약사용(캐릭터 캐릭터) throws InterruptedException {
-//        System.out.println("this.고유번호" + this.고유번호);
-        if(this.고유번호==-1) { //고유번호가 -1이면(회복물약이면)
-            if (캐릭터.캐릭터최종체력 - 캐릭터.캐릭터현재체력 >= 300) {
-                캐릭터.캐릭터현재체력 = 캐릭터.캐릭터현재체력 + 300;
-                System.out.print("\n체력이 300회복되어 " + 캐릭터.캐릭터현재체력 + "이 되었습니다.");
-            } else {
-                System.out.print("\n체력이 " + (캐릭터.캐릭터최종체력 - 캐릭터.캐릭터현재체력) + "회복되어 ");
-                캐릭터.캐릭터현재체력 = 캐릭터.캐릭터최종체력;
-                System.out.println(캐릭터.캐릭터현재체력 + "이(가) 되었습니다.");
-            }
-            this.스택수--;
-        }else if(this.고유번호==-2){//고유번호가 -2이면(마나물약이면)
-            if (캐릭터.캐릭터최종마나 - 캐릭터.캐릭터현재마나 >= 30) {
-                캐릭터.캐릭터현재마나 = 캐릭터.캐릭터현재마나 + 30;
-                System.out.print("\n마나가 30회복되어 " + 캐릭터.캐릭터현재마나 + "이 되었습니다.");
-            } else {
-                System.out.print("\n마나가 " + (캐릭터.캐릭터최종마나 - 캐릭터.캐릭터현재마나) + "회복되어 ");
-                캐릭터.캐릭터현재마나 = 캐릭터.캐릭터최종마나;
-                System.out.println(캐릭터.캐릭터현재마나 + "이(가) 되었습니다.");
-            }
-            this.스택수--;
-        }
-        Thread.sleep(1000);
-    }
     public abstract boolean 사용효과(캐릭터 캐릭터) throws InterruptedException, CloneNotSupportedException;
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
+
+    //    public void 물약사용(캐릭터 캐릭터) throws InterruptedException {
+////        System.out.println("this.고유번호" + this.고유번호);
+//        if(this.고유번호==-1) { //고유번호가 -1이면(회복물약이면)
+//            if (캐릭터.캐릭터최종체력 - 캐릭터.캐릭터현재체력 >= 300) {
+//                캐릭터.캐릭터현재체력 = 캐릭터.캐릭터현재체력 + 300;
+//                System.out.print("\n체력이 300회복되어 " + 캐릭터.캐릭터현재체력 + "이 되었습니다.");
+//            } else {
+//                System.out.print("\n체력이 " + (캐릭터.캐릭터최종체력 - 캐릭터.캐릭터현재체력) + "회복되어 ");
+//                캐릭터.캐릭터현재체력 = 캐릭터.캐릭터최종체력;
+//                System.out.println(캐릭터.캐릭터현재체력 + "이(가) 되었습니다.");
+//            }
+//            this.스택수--;
+//        }else if(this.고유번호==-2){//고유번호가 -2이면(마나물약이면)
+//            if (캐릭터.캐릭터최종마나 - 캐릭터.캐릭터현재마나 >= 30) {
+//                캐릭터.캐릭터현재마나 = 캐릭터.캐릭터현재마나 + 30;
+//                System.out.print("\n마나가 30회복되어 " + 캐릭터.캐릭터현재마나 + "이 되었습니다.");
+//            } else {
+//                System.out.print("\n마나가 " + (캐릭터.캐릭터최종마나 - 캐릭터.캐릭터현재마나) + "회복되어 ");
+//                캐릭터.캐릭터현재마나 = 캐릭터.캐릭터최종마나;
+//                System.out.println(캐릭터.캐릭터현재마나 + "이(가) 되었습니다.");
+//            }
+//            this.스택수--;
+//        }
+//        Thread.sleep(1000);
+//    }
 
 //    public void 소모품사용(능력치 캐릭터) throws InterruptedException {
 //        if(this.고유번호==200){ //고유번호가 200이면(공격력물약이면)

@@ -9,6 +9,9 @@ import java.util.Scanner;
 
 public abstract class 능력치 {
 
+
+    public int 전투횟수;
+    public int 전투승리횟수;
     public ArrayList<아이템> 회복물약가방;
     public ArrayList<아이템> 소지품;
     public ArrayList<아이템> 강화목록;

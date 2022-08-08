@@ -3,7 +3,6 @@ package java4.사냥터.몬스터.오크;
 import java4.사냥터.몬스터.스킬.오크.전투의포효;
 
 public class 오크전사 extends 오크 {
-    전투의포효 전투의포효 = new 전투의포효();
     public 오크전사(String 이름) {
         this.번호 = 이름;
         this.이름 = "오크 전사 " + 번호;
