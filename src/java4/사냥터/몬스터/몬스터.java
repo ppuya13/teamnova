@@ -13,9 +13,14 @@ import java4.캐릭터.캐릭터;
 import java.util.ArrayList;
 import java.util.Random;
 
-public abstract class 몬스터 {
+public abstract class 몬스터 extends Thread {
+
     public String 이름;
+    public final int 행동 = 10000; //행동게이지가 행동보다 높아지면 0으로 초기화하고 행동함
+    public int 행동난수; //속도값에 따라 랜덤하게 행동난수값을 설정함
+    public int 행동게이지 = 0;
     public boolean 소환됨; //소환된 턴엔 행동하지 못하게 하기 위함.
+    public int 속도; //행동게이지가 차는 속도, 대충 (1000/속도)초당 1회 행동함
     public int 공격력;
     public int 추가공격력 = 0;
     public int 최종공격력;
@@ -44,6 +49,26 @@ public abstract class 몬스터 {
         공용드랍테이블();
         this.드랍테이블.addAll(공용드랍테이블);
     }
+
+    public void run(){
+        System.out.println("이 객체의 이름은 " + this.이름 + " 이며 속도는 " + this.속도 + " 입니다.");
+        while (true){
+            try {
+                Thread.sleep(100);
+                this.행동게이지 = this.행동게이지+속도();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            if(this.행동게이지>행동){
+                this.행동게이지=행동;
+            }
+            if(this.행동게이지 == 행동){
+                System.out.println(this.이름 + "의 행동게이지가 가득찼습니다.");
+                this.행동게이지 = 0;
+            }
+        }
+    }
+
     public void 공용드랍테이블(){
         if(공용드랍테이블.size() == 0) {
             드랍템 = new 체력물약("체력물약");
@@ -68,6 +93,10 @@ public abstract class 몬스터 {
     public int 공격력(){
         int 공격력 = (int) Math.ceil(this.최종공격력*(Math.random()*0.2+0.9));
         return 공격력;
+    }
+    public int 속도(){
+        int 속도 = (int) Math.ceil(this.속도*(Math.random()*0.2+0.9));
+        return 속도;
     }
 
     public boolean 몬스터행동(ArrayList<몬스터> 몬스터어레이, int 몬스터수, 캐릭터 플레이어) throws InterruptedException {

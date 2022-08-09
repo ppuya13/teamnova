@@ -5,6 +5,7 @@ import java4.사냥터.몬스터.스킬.오크.전투의포효;
 public class 오크전사 extends 오크 {
     public 오크전사(String 이름) {
         this.이름 = "오크 전사 " + 이름;
+        this.속도 = rd.nextInt(41) + 230; //230~270
         this.공격력 = rd.nextInt(11) + 35; //35~45
         this.최종공격력 = this.공격력;
         this.방어력 = rd.nextInt(4) + 4; //4~7

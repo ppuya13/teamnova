@@ -9,6 +9,7 @@ public class 오크로드 extends 오크{
     병력보충 병력보충 = new 병력보충();
     public 오크로드(String 이름) {
         this.이름 = "오크 로드";
+        this.속도 = 300;
         this.공격력 = 80;
         this.최종공격력 = this.공격력;
         this.방어력 = 10;

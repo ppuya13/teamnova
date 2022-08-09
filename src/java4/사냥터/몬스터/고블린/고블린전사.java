@@ -7,6 +7,7 @@ public class 고블린전사 extends 고블린{
         몬스터스킬 연속공격 = new 연속공격();
         public 고블린전사(String 이름) {
                 this.이름 = "고블린 전사 " + 이름;
+                this.속도 = rd.nextInt(21) + 285;; //285~305
                 this.공격력 = rd.nextInt(4) + 7; //7~10
                 this.최종공격력 = this.공격력;
                 this.방어력 = rd.nextInt(3) + 4; //4~6

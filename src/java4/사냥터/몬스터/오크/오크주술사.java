@@ -9,6 +9,7 @@ public class 오크주술사 extends 오크{
 
     public 오크주술사(String 이름) {
         this.이름 = "오크 주술사 " + 이름;
+        this.속도 = rd.nextInt(21) + 190; //190~210
         this.공격력 = rd.nextInt(11) + 20; //20~30
         this.최종공격력 = this.공격력;
         this.방어력 = rd.nextInt(3) + 2; //2~4

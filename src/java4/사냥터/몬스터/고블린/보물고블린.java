@@ -3,6 +3,7 @@ package java4.사냥터.몬스터.고블린;
 public class 보물고블린 extends 고블린{
     public 보물고블린(String 이름){
         this.이름 = "보물 고블린 " + 이름;
+        this.속도 =rd.nextInt(16) + 260; //260~275
         this.공격력 = rd.nextInt(3) + 2; //2~4
         this.최종공격력 = this.공격력;
         this.방어력 = rd.nextInt(3) + 2; //2~4
