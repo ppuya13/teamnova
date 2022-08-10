@@ -1,5 +1,6 @@
 package 연습;
 
+import java4.Main;
 import java4.사냥터.몬스터.고블린.고블린궁수;
 import java4.사냥터.몬스터.고블린.고블린전사;
 import java4.사냥터.몬스터.고블린.보물고블린;
@@ -9,6 +10,10 @@ import java4.사냥터.몬스터.슬라임.빨간슬라임;
 import java4.사냥터.몬스터.슬라임.초록슬라임;
 import java4.사냥터.몬스터.오크.오크전사;
 import java4.사냥터.몬스터.오크.오크주술사;
+import java4.아이템.소모.지속형.공격력물약;
+import java4.아이템.아이템;
+import java4.캐릭터.캐릭터;
+import java4.캐릭터.플레이어;
 
 import javax.swing.*;
 import java.awt.*;
@@ -44,6 +49,8 @@ public class 연습용클래스 extends Thread {
         Random rd = new Random();
         몬스터 몬스터정보;
         ArrayList<몬스터> 몬스터어레이 = new ArrayList<>();
+        캐릭터 플레이어2 = new 플레이어();
+        아이템 공격력물약 = new 공격력물약("공격력물약");
 
         ///////////////////////////////////////////스레드연습 시작////////////////////////////////////////////////
 //        Runnable 실행할코드 = new Runnable() { //가장 기본적인 구조, new에서 자동완성을 하면 기본구조가 자동완성됨.
@@ -77,7 +84,7 @@ public class 연습용클래스 extends Thread {
         몬스터어레이.clear();
         몬스터머릿수 = rd.nextInt(9) + 2;
         System.out.println(몬스터머릿수 + "마리의 몬스터를 발견했다!!!");
-
+        플레이어2.start();
         for (int i = 1; i <= 몬스터머릿수; i++) {
             몬스터번호 = Integer.toString(i);
             몬스터생성난수 = Math.random();
@@ -113,7 +120,7 @@ public class 연습용클래스 extends Thread {
             몬스터어레이.add(몬스터정보);
         }
 
-        for(int i = 0 ; i < 몬스터어레이.size() ; i++){
+        for(int i = 0 ; i < 몬스터어레이.size() ; i++) {
             몬스터어레이.get(i).start();
         }
 
@@ -161,98 +168,189 @@ public class 연습용클래스 extends Thread {
 //                                .addComponent(btn6))
 //        );
 
+        Runnable 몬스터창코드 = new Runnable() {
+            @Override
+            public void run() {
+                JLabel[] 라벨 = new JLabel[몬스터어레이.size()];
+                몬스터 타겟;
+                몬스터스킬 스킬;
 
-//        JLabel label = new JLabel();
-//        JLabel label2 = new JLabel();
-//        JLabel label3 = new JLabel();
-//        JLabel label4 = new JLabel();
-//        JLabel label5 = new JLabel();
-//        JLabel label6 = new JLabel();
-//        JLabel label7 = new JLabel();
-//        JLabel label8 = new JLabel();
-//        JLabel label9 = new JLabel();
-//        JLabel label10 = new JLabel();
-//        JLabel label11 = new JLabel();
-//        JLabel label12 = new JLabel();
-//        label.setText(몬스터어레이.get(0).이름);
-//        label2.setText(몬스터어레이.get(0).이름);
-//        label3.setText(몬스터어레이.get(0).이름);
-//        label4.setText(몬스터어레이.get(0).이름);
-//        label5.setText(몬스터어레이.get(0).이름);
-//        label6.setText(몬스터어레이.get(0).이름);
-//        label7.setText(몬스터어레이.get(0).이름);
-//        label8.setText(몬스터어레이.get(0).이름);
-//        label9.setText(몬스터어레이.get(0).이름);
-//        label10.setText(몬스터어레이.get(0).이름);
-//        label11.setText(몬스터어레이.get(0).이름);
-//        label12.setText(몬스터어레이.get(0).이름);
-
-        JLabel[] 라벨 = new JLabel[몬스터어레이.size()];
-        몬스터 타겟;
-        몬스터스킬 스킬;
-
-
-        JFrame 몬스터 = new JFrame("몬스터");
-        몬스터.setBounds(1000,100,500,몬스터어레이.size()*40+20);
-        몬스터.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-        몬스터.setLayout(new GridLayout(몬스터어레이.size(),1,10,3)); //행, 열, 좌우간격, 상하간격
+                //레이아웃 설정
+                JFrame 몬스터 = new JFrame("몬스터");
+                몬스터.setBounds(1000,100,500,몬스터어레이.size()*40+20);
+                몬스터.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+                몬스터.setLayout(new GridLayout(몬스터어레이.size(),1,10,3)); //행, 열, 좌우간격, 상하간격
 //        몬스터.add(panel);
-        몬스터.setAlwaysOnTop(true);
-        몬스터.setVisible(true);//출력하기
+                몬스터.setAlwaysOnTop(true);
+                몬스터.setVisible(true);//출력하기
 
-        for (int i = 0; i < 몬스터어레이.size(); i++) {
-            라벨[i] = new JLabel("");
-        }
-        for (int i = 0; i < 몬스터어레이.size(); i++) {
-            타겟 = 몬스터어레이.get(i);
-            라벨[i].setText(타겟.이름 + " (체력:" + 타겟.현재체력 + "/" + 타겟.최대체력 + ") │ 공격력: " + 타겟.공격력 + "+" + 타겟.추가공격력 + " │ 방어력: " + 타겟.방어력 + "+" + 타겟.추가방어력);
-            if (타겟.지속스킬.size() > 0) {
-                라벨[i].setText(라벨[i].getText() + " 지속중: ");
-                for (int j = 0; j < 타겟.지속스킬.size(); j++) {
-                    스킬 = 타겟.지속스킬.get(j);
-                    라벨[i].setText(라벨[i].getText() + 스킬.스킬명 + "(" + (스킬.지속시간) + "턴) ");
+                //처음 라벨 초기화(일회성)
+                for (int i = 0; i < 몬스터어레이.size(); i++) {
+                    라벨[i] = new JLabel("");
                 }
-            }
-            라벨[i].setText(라벨[i].getText() + ")\n");
-            몬스터.add(라벨[i]);
-        }
-        while(true) {
-            for (int i = 0; i < 몬스터어레이.size(); i++) {
-                라벨[i].setText("");
-            }
-            for (int i = 0; i < 몬스터어레이.size(); i++) {
-                타겟 = 몬스터어레이.get(i);
-                라벨[i].setText(타겟.이름 + " (체력:" + 타겟.현재체력 + "/" + 타겟.최대체력 + ") │ 공격력: " + 타겟.공격력 + "+" + 타겟.추가공격력 + " │ 방어력: " + 타겟.방어력 + "+" + 타겟.추가방어력);
-                if (타겟.지속스킬.size() > 0) {
-                    라벨[i].setText(라벨[i].getText() + " 지속중: ");
-                    for (int j = 0; j < 타겟.지속스킬.size(); j++) {
-                        스킬 = 타겟.지속스킬.get(j);
-                        라벨[i].setText(라벨[i].getText() + 스킬.스킬명 + "(" + (스킬.지속시간) + "턴) ");
-                    }
-                }
-                라벨[i].setText(라벨[i].getText() + ")\n");
-            }
 
-//            몬스터.repaint();
-//            몬스터.invalidate();
-//            몬스터.revalidate(); //새로고침 비슷한 기능
-            Thread.sleep(1000);
-//            몬스터.removeAll();
-            몬스터어레이.get(0).현재체력 = 몬스터어레이.get(0).현재체력 - 30;
-            System.out.println(몬스터어레이.get(0).이름 + "의 체력을 30깎아서 " + 몬스터어레이.get(0).현재체력 + "이 되었습니다.");
-            재시작:
-            while(true) {
+                //라벨 입력(일회성)
                 for (int i = 0; i < 몬스터어레이.size(); i++) {
                     타겟 = 몬스터어레이.get(i);
-                    if (타겟.현재체력 < 0) {
-                        라벨[i]=null;
-                        몬스터어레이.remove(i);
-                        continue 재시작;
+                    라벨[i].setText(타겟.이름 + " (체력:" + 타겟.현재체력 + "/" + 타겟.최대체력 + ") │ 공격력: " + 타겟.공격력 + "+" + 타겟.추가공격력 + " │ 방어력: " + 타겟.방어력 + "+1" + 타겟.추가방어력+ ", 행동게이지: " + 타겟.행동게이지);
+                    if (타겟.지속스킬.size() > 0) {
+                        라벨[i].setText(라벨[i].getText() + " 지속중: ");
+                        for (int j = 0; j < 타겟.지속스킬.size(); j++) {
+                            스킬 = 타겟.지속스킬.get(j);
+                            라벨[i].setText(라벨[i].getText() + 스킬.스킬명 + "(" + (스킬.지속시간) + "턴) ");
+                        }
+                    }
+                    라벨[i].setText(라벨[i].getText() + ")\n");
+                    몬스터.add(라벨[i]);
+                }
+
+                //라벨 갱신
+                while(true) {
+                    for (int i = 0; i < 몬스터어레이.size(); i++) {
+                        라벨[i].setText("");
+                    }
+                    for (int i = 0; i < 몬스터어레이.size(); i++) {
+                        타겟 = 몬스터어레이.get(i);
+                        라벨[i].setText(타겟.이름 + " (체력:" + 타겟.현재체력 + "/" + 타겟.최대체력 + ") │ 공격력: " + 타겟.공격력 + "+" + 타겟.추가공격력 + " │ 방어력: " + 타겟.방어력 + "+1" + 타겟.추가방어력+ ", 행동게이지: " + ((int)Math.ceil(타겟.행동게이지)/100) + "%");
+                        if (타겟.지속스킬.size() > 0) {
+                            라벨[i].setText(라벨[i].getText() + " 지속중: ");
+                            for (int j = 0; j < 타겟.지속스킬.size(); j++) {
+                                스킬 = 타겟.지속스킬.get(j);
+                                라벨[i].setText(라벨[i].getText() + 스킬.스킬명 + "(" + (스킬.지속시간) + "턴) ");
+                            }
+                        }
+                        라벨[i].setText(라벨[i].getText() + ")\n");
+                    }
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    재시작:
+                    while (true) {
+                        for (int i = 0; i < 몬스터어레이.size(); i++) {
+                            타겟 = 몬스터어레이.get(i);
+                            if (타겟.현재체력 < 0) {
+                                라벨[몬스터어레이.size() - 1].setText("");
+                                몬스터어레이.remove(i);
+                                continue 재시작;
+                            }
+                        }
+                        break;
                     }
                 }
-                break;
+
+
             }
+        }; //몬스터의 상태창을 출력하는 코드
+        Thread 몬스터창= new Thread(몬스터창코드);
+        몬스터창.start();
+
+        Runnable 캐릭터창코드 = new Runnable() {
+            @Override
+            public void run() {
+                int 사용중사이즈;
+                JLabel 라벨;
+                JPanel 패널 = new JPanel();
+                JLabel 라벨2;
+
+                //레이아웃 설정
+                JFrame 캐릭터 = new JFrame("캐릭터"); //인자는 창의 제목을 지정
+                캐릭터.setBounds(100,100,300,500); //창의 크기와 위치를 지정
+                캐릭터.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE); //창의 종료버튼이 동작하지 않게 설정함.
+                캐릭터.setLayout(new GridLayout(0,1,10,3)); //행, 열, 좌우간격, 상하간격
+                캐릭터.setAlwaysOnTop(true); //창이 항상위로 가게 설정함.
+
+//                //처음 라벨 초기화(일회성)
+                라벨 = new JLabel("<html>" +
+                        "<br>┌──────────────────" +
+                        "<br>│레벨: " + Main.플레이어.캐릭터레벨 + " (" + Main.플레이어.캐릭터현재경험치 + "/" + Main.플레이어.캐릭터최대경험치 + ")" +
+                        "<br>│소지금: "+ Main.플레이어.소지금+ "골드" +
+                        "<br>│체력: " + Main.플레이어.캐릭터현재체력 + "/" + Main.플레이어.캐릭터최종체력 +
+                        "<br>│마나: " + Main.플레이어.캐릭터현재마나 + "/" + Main.플레이어.캐릭터최종마나 +
+                        "<br>│공격력: " + Main.플레이어.캐릭터공격력 + " +" + Main.플레이어.캐릭터추가공격력 +
+                        "<br>│방어력: " + Main.플레이어.캐릭터방어력 + " +" + Main.플레이어.캐릭터추가방어력 +
+                        "<br>│치명확률: " + Main.플레이어.캐릭터최종치확 + "%" +
+                        "<br>│치명피해: " + Main.플레이어.캐릭터최종치피 + "%" +
+                        "<br>│회피율: " + Main.플레이어.캐릭터최종회피 + "%" +
+                        "<br>└──────────────────" +
+                        "<br>행동게이지 : " + (int)Math.ceil(플레이어.행동게이지/100) + "%" +
+                        "</html>");
+                라벨2 = new JLabel("" +
+                        "<html>적용 중인 효과:" +
+                        "<br> </html>");
+//                라벨2.setText("섿스");
+                패널.setLayout(new FlowLayout(FlowLayout.LEFT,0,10));
+                패널.add(라벨2);
+                boolean 변경됨=true;
+                사용중사이즈=Main.플레이어.사용중.size();
+                System.out.println(사용중사이즈);
+                캐릭터.add(라벨);
+                캐릭터.add(패널);
+                캐릭터.setVisible(true); //출력하기
+//                try {
+//                    Thread.sleep(1000);
+//                } catch (InterruptedException e) {
+//                    throw new RuntimeException(e);
+//                }
+
+                //라벨 갱신
+                while(true) {
+                    라벨.setText("<html>" +
+                            "<br>┌──────────────────" +
+                            "<br>│레벨: " + Main.플레이어.캐릭터레벨 + " (" + Main.플레이어.캐릭터현재경험치 + "/" + Main.플레이어.캐릭터최대경험치 + ")" +
+                            "<br>│소지금: "+ Main.플레이어.소지금+ "골드" +
+                            "<br>│체력: " + Main.플레이어.캐릭터현재체력 + "/" + Main.플레이어.캐릭터최종체력 +
+                            "<br>│마나: " + Main.플레이어.캐릭터현재마나 + "/" + Main.플레이어.캐릭터최종마나 +
+                            "<br>│공격력: " + Main.플레이어.캐릭터공격력 + " +" + Main.플레이어.캐릭터추가공격력 +
+                            "<br>│방어력: " + Main.플레이어.캐릭터방어력 + " +" + Main.플레이어.캐릭터추가방어력 +
+                            "<br>│치명확률: " + Main.플레이어.캐릭터최종치확 + "%" +
+                            "<br>│치명피해: " + Main.플레이어.캐릭터최종치피 + "%" +
+                            "<br>│회피율: " + Main.플레이어.캐릭터최종회피 + "%" +
+                            "<br>└────────────────── "+
+                            "<br>행동게이지 : " + (int)Math.ceil(플레이어.행동게이지/100) + "%" +
+                            "</html>");
+                    if(사용중사이즈!=Main.플레이어.사용중.size()){
+                        사용중사이즈=Main.플레이어.사용중.size();
+                        변경됨=true;
+                    }
+                    if(변경됨) {
+                        변경됨=false;
+                        if (!(Main.플레이어.사용중.size() == 0)) {
+                            라벨2.setText("<html>" +
+                                    "적용 중인 효과: ");
+                            for (int i = 0; i < Main.플레이어.사용중.size(); i++) {
+                                System.out.println("적용");
+                                라벨2.setText(라벨2.getText() + "<br>" + Main.플레이어.사용중.get(i).아이템이름 + "(" + Main.플레이어.사용중.get(i).사용중 + ")");
+                                System.out.println(라벨2);
+                            }
+                        }
+                    }
+                    라벨2.setText(라벨2.getText()+"</html>");
+
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        }; //몬스터의 상태창을 출력하는 코드
+        Thread 캐릭터창= new Thread(캐릭터창코드);
+        캐릭터창.start();
+
+        while(true) {
+            Main.플레이어.캐릭터현재체력 = Main.플레이어.캐릭터현재체력 - 30;
+            if(Main.플레이어.사용중.size()<5){
+                Main.플레이어.사용중.add(공격력물약);
+                System.out.println("add함");
+            }
+            System.out.println(Main.플레이어.이름 + "의 체력을 30깎아서 " + Main.플레이어.캐릭터현재체력 + "이 되었습니다.");
+            Thread.sleep(1000);
+
+//            if(몬스터어레이.size())
         }
+
 
 
 //        몬스터.add(label);

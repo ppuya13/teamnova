@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
-public abstract class 캐릭터 {
+public abstract class 캐릭터 extends Thread{
 
 
     public int 전투횟수;
@@ -89,7 +89,36 @@ public abstract class 캐릭터 {
     public int 불굴최대;
     Random rd = new Random();
     Scanner sc = new Scanner(System.in);
+    int 입력;
     int 정수강화;
+    public int 속도;
+    public final int 행동 = 10000; //행동게이지가 행동보다 높아지면 0으로 초기화하고 행동함
+    public int 행동난수; //속도값에 따라 랜덤하게 행동난수값을 설정함
+    public static int 행동게이지 = 0;
+
+    public void run(){
+        System.out.println("이 객체의 이름은 " + this.이름 + " 이며 속도는 " + this.속도 + " 입니다.");
+        while (true){
+            try {
+                Thread.sleep(100);
+                this.행동게이지 = this.행동게이지+속도();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            if(this.행동게이지>행동){
+                this.행동게이지=행동;
+            }
+            if(this.행동게이지 == 행동){
+                System.out.println(this.이름 + "의 행동게이지가 가득찼습니다.");
+                입력 = sc.nextInt();
+                this.행동게이지 = 0;
+            }
+        }
+    }
+    public int 속도(){
+        int 속도 = (int) Math.ceil(this.속도*(Math.random()*0.2+0.9));
+        return 속도;
+    }
 
     public abstract void 스킬초기화();
     public abstract void 인벤토리초기화();

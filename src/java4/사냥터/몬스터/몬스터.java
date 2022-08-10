@@ -9,6 +9,7 @@ import java4.아이템.소모.회복형.*;
 import java4.아이템.아이템;
 import java4.아이템.장비.*;
 import java4.캐릭터.캐릭터;
+import java4.캐릭터.플레이어;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -51,20 +52,28 @@ public abstract class 몬스터 extends Thread {
     }
 
     public void run(){
-        System.out.println("이 객체의 이름은 " + this.이름 + " 이며 속도는 " + this.속도 + " 입니다.");
-        while (true){
-            try {
-                Thread.sleep(100);
-                this.행동게이지 = this.행동게이지+속도();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+        while (true) {
+            if (플레이어.행동게이지 >= 10000){
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
             }
-            if(this.행동게이지>행동){
-                this.행동게이지=행동;
-            }
-            if(this.행동게이지 == 행동){
-                System.out.println(this.이름 + "의 행동게이지가 가득찼습니다.");
-                this.행동게이지 = 0;
+            else {
+                try {
+                    Thread.sleep(100);
+                    this.행동게이지 = this.행동게이지 + 속도();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                if (this.행동게이지 > 행동) {
+                    this.행동게이지 = 행동;
+                }
+                if (this.행동게이지 == 행동) {
+                    System.out.println(this.이름 + "의 행동게이지가 가득찼습니다.");
+                    this.행동게이지 = 0;
+                }
             }
         }
     }

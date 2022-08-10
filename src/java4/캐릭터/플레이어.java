@@ -16,6 +16,7 @@ public class 플레이어 extends 캐릭터 {
     public 플레이어()
     {
         this.이름 = "플레이어";
+        this.속도 = 200;
         this.캐릭터레벨 = 1;
         this.캐릭터최대경험치 = 100;
         this.캐릭터현재경험치 = 0;
