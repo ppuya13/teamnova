@@ -10,6 +10,8 @@ import java4.아이템.아이템;
 import java4.아이템.장비.*;
 import java4.캐릭터.캐릭터;
 import java4.캐릭터.플레이어;
+import static java4.Main.플레이어;
+import static java4.사냥터.사냥터.*;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -57,7 +59,7 @@ public abstract class 몬스터 extends Thread {
                 try {
                     Thread.sleep(100);
                 } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
+                    break;
                 }
             }
             else {
@@ -65,14 +67,19 @@ public abstract class 몬스터 extends Thread {
                     Thread.sleep(100);
                     this.행동게이지 = this.행동게이지 + 속도();
                 } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
+                    break;
                 }
                 if (this.행동게이지 > 행동) {
                     this.행동게이지 = 행동;
                 }
                 if (this.행동게이지 == 행동) {
-                    System.out.println(this.이름 + "의 행동게이지가 가득찼습니다.");
-                    this.행동게이지 = 0;
+                    try {
+//                        System.out.println("몬스터.run | 몬스터어레이.size() : " + 몬스터어레이.size());
+                        this.몬스터행동(몬스터어레이, 몬스터머릿수 - 죽은몬스터수, 플레이어);
+                        this.행동게이지 = 0;
+                    } catch (InterruptedException e) {
+                        break;
+                    }
                 }
             }
         }
@@ -108,8 +115,8 @@ public abstract class 몬스터 extends Thread {
         return 속도;
     }
 
-    public boolean 몬스터행동(ArrayList<몬스터> 몬스터어레이, int 몬스터수, 캐릭터 플레이어) throws InterruptedException {
-        boolean 캐릭터사망 = false;
+    public void 몬스터행동(ArrayList<몬스터> 몬스터어레이, int 몬스터수, 캐릭터 플레이어) throws InterruptedException {
+//        boolean 캐릭터사망 = false;
         boolean 리롤=true;
         while(리롤) {
             int 스킬선택 = rd.nextInt(this.스킬리스트.size());
@@ -118,7 +125,7 @@ public abstract class 몬스터 extends Thread {
             if (플레이어.캐릭터현재체력 <= 0) {
                 System.out.println("플레이어는 쓰러졌다.");
                 플레이어.사망횟수++;
-                캐릭터사망 = true;
+//                캐릭터사망 = true;
                 Thread.sleep(1000);
             }
         }
@@ -141,7 +148,7 @@ public abstract class 몬스터 extends Thread {
             }
         }
 //        System.out.println("몬스터.몬스터행동 | 지속스킬판정");
-        return 캐릭터사망;
+//        return 캐릭터사망;
     }
 }
 

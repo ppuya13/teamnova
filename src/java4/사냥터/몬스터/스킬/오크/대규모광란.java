@@ -20,9 +20,9 @@ public class 대규모광란 extends 지속스킬{
         대규모광란 대규모광란;
         boolean 같은스킬없음 = false;
         System.out.println("\n" + 몬스터.이름 + "는 대규모 광란을 사용했다!");
-        Thread.sleep(250);
+//        Thread.sleep(250);
         System.out.println("몬스터들의 능력치가 상승했다!");
-        Thread.sleep(500);
+//        Thread.sleep(500);
         for(int i = 0 ; i < 몬스터어레이.size() ; i++) {
             대규모광란 = new 대규모광란();
             같은스킬없음=false;
@@ -46,6 +46,7 @@ public class 대규모광란 extends 지속스킬{
                 대규모광란.지속효과(대상, 플레이어, 몬스터어레이);
             }
         }
+        Thread.sleep(500);
         return false;
     }
 

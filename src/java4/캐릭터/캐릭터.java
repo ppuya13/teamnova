@@ -67,6 +67,13 @@ public abstract class 캐릭터 extends Thread{
     public int 캐릭터회피;
     public int 캐릭터추가회피;
 
+    public int 캐릭터최종속도;
+    public int 캐릭터속도;
+    public int 캐릭터추가속도;
+    public int 레벨업추가속도;
+    public int 영구속도;
+    public int 소모품추가속도;
+
     public int 활력;
     public int 활력최대;
     public int 명상;
@@ -91,13 +98,12 @@ public abstract class 캐릭터 extends Thread{
     Scanner sc = new Scanner(System.in);
     int 입력;
     int 정수강화;
-    public int 속도;
     public final int 행동 = 10000; //행동게이지가 행동보다 높아지면 0으로 초기화하고 행동함
     public int 행동난수; //속도값에 따라 랜덤하게 행동난수값을 설정함
     public static int 행동게이지 = 0;
 
     public void run(){
-        System.out.println("이 객체의 이름은 " + this.이름 + " 이며 속도는 " + this.속도 + " 입니다.");
+//        System.out.println("이 객체의 이름은 " + this.이름 + " 이며 속도는 " + this.속도 + " 입니다.");
         while (true){
             try {
                 Thread.sleep(100);
@@ -109,14 +115,19 @@ public abstract class 캐릭터 extends Thread{
                 this.행동게이지=행동;
             }
             if(this.행동게이지 == 행동){
-                System.out.println(this.이름 + "의 행동게이지가 가득찼습니다.");
-                입력 = sc.nextInt();
-                this.행동게이지 = 0;
+//                System.out.println(this.이름 + "의 행동게이지가 가득찼습니다.");
+                try {
+                    synchronized (this) {
+                        this.wait();
+                    }
+                } catch (InterruptedException e) {
+                    break;
+                }
             }
         }
     }
     public int 속도(){
-        int 속도 = (int) Math.ceil(this.속도*(Math.random()*0.2+0.9));
+        int 속도 = (int) Math.ceil(this.캐릭터최종속도 *(Math.random()*0.2+0.9));
         return 속도;
     }
 
@@ -134,6 +145,7 @@ public abstract class 캐릭터 extends Thread{
         this.캐릭터추가치확=0;
         this.캐릭터추가치피=0;
         this.캐릭터추가회피=0;
+        this.캐릭터추가속도=0;
         ArrayList<아이템> 소지품 = this.소지품;
         아이템 타겟;
         for(int i=0 ; i<=소지품.size()-1 ; i++){
@@ -152,6 +164,7 @@ public abstract class 캐릭터 extends Thread{
                 this.캐릭터추가치피=this.캐릭터추가치피+타겟.기본치피+타겟.추가치피;
 //                System.out.println("추가치피적용 "+this.캐릭터추가치피);
                 this.캐릭터추가회피=this.캐릭터추가회피+타겟.추가회피; //기본회피를 제공하는 아이템이 현재 없음.
+                this.캐릭터추가속도=this.캐릭터추가속도+타겟.기본속도+타겟.추가속도;
             }
         }
     }
@@ -163,6 +176,7 @@ public abstract class 캐릭터 extends Thread{
         this.캐릭터최종치확=this.캐릭터치명확률+this.캐릭터추가치확+this.레벨업추가치확;
         this.캐릭터최종치피=this.캐릭터치명피해+this.캐릭터추가치피+this.레벨업추가치피+this.영구치피;
         this.캐릭터최종회피=this.캐릭터회피+this.캐릭터추가회피;
+        this.캐릭터최종속도=this.캐릭터속도+this.캐릭터추가속도+this.레벨업추가속도+this.소모품추가속도+this.영구속도;
         if(this.캐릭터최종체력<캐릭터현재체력){//최종체력보다 현재체력이 클경우
             this.캐릭터현재체력=this.캐릭터최종체력;
         }
@@ -180,7 +194,7 @@ public abstract class 캐릭터 extends Thread{
         int 랜덤값;
         int 상승횟수=0;
         while(상승횟수 <= 4){
-            랜덤값 = rd.nextInt(50); //0~9체력 | 10~19마나 | 20~29공격력 | 30~39방어력 | 40~49치피
+            랜덤값 = rd.nextInt(60); //0~9체력 | 10~19마나 | 20~29공격력 | 30~39방어력 | 40~49치피 |50~59속도
             if(랜덤값<=9){ //0~9체력
                 정수강화=rd.nextInt(11)+20; //20~30 상승
                 System.out.println("체력이 "+정수강화+" 만큼 성장했다!");
@@ -215,6 +229,13 @@ public abstract class 캐릭터 extends Thread{
                 정수강화=rd.nextInt(6)+5;
                 System.out.println("치명타 피해량이 "+정수강화+" 만큼 상승했다!");
                 this.레벨업추가치피=this.레벨업추가치피+정수강화;
+                상승횟수++;
+                Thread.sleep(200);
+            }
+            else if(랜덤값<=59){ //50~59속도
+                정수강화=rd.nextInt(3)+1;
+                System.out.println("속도가 "+정수강화+" 만큼 상승했다!");
+                this.레벨업추가속도=this.레벨업추가속도+정수강화;
                 상승횟수++;
                 Thread.sleep(200);
             }

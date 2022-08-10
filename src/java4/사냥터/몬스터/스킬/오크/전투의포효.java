@@ -19,7 +19,7 @@ public class 전투의포효 extends 지속스킬 {
         전투의포효.지속시간++;
         boolean 같은스킬없음 = false;
         System.out.println("\n" + 몬스터.이름 + "의 전투의 포효!");
-        Thread.sleep(500);
+//        Thread.sleep(500);
         if(몬스터.지속스킬.size()>0) {//지속중인 스킬이 있으면
             for (int i = 0; i < 몬스터.지속스킬.size(); i++) {
                 if (몬스터.지속스킬.get(i).스킬명.equals(this.스킬명)){//지속중인 스킬이 있고 그 스킬 중 이 스킬과 같은 스킬이 있으면
@@ -36,6 +36,7 @@ public class 전투의포효 extends 지속스킬 {
             몬스터.지속스킬.add(전투의포효);
         }
         전투의포효.지속효과(몬스터, 플레이어, 몬스터어레이);
+        Thread.sleep(500);
         return false;
     }
 

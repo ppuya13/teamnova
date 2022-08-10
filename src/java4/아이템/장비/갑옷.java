@@ -15,5 +15,6 @@ public class 갑옷 extends 장비아이템{
         this.기본마나=0;
         this.기본치확=0;
         this.기본치피=0;
+        this.기본속도=0;
     }
 }

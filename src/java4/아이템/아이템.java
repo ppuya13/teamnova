@@ -15,7 +15,7 @@ public abstract class 아이템 implements Cloneable{ //아이템 정보는 이�
     public boolean 상점판매여부 = false; //true이면 상점에서 판매함
     public int 구매가격 = 0;
     public int 판매가격 = 0;
-    public int 장비부위 = 0; //1:무기 2:방패 3:갑옷 4:각반 //같은 부위 중복 착용을 막기 위함.
+    public int 장비부위 = 0; //1:무기 2:방패 3:갑옷 4:각반 5:장갑//같은 부위 중복 착용을 막기 위함.
     public boolean 사용가능여부 = false; //사용이 가능한 아이템인지 지정
     public String 아이템효과 = ""; //인벤토리의 살펴보기에 출력될 메시지
     public int 지속시간 = 0; //지속시간이 존재하는 아이템에만 적용
@@ -31,6 +31,7 @@ public abstract class 아이템 implements Cloneable{ //아이템 정보는 이�
     public int 기본마나 = 0;
     public int 기본치확 = 0;
     public int 기본치피 = 0;
+    public int 기본속도 = 0;
     public int 추가능력치 = 0;
     public int 추가공격력 = 0;
     public int 추가방어력 = 0;
@@ -39,6 +40,7 @@ public abstract class 아이템 implements Cloneable{ //아이템 정보는 이�
     public int 추가치확 = 0;
     public int 추가치피 = 0;
     public int 추가회피 = 0;
+    public int 추가속도 = 0;
 
 
     //장비 아이템 효과, 사용 아이템 효과 적용할 방법 생각해보기
@@ -58,6 +60,7 @@ public abstract class 아이템 implements Cloneable{ //아이템 정보는 이�
         this.추가치확=0;
         this.추가치피=0;
         this.추가회피=0;
+        this.추가속도=0;
     }
     public abstract boolean 사용효과(플레이어 플레이어) throws InterruptedException, CloneNotSupportedException;
     public Object clone() throws CloneNotSupportedException {

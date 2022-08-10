@@ -22,7 +22,7 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.concurrent.Callable;
 
-public class 연습용클래스 extends Thread {
+public class 연습용클래스 {
     String 스트링;
     int 인트;
 
@@ -135,39 +135,6 @@ public class 연습용클래스 extends Thread {
 //        캐릭터.setVisible(true); //출력하기
 //        캐릭터.revalidate(); //새로고침 비슷한 기능
 
-        //레이아웃 지정하기
-//        JButton btn1 = new JButton("버튼1");
-//        JButton btn2 = new JButton("버튼2");
-//        JButton btn3 = new JButton("버튼3");
-//        JButton btn4 = new JButton("버튼4");
-//        JButton btn5 = new JButton("버튼5");
-//        JButton btn6 = new JButton("버튼6");
-//
-//        GroupLayout 몬스터레이아웃 = new GroupLayout(panel);
-//        몬스터레이아웃.setAutoCreateGaps(true);//자동 간격
-//        몬스터레이아웃.setAutoCreateContainerGaps(true);//자동 간격
-
-//        몬스터레이아웃.setHorizontalGroup( //가로정렬
-//                몬스터레이아웃.createSequentialGroup()
-//                        .addComponent(btn1)
-//                        .addComponent(btn2)
-//                        .addGroup(몬스터레이아웃.createParallelGroup(GroupLayout.Alignment.BASELINE)
-//                                .addComponent(btn3)
-//                                .addComponent(btn4)
-//                                .addComponent(btn5))
-//        );
-//        몬스터레이아웃.setVerticalGroup( //세로정렬
-//                몬스터레이아웃.createSequentialGroup()
-//                        .addGroup(몬스터레이아웃.createParallelGroup(GroupLayout.Alignment.BASELINE)
-//                                .addComponent(btn1)
-//                                .addComponent(btn2)
-//                                .addComponent(btn3))
-//                        .addGroup(몬스터레이아웃.createParallelGroup(GroupLayout.Alignment.BASELINE)
-//                                .addComponent(btn4)
-//                                .addComponent(btn5)
-//                                .addComponent(btn6))
-//        );
-
         Runnable 몬스터창코드 = new Runnable() {
             @Override
             public void run() {
@@ -258,7 +225,7 @@ public class 연습용클래스 extends Thread {
                 JFrame 캐릭터 = new JFrame("캐릭터"); //인자는 창의 제목을 지정
                 캐릭터.setBounds(100,100,300,500); //창의 크기와 위치를 지정
                 캐릭터.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE); //창의 종료버튼이 동작하지 않게 설정함.
-                캐릭터.setLayout(new GridLayout(0,1,10,3)); //행, 열, 좌우간격, 상하간격
+                캐릭터.setLayout(new GridLayout(0,1,10,0)); //행, 열, 좌우간격, 상하간격
                 캐릭터.setAlwaysOnTop(true); //창이 항상위로 가게 설정함.
 
 //                //처음 라벨 초기화(일회성)
@@ -279,12 +246,11 @@ public class 연습용클래스 extends Thread {
                 라벨2 = new JLabel("" +
                         "<html>적용 중인 효과:" +
                         "<br> </html>");
-//                라벨2.setText("섿스");
                 패널.setLayout(new FlowLayout(FlowLayout.LEFT,0,10));
                 패널.add(라벨2);
                 boolean 변경됨=true;
-                사용중사이즈=Main.플레이어.사용중.size();
-                System.out.println(사용중사이즈);
+                사용중사이즈=플레이어2.사용중.size();
+//                System.out.println(사용중사이즈);
                 캐릭터.add(라벨);
                 캐릭터.add(패널);
                 캐릭터.setVisible(true); //출력하기
@@ -298,31 +264,31 @@ public class 연습용클래스 extends Thread {
                 while(true) {
                     라벨.setText("<html>" +
                             "<br>┌──────────────────" +
-                            "<br>│레벨: " + Main.플레이어.캐릭터레벨 + " (" + Main.플레이어.캐릭터현재경험치 + "/" + Main.플레이어.캐릭터최대경험치 + ")" +
-                            "<br>│소지금: "+ Main.플레이어.소지금+ "골드" +
-                            "<br>│체력: " + Main.플레이어.캐릭터현재체력 + "/" + Main.플레이어.캐릭터최종체력 +
-                            "<br>│마나: " + Main.플레이어.캐릭터현재마나 + "/" + Main.플레이어.캐릭터최종마나 +
-                            "<br>│공격력: " + Main.플레이어.캐릭터공격력 + " +" + Main.플레이어.캐릭터추가공격력 +
-                            "<br>│방어력: " + Main.플레이어.캐릭터방어력 + " +" + Main.플레이어.캐릭터추가방어력 +
-                            "<br>│치명확률: " + Main.플레이어.캐릭터최종치확 + "%" +
-                            "<br>│치명피해: " + Main.플레이어.캐릭터최종치피 + "%" +
-                            "<br>│회피율: " + Main.플레이어.캐릭터최종회피 + "%" +
+                            "<br>│레벨: " + 플레이어2.캐릭터레벨 + " (" + 플레이어2.캐릭터현재경험치 + "/" + 플레이어2.캐릭터최대경험치 + ")" +
+                            "<br>│소지금: "+ 플레이어2.소지금+ "골드" +
+                            "<br>│체력: " + 플레이어2.캐릭터현재체력 + "/" + 플레이어2.캐릭터최종체력 +
+                            "<br>│마나: " + 플레이어2.캐릭터현재마나 + "/" + 플레이어2.캐릭터최종마나 +
+                            "<br>│공격력: " + 플레이어2.캐릭터공격력 + " +" + 플레이어2.캐릭터추가공격력 +
+                            "<br>│방어력: " + 플레이어2.캐릭터방어력 + " +" + 플레이어2.캐릭터추가방어력 +
+                            "<br>│치명확률: " + 플레이어2.캐릭터최종치확 + "%" +
+                            "<br>│치명피해: " + 플레이어2.캐릭터최종치피 + "%" +
+                            "<br>│회피율: " + 플레이어2.캐릭터최종회피 + "%" +
                             "<br>└────────────────── "+
-                            "<br>행동게이지 : " + (int)Math.ceil(플레이어.행동게이지/100) + "%" +
+                            "<br>행동게이지 : " + (int)Math.ceil(플레이어2.행동게이지/100) + "%" +
                             "</html>");
-                    if(사용중사이즈!=Main.플레이어.사용중.size()){
-                        사용중사이즈=Main.플레이어.사용중.size();
+                    if(사용중사이즈!=플레이어2.사용중.size()){
+                        사용중사이즈=플레이어2.사용중.size();
                         변경됨=true;
                     }
                     if(변경됨) {
                         변경됨=false;
-                        if (!(Main.플레이어.사용중.size() == 0)) {
+                        if (!(플레이어2.사용중.size() == 0)) {
                             라벨2.setText("<html>" +
                                     "적용 중인 효과: ");
-                            for (int i = 0; i < Main.플레이어.사용중.size(); i++) {
-                                System.out.println("적용");
-                                라벨2.setText(라벨2.getText() + "<br>" + Main.플레이어.사용중.get(i).아이템이름 + "(" + Main.플레이어.사용중.get(i).사용중 + ")");
-                                System.out.println(라벨2);
+                            for (int i = 0; i < 플레이어2.사용중.size(); i++) {
+//                                System.out.println("적용");
+                                라벨2.setText(라벨2.getText() + "<br>" + 플레이어2.사용중.get(i).아이템이름 + "(" + 플레이어2.사용중.get(i).사용중 + ")");
+//                                System.out.println(라벨2);
                             }
                         }
                     }
@@ -340,12 +306,37 @@ public class 연습용클래스 extends Thread {
         캐릭터창.start();
 
         while(true) {
-            Main.플레이어.캐릭터현재체력 = Main.플레이어.캐릭터현재체력 - 30;
-            if(Main.플레이어.사용중.size()<5){
-                Main.플레이어.사용중.add(공격력물약);
-                System.out.println("add함");
+//            Main.플레이어.캐릭터현재체력 = Main.플레이어.캐릭터현재체력 - 30;
+//            if(Main.플레이어.사용중.size()<5){
+//                Main.플레이어.사용중.add(공격력물약);
+////                System.out.println("add함");
+//            }
+
+//            플레이어2.행동게이지 = 8000;
+            if(플레이어2.행동게이지==10000) {
+                System.out.println("싱크로전 : " + 플레이어2.getState());
+                System.out.println("1초후 해제");
+                Thread.sleep(1000);
+                synchronized (플레이어2) {
+                    플레이어2.행동게이지 = 0;
+                    플레이어2.notify();
+                    System.out.println("notify후 : " + 플레이어2.getState());
+//                    플레이어2.yield();
+//                    System.out.println("yield후 : " + 플레이어2.getState());
+//                    플레이어2.interrupt();
+//                    System.out.println("interrupt후 : " + 플레이어2.getState());
+                }
+                Thread.sleep(1000);
+//                System.out.println("interrupt 1초 후 : " + 플레이어2.getState());
+
+//                synchronized (플레이어2) {
+//                    Thread.sleep(1000);
+//                    System.out.println("재실행전");
+//                    플레이어2.notify();
+//                    System.out.println("재실행후");
+//                }
             }
-            System.out.println(Main.플레이어.이름 + "의 체력을 30깎아서 " + Main.플레이어.캐릭터현재체력 + "이 되었습니다.");
+//            System.out.println(Main.플레이어.이름 + "의 체력을 30깎아서 " + Main.플레이어.캐릭터현재체력 + "이 되었습니다.");
             Thread.sleep(1000);
 
 //            if(몬스터어레이.size())

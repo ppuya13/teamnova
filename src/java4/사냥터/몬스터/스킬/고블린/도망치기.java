@@ -31,6 +31,7 @@ public class 도망치기 extends 몬스터스킬 {
                 }
             }
         }
+        Thread.sleep(500);
         return false;
     }
 }

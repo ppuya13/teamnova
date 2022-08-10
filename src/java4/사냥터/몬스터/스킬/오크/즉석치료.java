@@ -39,12 +39,13 @@ public class 즉석치료 extends 몬스터스킬{
             }
             System.out.println(몬스터.이름 + "이(가) " + 대상.이름 + "에게 즉석치료를 사용했다!");
             대상.현재체력 = 대상.현재체력+회복량;
-            Thread.sleep(500);
+//            Thread.sleep(500);
             System.out.println(대상.이름 + "의 체력이 " + 회복량 + " 회복되어 " + 대상.현재체력 + "이(가) 되었다!");
-            Thread.sleep(500);
+//            Thread.sleep(500);
 
             대상리스트.clear();
         }
+        Thread.sleep(500);
         return !사용가능;
     }
 }

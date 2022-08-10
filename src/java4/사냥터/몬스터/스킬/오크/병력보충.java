@@ -25,9 +25,9 @@ public class 병력보충 extends 몬스터스킬 {
 //            System.out.println("병력보충.사용효과 | 몹이 너무 많아서 리롤");
             return true;
         }
-        Thread.sleep(500);
+//        Thread.sleep(500);
         System.out.println("오크들이 더 몰려왔다!");
-        Thread.sleep(500);
+//        Thread.sleep(500);
         for(int i = 0 ; i < 3 ; i++) {
             난수 = rd.nextInt(10);
             if(난수<7){
@@ -39,6 +39,7 @@ public class 병력보충 extends 몬스터스킬 {
             몬스터.소환됨 = true;
             몬스터어레이.add(몬스터);
         }
+        Thread.sleep(500);
         return false;
     }
 }

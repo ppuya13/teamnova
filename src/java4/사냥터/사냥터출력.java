@@ -6,7 +6,10 @@ import java4.아이템.소모.지속형.지속형;
 
 import static java4.Main.플레이어;
 
+
 public class 사냥터출력 extends 사냥터{
+    public static boolean 턴넘김 = false;
+    public static boolean 몹사망 = false;
     public void 사냥터() throws InterruptedException, CloneNotSupportedException {
         사냥터:
         while (반복) {
@@ -105,135 +108,125 @@ public class 사냥터출력 extends 사냥터{
         }
     }
     public void 전투(boolean 보스전) throws InterruptedException, CloneNotSupportedException {
+        전투_몬스터창 몬스터창 = new 전투_몬스터창(몬스터어레이);
+        전투_캐릭터창 캐릭터창 = new 전투_캐릭터창(플레이어);
+        몬스터창.start();
+        캐릭터창.start();
+        플레이어.행동게이지=10000;
+        for(int i = 0 ; i < 몬스터어레이.size() ; i++) {
+            몬스터어레이.get(i).start();
+        }
+
+        boolean 전투 = true;
         전투:
-        while (반복) {
-            입력 = -1;
-            System.out.println(메인.능력치창());
-            System.out.println(this.몬스터목록());
-            this.사냥터행동(보스전);
-            입력 = sc.nextInt();
-            switch (입력) {
-                case 1: //공격
-                    if(플레이어.캐릭터공격(몬스터어레이, this)){
-                        continue 전투;
-                    }
-                    몬스터삭제 = true;
-                    턴 = true;
-                    break;
-                case 2: //스킬
-                    this.스킬();
-                    break;
-                case 3: //아이템
-                    this.아이템();
-                    break;
-                case 4: //살펴보기
-                    this.살펴보기();
-                    break;
-                case 5: //도망치기
-                    if(!보스전) {
-                        반복 = true;
-                        while (반복) {
-                            System.out.println("" +
-                                    "정말 도망치시겠습니까?" +
-                                    "\n0.취소한다." +
-                                    "\n1.도망친다.");
-                            입력 = sc.nextInt();
-                            switch (입력) {
-                                case 0:
-                                    continue 전투;
-                                case 1:
-                                    System.out.println("도망쳤습니다.");
-                                    플레이어.사용중.clear();
-                                    전투종료 = true;
-                                    반복 = false;
-                                    Thread.sleep(1000);
-                                    break;
-                            }
+        while (전투) {
+            while (플레이어.행동게이지 == 플레이어.행동) {
+                입력 = -1;
+                System.out.println(메인.능력치창());
+                System.out.println(this.몬스터목록());
+                this.사냥터행동(보스전);
+                입력 = sc.nextInt();
+                switch (입력) {
+                    case 1: //공격
+                        if (플레이어.캐릭터공격(몬스터어레이, this)) {
+                            continue 전투;
                         }
+                        몬스터삭제 = true;
+                        턴넘김 = true;
                         break;
-                    }
-                    break;
-            }
-            if (턴) {
-//                            플레이어.소모템적용(); //소모템 지속시간도 여기서 감소시킴
-                if(플레이어.사용중.size()>0){//적용중인 지속스킬이 있다면
-                    for(int i = 0 ; i < 플레이어.사용중.size() ; i++){ //지속스킬 수만큼 반복
-                        ((지속형)플레이어.사용중.get(i)).효과적용(플레이어);
-                    }
-                    재시작:
-                    while(true){
-                        if(플레이어.사용중.size()>0) {//계속 지워줘야하기 때문에 지속스킬 개수 판정을 다시함
-                            for (int i = 0; i < 플레이어.사용중.size(); i++) {
-                                if(((지속형)플레이어.사용중.get(i)).효과삭제(플레이어)){//스킬을 하나 지웠으면
-                                    continue 재시작; //재시작함
+                    case 2: //스킬
+                        this.스킬();
+                        break;
+                    case 3: //아이템
+                        this.아이템();
+                        break;
+                    case 4: //살펴보기
+                        this.살펴보기();
+                        break;
+                    case 5: //도망치기
+                        if (!보스전) {
+                            반복 = true;
+                            while (반복) {
+                                System.out.println("" +
+                                        "정말 도망치시겠습니까?" +
+                                        "\n0.취소한다." +
+                                        "\n1.도망친다.");
+                                입력 = sc.nextInt();
+                                switch (입력) {
+                                    case 0:
+                                        continue 전투;
+                                    case 1:
+                                        System.out.println("도망쳤습니다.");
+                                        플레이어.사용중.clear();
+                                        전투종료 = true;
+                                        반복 = false;
+                                        Thread.sleep(1000);
+                                        break;
                                 }
                             }
+                            break;
                         }
-                        //지속스킬이 더이상 없거나 지울 스킬이 없다면
                         break;
-                    }
                 }
-            }
-            플레이어.능력치적용();
-
-            //플레이어의 행동이 끝난 뒤
-            this.몬스터삭제(this.몬스터삭제);
-            전투승리 = this.전투종료판정(몬스터어레이, 보스전);
-
-
-
-            if (전투승리) {
-                턴 = false;
-                전투종료 = true;
-                플레이어.사용중.clear();
-            }
-            if (턴) {
-                for(int i = 0 ; i < this.몬스터어레이.size() ; i++) {
-                    몬스터정보 = this.몬스터어레이.get(i);
-                    if(!몬스터정보.소환됨) { //몬스터가 소환된 턴이 아니면
-                        if (!사망) {
-                            사망 = 몬스터정보.몬스터행동(this.몬스터어레이, this.몬스터머릿수 - this.죽은몬스터수, 플레이어);
+                if (턴넘김) {
+//                            플레이어.소모템적용(); //소모템 지속시간도 여기서 감소시킴
+                    if (플레이어.사용중.size() > 0) {//적용중인 지속스킬이 있다면
+                        for (int i = 0; i < 플레이어.사용중.size(); i++) { //지속스킬 수만큼 반복
+                            ((지속형) 플레이어.사용중.get(i)).효과적용(플레이어);
                         }
-                    }else{//몬스터가 소환된 턴이면
-                        System.out.println("사냥터출력|"+몬스터정보.이름 + "이(가) 소환된턴임.");
-                        몬스터정보.소환됨=false;
+                        재시작:
+                        while (true) {
+                            if (플레이어.사용중.size() > 0) {//계속 지워줘야하기 때문에 지속스킬 개수 판정을 다시함
+                                for (int i = 0; i < 플레이어.사용중.size(); i++) {
+                                    if (((지속형) 플레이어.사용중.get(i)).효과삭제(플레이어)) {//스킬을 하나 지웠으면
+                                        continue 재시작; //재시작함
+                                    }
+                                }
+                            }
+                            //지속스킬이 더이상 없거나 지울 스킬이 없다면
+                            break;
+                        }
                     }
                 }
-                this.몬스터삭제(몬스터삭제);
-                턴 = false;
-                if (사망) {
-                    System.exit(0);
+                플레이어.능력치적용();
+
+                //플레이어의 행동이 끝난 뒤
+                this.몬스터삭제(this.몬스터삭제);
+                전투승리 = this.전투종료판정(몬스터어레이, 보스전);
+
+
+                if (전투승리) {
+                    턴넘김 = false;
+                    전투종료 = true;
+                    플레이어.사용중.clear();
                 }
-            }
-            if (전투종료) {//전투가 종료됐다면
-                this.전투정산(전투승리, 플레이어);
+                if (턴넘김) {
+                    플레이어.행동게이지=0;
+                    synchronized (플레이어){
+                        Thread.sleep(100);
+                        플레이어.notify();
+//                        System.out.println(플레이어.getState());
+                    }
+                    this.몬스터삭제(몬스터삭제);
+                    턴넘김 = false;
+//                    if (사망) {
+//                        System.exit(0);
+//                    }
+                }
+                if (전투종료) {//전투가 종료됐다면
+                    몬스터창.interrupt();
+                    캐릭터창.interrupt();
+                    this.전투정산(전투승리, 플레이어);
+                    반복 = true;
+                    전투승리 = false;
+                    전투종료 = false;
+                    return;
+                }
                 반복 = true;
-                전투승리 = false;
-                전투종료 = false;
-                return;
             }
-            반복 = true;
+            Thread.sleep(50);
         }
     }
-//    public void 공격() throws InterruptedException {
-//        while(true) {
-//            System.out.println(메인.능력치창());
-//            System.out.println("\n공격할 몬스터를 선택하세요.");
-//            System.out.print(this.행동몬스터목록());
-//            System.out.print("\n→");
-//            입력 = sc.nextInt();
-//            if (입력 == 0) {
-//                return;
-//            } else if (입력 > 0 && 입력 <= 몬스터어레이.size()) {
-//                몬스터타겟 = this.몬스터어레이.get(입력 - 1);
-//                플레이어.캐릭터공격(몬스터타겟, );
-//                몬스터삭제 = true;
-//                턴 = true;
-//                반복 = false;
-//                break;
-//            }
-//        }
-//    }
     public void 스킬() throws InterruptedException {
         boolean 스킬반복 = true;
         스킬:
@@ -253,7 +246,7 @@ public class 사냥터출력 extends 사냥터{
                     continue 스킬; //true면 취소했다는 뜻이기 때문에 스킬선택창으로 돌아감
                 }
                 몬스터삭제 = true;
-                턴 = true;
+                턴넘김 = true;
                 스킬반복=false;
             }
         }
@@ -281,7 +274,7 @@ public class 사냥터출력 extends 사냥터{
                         continue 아이템;
                     }
                     플레이어.인벤정리();
-                    턴 = true;
+                    턴넘김 = true;
                     break;
                 }
             }

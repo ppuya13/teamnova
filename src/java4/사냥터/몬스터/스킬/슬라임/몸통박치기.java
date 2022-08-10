@@ -22,20 +22,21 @@ public class 몸통박치기 extends 몬스터스킬 {
         if(플레이어.캐릭터현재체력>=1){ //캐릭터가 살아있으면
             if(rd.nextInt(100)+플레이어.캐릭터최종회피>99) {//회피판정 성공시
                 System.out.println("\n플레이어는 회피했다!");
-                Thread.sleep(500);
+//                Thread.sleep(500);
             }
             else {
                 if (데미지 - 플레이어.캐릭터최종방어력 >= 1) {
                     System.out.println((데미지 - 플레이어.캐릭터최종방어력) + "의 데미지를 입었다!");
-                    Thread.sleep(500);
+//                    Thread.sleep(500);
                     플레이어.캐릭터현재체력 = 플레이어.캐릭터현재체력 - (데미지 - 플레이어.캐릭터최종방어력);
                 } else {
                     System.out.println("1의 데미지를 입었다!");
-                    Thread.sleep(500);
+//                    Thread.sleep(500);
                     플레이어.캐릭터현재체력 = 플레이어.캐릭터현재체력 - 1;
                 }
             }
         }
+        Thread.sleep(500);
         return false;
     }
 }
