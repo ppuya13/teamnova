@@ -56,7 +56,7 @@ public abstract class 몬스터 extends Thread {
     public void run(){
         while (true) {
 
-            if (플레이어.행동게이지 >= 10000){
+            if (플레이어.행동게이지 >= 플레이어.행동){
                 try {
                     Thread.sleep(100);
                 } catch (InterruptedException e) {

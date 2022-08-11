@@ -52,31 +52,16 @@ public class Main {
 
             입력 = sc.nextInt();
 
-           switch (입력) {
+            switch (입력) {
                 case 0: //디버깅용
                     System.out.println("디버깅용");
                     break;
                 case 1: //사냥터
-                    try {
-                        사냥터출력.사냥터();
-                    }catch (ArrayIndexOutOfBoundsException e){
-                        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" +
-                                "사냥터 ArrayIndexOutOfBoundsException 발생");
-                    }catch (NullPointerException e){
-                        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" +
-                                "사냥터 NullPointerException 발생");
-                    }
+                    사냥터출력.사냥터();
                     break;
                 case 2: //인벤토리
-                    try {
-                        인벤토리출력.인벤토리();
-                    }catch (ArrayIndexOutOfBoundsException e){
-                        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" +
-                                "인벤토리 ArrayIndexOutOfBoundsException 발생");
-                    }catch (NullPointerException e){
-                        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" +
-                                "인벤토리 NullPointerException 발생");
-                    }
+                    인벤토리출력.인벤토리();
+
                     break;
                 case 3: //상점
                     상점.상점();
@@ -87,10 +72,10 @@ public class Main {
                 case 5: //휴식
                     플레이어.휴식();
                     break;
-               case 456456:
-                   System.out.println("show me the money!!!");
-                   플레이어.소지금=플레이어.소지금+5000;
-                   Thread.sleep(1000);
+                case 456456:
+                    System.out.println("show me the money!!!");
+                    플레이어.소지금=플레이어.소지금+5000;
+                    Thread.sleep(1000);
             }
             if (사망) {
                 System.out.println("플레이어는 쓰러졌다.");
@@ -100,6 +85,22 @@ public class Main {
         }
     }//psvm 닫힘
 }//class 닫힘
+
+
+//0811 피드백(기찬 팀장님) (스레드미통과)
+//스레드를 사용할 필요 없는 곳에 너무 스레드를 남발했다.
+//스레드는 적게 쓸수록 좋다.
+
+//몬스터를 각각 스레드를 쓰게 하지 말고 싱글스레드 또는 스레드없이 관리하기(가능할거같음).
+//스테이터스창은 while로 돌리지 말고 스테이터스가 바뀔 일이 있을 때만 호출하도록 바꾸기
+
+//스레드를 쓸 수 밖에 없는 곳에 사용하기
+//1. 플레이어 턴때 시간제한 두기(기찬팀장님 제안)
+//2. 대장간에 강화를 시킬때 시간이 걸리게 해서 강화하는동안 다른것을 할수있게(기찬팀장님 제안)
+//3. 도트딜(턴과 상관없이 들어가는 데미지)(기찬팀장님 제안)
+//4. 대장간에 신규기능(아이템제작 추가)
+
+
 
 
 //0808 피드백(배희진 파트장님) (상속통과)
