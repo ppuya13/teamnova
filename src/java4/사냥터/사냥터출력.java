@@ -9,7 +9,7 @@ import static java4.Main.플레이어;
 
 public class 사냥터출력 extends 사냥터{
     public static boolean 턴넘김 = false;
-    public static boolean 몹사망 = false;
+    //    public static boolean 몹사망 = false;
     public void 사냥터() throws InterruptedException, CloneNotSupportedException {
         사냥터:
         while (반복) {
@@ -110,6 +110,7 @@ public class 사냥터출력 extends 사냥터{
     public void 전투(boolean 보스전) throws InterruptedException, CloneNotSupportedException {
         전투_몬스터창 몬스터창 = new 전투_몬스터창(몬스터어레이);
         전투_캐릭터창 캐릭터창 = new 전투_캐릭터창(플레이어);
+
         몬스터창.start();
         캐릭터창.start();
         플레이어.행동게이지=10000;

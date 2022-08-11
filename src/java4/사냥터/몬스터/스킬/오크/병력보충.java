@@ -36,7 +36,7 @@ public class 병력보충 extends 몬스터스킬 {
             else{
                 몬스터 = new 오크주술사("(소환됨)");
             }
-            몬스터.소환됨 = true;
+            몬스터.start();
             몬스터어레이.add(몬스터);
         }
         Thread.sleep(500);

@@ -37,7 +37,7 @@ public class 강타 extends 단일스킬 {
         타겟.현재체력 = 타겟.현재체력 - 입힌데미지;
         Thread.sleep(500);
         if(치명타){
-            System.out.print("치명타!");
+            System.out.println("치명타!");
             Thread.sleep(500);
         }
         System.out.println("" +

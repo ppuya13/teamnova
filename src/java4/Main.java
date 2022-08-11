@@ -57,10 +57,26 @@ public class Main {
                     System.out.println("디버깅용");
                     break;
                 case 1: //사냥터
-                    사냥터출력.사냥터();
+                    try {
+                        사냥터출력.사냥터();
+                    }catch (ArrayIndexOutOfBoundsException e){
+                        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" +
+                                "사냥터 ArrayIndexOutOfBoundsException 발생");
+                    }catch (NullPointerException e){
+                        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" +
+                                "사냥터 NullPointerException 발생");
+                    }
                     break;
                 case 2: //인벤토리
-                    인벤토리출력.인벤토리();
+                    try {
+                        인벤토리출력.인벤토리();
+                    }catch (ArrayIndexOutOfBoundsException e){
+                        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" +
+                                "인벤토리 ArrayIndexOutOfBoundsException 발생");
+                    }catch (NullPointerException e){
+                        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" +
+                                "인벤토리 NullPointerException 발생");
+                    }
                     break;
                 case 3: //상점
                     상점.상점();

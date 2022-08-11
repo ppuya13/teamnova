@@ -46,7 +46,7 @@ public class 휩쓸기 extends 광역스킬 {
 
             타겟.현재체력 = 타겟.현재체력 - 입힌데미지;
             if(치명타){
-                System.out.print("치명타!");
+                System.out.println("치명타!");
                 Thread.sleep(400);
             }
             System.out.println("" +
