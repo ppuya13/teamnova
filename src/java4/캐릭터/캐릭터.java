@@ -106,31 +106,28 @@ public abstract class 캐릭터 extends Thread{
 //        System.out.println("이 객체의 이름은 " + this.이름 + " 이며 속도는 " + this.속도 + " 입니다.");
         while (true){
             try {
-                try {
-                    Thread.sleep(100);
-                    this.행동게이지 = this.행동게이지 + 속도();
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
+                if(this.캐릭터현재체력<=0){
+                    System.out.println(this.이름 + "은(는) 쓰러졌다.");
+                    Thread.sleep(1000);
+                    System.exit(0);
                 }
-                if (this.행동게이지 > 행동) {
-                    this.행동게이지 = 행동;
-                }
-                if (this.행동게이지 == 행동) {
+                Thread.sleep(100);
+                this.행동게이지 = this.행동게이지 + 속도();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            if (this.행동게이지 > 행동) {
+                this.행동게이지 = 행동;
+            }
+            if (this.행동게이지 == 행동) {
 //                System.out.println(this.이름 + "의 행동게이지가 가득찼습니다.");
-                    try {
-                        synchronized (this) {
-                            this.wait();
-                        }
-                    } catch (InterruptedException e) {
-                        break;
+                try {
+                    synchronized (this) {
+                        this.wait();
                     }
+                } catch (InterruptedException e) {
+                    break;
                 }
-            }catch (ArrayIndexOutOfBoundsException e){
-                System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" +
-                        "캐릭터 ArrayIndexOutOfBoundsException 발생");
-            }catch (NullPointerException e){
-                System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" +
-                        "캐릭터 NullPointerException 발생");
             }
         }
     }

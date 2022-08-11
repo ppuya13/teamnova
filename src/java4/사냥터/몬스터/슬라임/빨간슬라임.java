@@ -2,8 +2,6 @@ package java4.사냥터.몬스터.슬라임;
 
 public class 빨간슬라임 extends 슬라임{
     public 빨간슬라임(String 이름) {
-
-        System.out.println("다음");
         this.이름 = "빨간슬라임 " + 이름;
         this.속도 = rd.nextInt(21) + 160; //160~180
         this.공격력 = rd.nextInt(4) + 6; //6~9

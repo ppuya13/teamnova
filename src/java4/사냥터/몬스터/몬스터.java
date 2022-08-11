@@ -22,7 +22,7 @@ public abstract class 몬스터 extends Thread {
     public final int 행동 = 10000; //행동게이지가 행동보다 높아지면 0으로 초기화하고 행동함
     public int 행동난수; //속도값에 따라 랜덤하게 행동난수값을 설정함
     public int 행동게이지 = 0;
-//    public boolean 소환됨; //소환된 턴엔 행동하지 못하게 하기 위함.
+    //    public boolean 소환됨; //소환된 턴엔 행동하지 못하게 하기 위함.
     public int 속도; //행동게이지가 차는 속도, 대충 (1000/속도)초당 1회 행동함
     public int 공격력;
     public int 추가공격력 = 0;
@@ -56,44 +56,36 @@ public abstract class 몬스터 extends Thread {
     public void run(){
         while (true) {
 
-            try {
-                if (플레이어.행동게이지 >= 10000){
-                    try {
-                        Thread.sleep(100);
-                    } catch (InterruptedException e) {
-                        break;
-                    }
-                }
-                else {
-                    try {
-                        Thread.sleep(100);
-                        this.행동게이지 = this.행동게이지 + 속도();
-                    } catch (InterruptedException e) {
-                        break;
-                    }
-                    if (this.행동게이지 > 행동) {
-                        this.행동게이지 = 행동;
-                    }
-                    if (this.행동게이지 == 행동) {
-                        try {
-//                        System.out.println("몬스터.run | 몬스터어레이.size() : " + 몬스터어레이.size());
-                            this.몬스터행동(몬스터어레이, 몬스터머릿수 - 죽은몬스터수, 플레이어);
-                            this.행동게이지 = 0;
-                        } catch (InterruptedException e) {
-                            break;
-                        }
-                    }
+            if (플레이어.행동게이지 >= 10000){
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    break;
                 }
             }
-            catch (ArrayIndexOutOfBoundsException e){
-                System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" +
-                        "몬스터 ArrayIndexOutOfBoundsException 발생");
-            }catch (NullPointerException e){
-                System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" +
-                        "몬스터 NullPointerException 발생");
+            else {
+                try {
+                    Thread.sleep(100);
+                    this.행동게이지 = this.행동게이지 + 속도();
+                } catch (InterruptedException e) {
+                    break;
+                }
+                if (this.행동게이지 > 행동) {
+                    this.행동게이지 = 행동;
+                }
+                if (this.행동게이지 == 행동) {
+                    try {
+//                        System.out.println("몬스터.run | 몬스터어레이.size() : " + 몬스터어레이.size());
+                        this.몬스터행동(몬스터어레이, 몬스터머릿수 - 죽은몬스터수, 플레이어);
+                        this.행동게이지 = 0;
+                    } catch (InterruptedException e) {
+                        break;
+                    }
+                }
             }
         }
     }
+
 
     public void 공용드랍테이블(){
         if(공용드랍테이블.size() == 0) {
@@ -108,6 +100,8 @@ public abstract class 몬스터 extends Thread {
             드랍템 = new 갑옷("갑옷");
             공용드랍테이블.add(드랍템);
             드랍템 = new 각반("각반");
+            공용드랍테이블.add(드랍템);
+            드랍템 = new 장갑("장갑");
             공용드랍테이블.add(드랍템);
             드랍템 = new 공격력물약("공격력물약");
             공용드랍테이블.add(드랍템);
