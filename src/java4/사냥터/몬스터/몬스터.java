@@ -16,7 +16,7 @@ import static java4.사냥터.사냥터.*;
 import java.util.ArrayList;
 import java.util.Random;
 
-public abstract class 몬스터 extends Thread {
+public abstract class 몬스터 {
 
     public String 이름;
     public final int 행동 = 10000; //행동게이지가 행동보다 높아지면 0으로 초기화하고 행동함
@@ -53,38 +53,38 @@ public abstract class 몬스터 extends Thread {
         this.드랍테이블.addAll(공용드랍테이블);
     }
 
-    public void run(){
-        while (true) {
-
-            if (플레이어.행동게이지 >= 플레이어.행동){
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    break;
-                }
-            }
-            else {
-                try {
-                    Thread.sleep(100);
-                    this.행동게이지 = this.행동게이지 + 속도();
-                } catch (InterruptedException e) {
-                    break;
-                }
-                if (this.행동게이지 > 행동) {
-                    this.행동게이지 = 행동;
-                }
-                if (this.행동게이지 == 행동) {
-                    try {
-//                        System.out.println("몬스터.run | 몬스터어레이.size() : " + 몬스터어레이.size());
-                        this.몬스터행동(몬스터어레이, 몬스터머릿수 - 죽은몬스터수, 플레이어);
-                        this.행동게이지 = 0;
-                    } catch (InterruptedException e) {
-                        break;
-                    }
-                }
-            }
-        }
-    }
+//    public void run(){
+//        while (true) {
+//
+//            if (플레이어.행동게이지 >= 플레이어.행동){
+//                try {
+//                    Thread.sleep(100);
+//                } catch (InterruptedException e) {
+//                    break;
+//                }
+//            }
+//            else {
+//                try {
+//                    Thread.sleep(100);
+//                    this.행동게이지 = this.행동게이지 + 속도();
+//                } catch (InterruptedException e) {
+//                    break;
+//                }
+//                if (this.행동게이지 > 행동) {
+//                    this.행동게이지 = 행동;
+//                }
+//                if (this.행동게이지 == 행동) {
+//                    try {
+////                        System.out.println("몬스터.run | 몬스터어레이.size() : " + 몬스터어레이.size());
+//                        this.몬스터행동(몬스터어레이, 몬스터머릿수 - 죽은몬스터수, 플레이어);
+//                        this.행동게이지 = 0;
+//                    } catch (InterruptedException e) {
+//                        break;
+//                    }
+//                }
+//            }
+//        }
+//    }
 
 
     public void 공용드랍테이블(){
@@ -110,6 +110,12 @@ public abstract class 몬스터 extends Thread {
         }
     }
 
+
+    public void 행동게이지() throws InterruptedException {
+        if (!(플레이어.행동게이지 >= 플레이어.행동)){
+            this.행동게이지 = this.행동게이지 + 속도();
+        }
+    }
     public int 공격력(){
         int 공격력 = (int) Math.ceil(this.최종공격력*(Math.random()*0.2+0.9));
         return 공격력;

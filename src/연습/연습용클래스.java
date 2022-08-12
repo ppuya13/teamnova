@@ -121,7 +121,7 @@ public class 연습용클래스 {
         }
 
         for(int i = 0 ; i < 몬스터어레이.size() ; i++) {
-            몬스터어레이.get(i).start();
+//            몬스터어레이.get(i).start();
         }
 
         JPanel panel = new JPanel();

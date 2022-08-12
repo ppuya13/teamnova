@@ -60,9 +60,9 @@ public class 사냥터{
     }
 
     public void 몬스터생성() throws InterruptedException {
-        for(int i = 0 ; i < 몬스터어레이.size() ; i++){
-            몬스터어레이.get(i).interrupt();
-        }
+//        for(int i = 0 ; i < 몬스터어레이.size() ; i++){
+//            몬스터어레이.get(i).interrupt();
+//        }
         this.몬스터어레이.clear();
 //        this.몬스터머릿수 = rd.nextInt(9) + 1;
         this.몬스터머릿수 = rd.nextInt(9) + 2;
@@ -105,7 +105,7 @@ public class 사냥터{
     }
     public void 보스전생성1() throws InterruptedException {
         for(int i = 0 ; i < 몬스터어레이.size() ; i++){
-            몬스터어레이.get(i).interrupt();
+//            몬스터어레이.get(i).interrupt();
         }
         this.몬스터어레이.clear();
 //        this.몬스터머릿수 = rd.nextInt(9) + 1;
@@ -189,7 +189,7 @@ public class 사냥터{
                         Thread.sleep(1000);
                         System.out.println("");
 //                        System.out.println("사냥터.몬스터삭제| 여기서 몬스터어레이 리무브함");
-                        몬스터어레이.get(i).interrupt();
+//                        몬스터어레이.get(i).interrupt();
                         몬스터어레이.remove(i); //몬스터어레이에서 몬스터를 삭제
 //                        몹사망=true;
                         죽은몬스터수 = 죽은몬스터수 + 1; //전투종료를 위해 죽은몬스터수를 늘림(근데 그냥 전투종료 조건을 몬스터어레이가 0이면으로 바꾸는 것도 고려해보기)
@@ -210,7 +210,7 @@ public class 사냥터{
             if (몬스터머릿수 - 죽은몬스터수 == 0) {
 //            System.out.println("this.전투종료판정 | 전투승리 : " + 전투승리);
                 for(int i = 0 ; i < 몬스터어레이.size() ; i++){
-                    몬스터어레이.get(i).interrupt();
+//                    몬스터어레이.get(i).interrupt();
                 }
                 몬스터어레이.clear();
                 몬스터머릿수 = 0;
