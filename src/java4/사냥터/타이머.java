@@ -10,12 +10,17 @@ import java.util.TimerTask;
 
 import static java4.Main.플레이어;
 import static java4.사냥터.사냥터.몬스터어레이;
+import static java4.사냥터.사냥터출력.*;
+
 
 public class 타이머 extends Thread {
     public int 카운트 = 10;
     public String 텍스트;
+    전투 전투2;
 
-
+    public 타이머(전투 전투2){
+        this.전투2 = 전투2;
+    }
     public void run(){
 
 
@@ -31,6 +36,7 @@ public class 타이머 extends Thread {
             public void run() {
                 텍스트 = Integer.toString(카운트);
                 라벨.setText(텍스트);
+//                System.out.println("실행");
                 if(카운트 > 0){
                     카운트--;
                 }
@@ -40,16 +46,48 @@ public class 타이머 extends Thread {
                     } catch (InterruptedException e) {
                         System.out.println("타이머(태스크)| 인터럽트 예외 발생");
                     }
-                    this.cancel();
-                    타이머창.setVisible(false);
+                    try {
+                        this.타이머종료();
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
 
             private void 시간초과() throws InterruptedException {
+                java4.사냥터.사냥터출력.턴여부 =false;
+                행동중=true;
                 System.out.println("제한시간을 초과해 자동으로 공격합니다.");
                 기본공격 기본공격 = new 기본공격();
                 몬스터 타겟 = 몬스터어레이.get(0);
                 기본공격.사용효과(몬스터어레이,플레이어,타겟);
+                java4.사냥터.사냥터출력.턴여부 =false;
+                몬스터삭제=true;
+                플레이어.능력치적용();
+                턴넘김=true;
+                타이머창.setVisible(false);
+                synchronized (전투2) {
+                    전투2.notify();
+                }
+                this.cancel();
+            }
+            public void 타이머종료() throws InterruptedException {
+                java4.사냥터.사냥터출력.턴여부 =false;
+                행동중=true;
+                타이머창.setVisible(false);
+                this.cancel();
+
+                while(true) {
+                    if(턴넘김) {
+                        몬스터삭제 = true;
+                        플레이어.능력치적용();
+                        synchronized (전투2) {
+                            전투2.notify();
+                        }
+                        break;
+                    }
+                    Thread.sleep(100);
+                }
             }
         };
         타이머.schedule(태스크,0,1000);

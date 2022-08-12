@@ -7,6 +7,8 @@ import java4.캐릭터.캐릭터;
 
 import java.util.ArrayList;
 
+import static java4.사냥터.사냥터출력.*;
+
 public abstract class 단일스킬 extends 스킬 {
 
     public 단일스킬(){
@@ -20,18 +22,23 @@ public abstract class 단일스킬 extends 스킬 {
             System.out.print("" +
                     this.스킬명 + "을(를) 사용할 대상을 선택하세요." +
                     "\n→");
-            입력 = sc.nextInt();
-            if (입력 == 0) {
-                return true;
-            } else if (입력 > 0 && 입력 <= 출력.몬스터어레이.size()) {
-                if(캐릭터.캐릭터현재마나<this.소모량){
-                    System.out.println("마나가 부족합니다.");
-                    Thread.sleep(1000);
+            while(입력대기) {
+                Thread.sleep(100);
+            }
+            if (턴여부) {
+                행동중 = true;
+                if (전투입력 == 0) {
                     return true;
+                } else if (전투입력 > 0 && 전투입력 <= 출력.몬스터어레이.size()) {
+                    if (캐릭터.캐릭터현재마나 < this.소모량) {
+                        System.out.println("마나가 부족합니다.");
+                        Thread.sleep(1000);
+                        return true;
+                    }
+                    몬스터 타겟 = 몬스터어레이.get(전투입력 - 1);
+                    this.사용효과(몬스터어레이, 캐릭터, 타겟);
+                    return false;
                 }
-                몬스터 타겟 = 몬스터어레이.get(입력-1);
-                this.사용효과(몬스터어레이,캐릭터,타겟);
-                return false;
             }
         }
     }

@@ -15,7 +15,7 @@ public abstract class 스킬 {
     public String 효과;
     public int 소모량;
     public Random rd = new Random();
-    public int 입력;
+    public int 전투입력;
     public Scanner sc = new Scanner(System.in);
 
     public int 공격력(캐릭터 플레이어){

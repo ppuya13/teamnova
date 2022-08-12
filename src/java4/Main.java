@@ -10,6 +10,7 @@ import java.util.Scanner;
 public class Main {
     static public java4.캐릭터.플레이어 플레이어 = new 플레이어();
 
+    public static 사냥터출력 사냥터출력 = new 사냥터출력();
     public static void main(String[] args) throws InterruptedException, CloneNotSupportedException {
 
         //캐릭터 초기화
@@ -31,7 +32,6 @@ public class Main {
         //출력변수
         출력 메인 = new 출력();
         인벤토리출력 인벤토리출력 = new 인벤토리출력();
-        사냥터출력 사냥터출력 = new 사냥터출력();
         대장간출력 대장간출력 = new 대장간출력();
         //출력변수
         플레이어.최종능력치적용();

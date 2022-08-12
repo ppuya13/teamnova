@@ -5,11 +5,18 @@ import java4.사냥터.몬스터.몬스터;
 import java4.사냥터.사냥터출력;
 import java4.스킬.단일스킬.기본공격;
 import java4.스킬.스킬;
+import java4.아이템.소모.지속형.지속형;
 import java4.아이템.아이템;
+import java4.출력;
 
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
+
+import static java4.Main.플레이어;
+import static java4.사냥터.사냥터.몬스터어레이;
+import static java4.Main.사냥터출력;
+import static java4.사냥터.사냥터출력.*;
 
 public abstract class 캐릭터 extends Thread{
 
@@ -101,32 +108,142 @@ public abstract class 캐릭터 extends Thread{
     public final int 행동 = 10000; //행동게이지가 행동보다 높아지면 0으로 초기화하고 행동함
     public int 행동난수; //속도값에 따라 랜덤하게 행동난수값을 설정함
     public static int 행동게이지 = 0;
+    public static boolean 공격여부 = false;
+    public static boolean 스킬여부 = false;
+    public static boolean 아이템여부 = false;
 
     public void run(){
-//        System.out.println("이 객체의 이름은 " + this.이름 + " 이며 속도는 " + this.속도 + " 입니다.");
-        while (true){
-            try {
-                if(this.캐릭터현재체력<=0){
-                    System.out.println(this.이름 + "은(는) 쓰러졌다.");
-                    Thread.sleep(1000);
-                    System.exit(0);
-                }
-                Thread.sleep(100);
-                this.행동게이지 = this.행동게이지 + 속도();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            if (this.행동게이지 > 행동) {
-                this.행동게이지 = 행동;
-            }
-            if (this.행동게이지 == 행동) {
-//                System.out.println(this.이름 + "의 행동게이지가 가득찼습니다.");
-                try {
-                    synchronized (this) {
-                        this.wait();
+
+        while(true) {
+            if(턴여부){
+                if(공격여부){
+                    공격여부 =false;
+                    try {
+                        this.캐릭터공격(몬스터어레이, 사냥터출력);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
                     }
-                } catch (InterruptedException e) {
+                }
+                else if(스킬여부){
+                    스킬여부 = false;
+                    try {
+                        this.스킬();
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                else if(아이템여부){
+                    아이템여부 = false;
+
+                }
+            }
+
+            try {
+                synchronized (this) {
+                    this.wait();
+                }
+            } catch (InterruptedException e) {
+                System.out.println("캐릭터| notify됨");
+            }
+
+
+        }//while문 종료
+
+
+    }
+
+//    public void run(){
+////        System.out.println("이 객체의 이름은 " + this.이름 + " 이며 속도는 " + this.속도 + " 입니다.");
+//        while (true){
+//            try {
+//                if(this.캐릭터현재체력<=0){
+//                    System.out.println(this.이름 + "은(는) 쓰러졌다.");
+//                    Thread.sleep(1000);
+//                    System.exit(0);
+//                }
+//                Thread.sleep(100);
+//                this.행동게이지 = this.행동게이지 + 속도();
+//            } catch (InterruptedException e) {
+//                throw new RuntimeException(e);
+//            }
+//            if (this.행동게이지 > 행동) {
+//                this.행동게이지 = 행동;
+//            }
+//            if (this.행동게이지 == 행동) {
+////                System.out.println(this.이름 + "의 행동게이지가 가득찼습니다.");
+//                try {
+//                    synchronized (this) {
+//                        this.wait();
+//                    }
+//                } catch (InterruptedException e) {
+//                    break;
+//                }
+//            }
+//        }
+//    }
+
+    public void 스킬() throws InterruptedException {
+        출력 메인 = new 출력();
+        스킬 타겟스킬;
+        boolean 스킬반복 = true;
+        스킬:
+        while (스킬반복) {
+            System.out.println(메인.능력치창());
+            System.out.println("\n보유 중인 스킬 리스트");
+            System.out.println(메인.스킬창());
+            System.out.print("" +
+                    "사용할 스킬을 선택해주세요. " +
+                    "\n→");
+            synchronized (this) {
+                this.wait();
+            }
+            if(턴여부) {
+                if (전투입력 == 0) {
                     break;
+                } else if (전투입력 > 0 && 전투입력 <= 플레이어.스킬목록.size()) {
+                    타겟스킬 = 플레이어.스킬목록.get(전투입력 - 1);
+                    if (타겟스킬.사용확인(몬스터어레이, 플레이어, 사냥터출력)) {
+                        continue 스킬; //true면 취소했다는 뜻이기 때문에 스킬선택창으로 돌아감
+                    }
+                    몬스터삭제 = true;
+                    턴넘김 = true;
+                    스킬반복 = false;
+                }
+            }
+        }
+    }
+
+    public void 아이템() throws InterruptedException, CloneNotSupportedException {
+        출력 메인 = new 출력();
+        아이템 아이템정보;
+        아이템:
+        while (true) {
+            System.out.println(메인.능력치창());
+            System.out.println("\n아이템 사용하기");
+            System.out.println(메인.행동인벤토리());
+            System.out.print("" +
+                    "아이템을 선택해주세요. " +
+                    "\n소모품만을 사용할 수 있으며, 아이템 사용 시 턴을 넘기게됩니다." +
+                    "\n→");
+            synchronized (this) {
+                this.wait();
+            }
+            if(턴여부) {
+                if (전투입력 == 0) {
+                    break;
+                } else if (전투입력 > 0 && 전투입력 <= 플레이어.소지품.size() + 플레이어.회복물약가방.size()) {
+                    아이템정보 = 플레이어.아이템사용(전투입력);
+                    if (아이템정보.착용가능여부) { //선택한 아이템이 착용가능하면
+                        System.out.println("전투중엔 아이템 장착/해제를 할 수 없습니다.");
+                        Thread.sleep(1000);
+                    } else {
+                        if (아이템정보.사용효과(플레이어)) {
+                            continue 아이템;
+                        }
+                        플레이어.인벤정리();
+                        턴넘김 = true;
+                        break;
+                    }
                 }
             }
         }
@@ -135,7 +252,29 @@ public abstract class 캐릭터 extends Thread{
         int 속도 = (int) Math.ceil(this.캐릭터최종속도 *(Math.random()*0.2+0.9));
         return 속도;
     }
-
+    public void 턴넘김() throws InterruptedException {
+        if (턴넘김) {
+//                            플레이어.소모템적용(); //소모템 지속시간도 여기서 감소시킴
+            if (this.사용중.size() > 0) {//적용중인 지속스킬이 있다면
+                for (int i = 0; i < this.사용중.size(); i++) { //지속스킬 수만큼 반복
+                    ((지속형) this.사용중.get(i)).효과적용((플레이어)this);
+                }
+                재시작:
+                while (true) {
+                    if (this.사용중.size() > 0) {//계속 지워줘야하기 때문에 지속스킬 개수 판정을 다시함
+                        for (int i = 0; i < this.사용중.size(); i++) {
+                            if (((지속형) this.사용중.get(i)).효과삭제((플레이어)this)) {//스킬을 하나 지웠으면
+                                continue 재시작; //재시작함
+                            }
+                        }
+                    }
+                    //지속스킬이 더이상 없거나 지울 스킬이 없다면
+                    break;
+                }
+            }
+        }
+        this.능력치적용();
+    }
     public abstract void 스킬초기화();
     public abstract void 인벤토리초기화();
     public void 능력치적용(){

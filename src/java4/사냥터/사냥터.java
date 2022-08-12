@@ -21,7 +21,6 @@ import static java4.Main.플레이어;
 //import static java4.사냥터.사냥터출력.몹사망;
 
 public class 사냥터{
-
     public static ArrayList<몬스터> 몬스터어레이;
     public static int 몬스터머릿수;
     public static int 죽은몬스터수;
@@ -41,7 +40,6 @@ public class 사냥터{
     Random rd = new Random();
     출력 메인 = new 출력();
     boolean 반복 = true;
-    boolean 몬스터삭제 = false;
 //    boolean 턴 = false;
     boolean 전투승리 = false;
     boolean 전투종료 = false;
@@ -50,7 +48,6 @@ public class 사냥터{
     Scanner sc = new Scanner(System.in);
     몬스터 몬스터타겟;
     아이템 아이템정보;
-    java4.스킬.스킬 스킬;
     java4.인벤토리.인벤토리출력 인벤토리출력 = new 인벤토리출력();
 
     public 사냥터(){
