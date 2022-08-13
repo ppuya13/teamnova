@@ -1,7 +1,8 @@
 package java4;
 
-import java4.사냥터.사냥터출력;
+import java4.사냥터.구사냥터코드.구사냥터출력;
 import java4.대장간.대장간출력;
+import java4.사냥터.사냥터;
 import java4.상점.상점;
 import java4.인벤토리.인벤토리출력;
 import java4.캐릭터.플레이어;
@@ -10,9 +11,10 @@ import java.util.Scanner;
 public class Main {
     static public java4.캐릭터.플레이어 플레이어 = new 플레이어();
 
-    public static 사냥터출력 사냥터출력 = new 사냥터출력();
-    public static void main(String[] args) throws InterruptedException, CloneNotSupportedException {
+    public static 출력 메인 = new 출력();
 
+    public static 구사냥터출력 구사냥터출력 = new 구사냥터출력();
+    public static void main(String[] args) throws InterruptedException, CloneNotSupportedException {
         //캐릭터 초기화
         플레이어.start();
         플레이어.인벤토리초기화();
@@ -30,9 +32,9 @@ public class Main {
         boolean 사망 = false;
 
         //출력변수
-        출력 메인 = new 출력();
         인벤토리출력 인벤토리출력 = new 인벤토리출력();
         대장간출력 대장간출력 = new 대장간출력();
+        사냥터 사냥터 = new 사냥터();
         //출력변수
         플레이어.최종능력치적용();
 
@@ -57,11 +59,10 @@ public class Main {
                     System.out.println("디버깅용");
                     break;
                 case 1: //사냥터
-                    사냥터출력.사냥터();
+                    사냥터.사냥터();
                     break;
                 case 2: //인벤토리
                     인벤토리출력.인벤토리();
-
                     break;
                 case 3: //상점
                     상점.상점();

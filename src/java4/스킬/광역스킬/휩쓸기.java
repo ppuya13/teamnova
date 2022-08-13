@@ -2,12 +2,9 @@ package java4.스킬.광역스킬;
 
 
 import java4.사냥터.몬스터.몬스터;
-import java4.사냥터.사냥터출력;
 import java4.캐릭터.캐릭터;
 
 import java.util.ArrayList;
-
-import static java4.Main.플레이어;
 
 public class 휩쓸기 extends 광역스킬 {
     public 휩쓸기(){

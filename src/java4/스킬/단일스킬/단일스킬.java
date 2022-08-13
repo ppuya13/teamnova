@@ -1,13 +1,13 @@
 package java4.스킬.단일스킬;
 
 import java4.사냥터.몬스터.몬스터;
-import java4.사냥터.사냥터출력;
+import java4.사냥터.구사냥터코드.구사냥터출력;
 import java4.스킬.스킬;
 import java4.캐릭터.캐릭터;
 
 import java.util.ArrayList;
 
-import static java4.사냥터.사냥터출력.*;
+import static java4.사냥터.구사냥터코드.구사냥터출력.*;
 
 public abstract class 단일스킬 extends 스킬 {
 
@@ -15,14 +15,16 @@ public abstract class 단일스킬 extends 스킬 {
         this.타입=1;
     }
     @Override
-    public boolean 사용확인(ArrayList<몬스터> 몬스터어레이, 캐릭터 캐릭터, 사냥터출력 출력) throws InterruptedException {
+    public boolean 사용확인(ArrayList<몬스터> 몬스터어레이, 캐릭터 캐릭터, 구사냥터출력 출력) throws InterruptedException {
         while (true) {
             System.out.print("\n" + this.스킬명 + "(마나 " + this.소모량 + ") : " + this.효과);
             System.out.println(출력.행동몬스터목록());
             System.out.print("" +
                     this.스킬명 + "을(를) 사용할 대상을 선택하세요." +
                     "\n→");
-            while(입력대기) {
+            입력대기=true;
+            입력대기:
+            while(턴여부&&입력대기) {
                 Thread.sleep(100);
             }
             if (턴여부) {

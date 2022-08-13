@@ -1,10 +1,6 @@
 package 연습;
 
-import java4.사냥터.타이머;
-
 import java.util.Scanner;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class 타이머연습 {
     public static void main(String[] args) {

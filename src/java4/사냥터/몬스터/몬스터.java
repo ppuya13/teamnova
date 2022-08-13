@@ -9,9 +9,8 @@ import java4.아이템.소모.회복형.*;
 import java4.아이템.아이템;
 import java4.아이템.장비.*;
 import java4.캐릭터.캐릭터;
-import java4.캐릭터.플레이어;
+
 import static java4.Main.플레이어;
-import static java4.사냥터.사냥터.*;
 
 import java.util.ArrayList;
 import java.util.Random;

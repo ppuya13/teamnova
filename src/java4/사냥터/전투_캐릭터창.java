@@ -1,8 +1,6 @@
 package java4.사냥터;
 
-import java4.Main;
 import java4.캐릭터.캐릭터;
-import java4.캐릭터.플레이어;
 
 import javax.swing.*;
 import java.awt.*;

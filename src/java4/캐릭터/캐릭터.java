@@ -2,7 +2,7 @@ package java4.캐릭터;
 
 import java4.Main;
 import java4.사냥터.몬스터.몬스터;
-import java4.사냥터.사냥터출력;
+import java4.사냥터.구사냥터코드.구사냥터출력;
 import java4.스킬.단일스킬.기본공격;
 import java4.스킬.스킬;
 import java4.아이템.소모.지속형.지속형;
@@ -14,9 +14,9 @@ import java.util.Random;
 import java.util.Scanner;
 
 import static java4.Main.플레이어;
-import static java4.사냥터.사냥터.몬스터어레이;
-import static java4.Main.사냥터출력;
-import static java4.사냥터.사냥터출력.*;
+import static java4.사냥터.구사냥터코드.구사냥터.몬스터어레이;
+import static java4.Main.구사냥터출력;
+import static java4.사냥터.구사냥터코드.구사냥터출력.*;
 
 public abstract class 캐릭터 extends Thread{
 
@@ -111,15 +111,17 @@ public abstract class 캐릭터 extends Thread{
     public static boolean 공격여부 = false;
     public static boolean 스킬여부 = false;
     public static boolean 아이템여부 = false;
+    public static boolean 플레이어선택중 =  false;
 
     public void run(){
 
         while(true) {
             if(턴여부){
+                플레이어선택중=true;
                 if(공격여부){
                     공격여부 =false;
                     try {
-                        this.캐릭터공격(몬스터어레이, 사냥터출력);
+                        this.캐릭터공격(몬스터어레이, 구사냥터출력);
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
@@ -136,6 +138,7 @@ public abstract class 캐릭터 extends Thread{
                     아이템여부 = false;
 
                 }
+                플레이어선택중=false;
             }
 
             try {
@@ -188,6 +191,7 @@ public abstract class 캐릭터 extends Thread{
         boolean 스킬반복 = true;
         스킬:
         while (스킬반복) {
+            System.out.println("캐릭터.스킬()|스킬반복: "+스킬반복);
             System.out.println(메인.능력치창());
             System.out.println("\n보유 중인 스킬 리스트");
             System.out.println(메인.스킬창());
@@ -197,17 +201,19 @@ public abstract class 캐릭터 extends Thread{
             synchronized (this) {
                 this.wait();
             }
+            System.out.println("캐릭터.스킬()|전투입력: "+전투입력 + ", 턴여부: "+턴여부);
             if(턴여부) {
                 if (전투입력 == 0) {
                     break;
                 } else if (전투입력 > 0 && 전투입력 <= 플레이어.스킬목록.size()) {
+                    System.out.println("캐릭터.스킬()|스킬발동");
                     타겟스킬 = 플레이어.스킬목록.get(전투입력 - 1);
-                    if (타겟스킬.사용확인(몬스터어레이, 플레이어, 사냥터출력)) {
+                    if (타겟스킬.사용확인(몬스터어레이, 플레이어, 구사냥터출력)) {
                         continue 스킬; //true면 취소했다는 뜻이기 때문에 스킬선택창으로 돌아감
                     }
                     몬스터삭제 = true;
                     턴넘김 = true;
-                    스킬반복 = false;
+                    break;
                 }
             }
         }
@@ -413,7 +419,7 @@ public abstract class 캐릭터 extends Thread{
                 "\n→");
         int 입력 = sc.nextInt();
     }
-    public boolean 캐릭터공격(ArrayList<몬스터> 몬스터어레이, 사냥터출력 출력) throws InterruptedException {
+    public boolean 캐릭터공격(ArrayList<몬스터> 몬스터어레이, 구사냥터출력 출력) throws InterruptedException {
         기본공격 기본공격 = new 기본공격();
         return 기본공격.사용확인(몬스터어레이,this,출력);
     }
