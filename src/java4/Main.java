@@ -3,10 +3,15 @@ package java4;
 import java4.사냥터.구사냥터코드.구사냥터출력;
 import java4.대장간.대장간출력;
 import java4.사냥터.사냥터;
+import java4.사냥터.전투_행동게이지;
 import java4.상점.상점;
 import java4.인벤토리.인벤토리출력;
 import java4.캐릭터.플레이어;
 import java.util.Scanner;
+
+import static java4.사냥터.사냥터.사냥터입력;
+import static java4.사냥터.사냥터.전투_행동게이지;
+//import static java4.사냥터.사냥터.전투;
 
 public class Main {
     static public java4.캐릭터.플레이어 플레이어 = new 플레이어();
@@ -14,6 +19,7 @@ public class Main {
     public static 출력 메인 = new 출력();
 
     public static 구사냥터출력 구사냥터출력 = new 구사냥터출력();
+    public static 사냥터 사냥터 = new 사냥터();
     public static void main(String[] args) throws InterruptedException, CloneNotSupportedException {
         //캐릭터 초기화
         플레이어.start();
@@ -25,6 +31,7 @@ public class Main {
         상점 상점 = new 상점();//상점에 물건들을 진열하기 위한 코드
         //상점 초기화
 
+        사냥터입력.start(); //일단 입력을 start함.(wait상태)
 
 
         Scanner sc = new Scanner(System.in);
@@ -34,7 +41,6 @@ public class Main {
         //출력변수
         인벤토리출력 인벤토리출력 = new 인벤토리출력();
         대장간출력 대장간출력 = new 대장간출력();
-        사냥터 사냥터 = new 사냥터();
         //출력변수
         플레이어.최종능력치적용();
 
@@ -59,6 +65,7 @@ public class Main {
                     System.out.println("디버깅용");
                     break;
                 case 1: //사냥터
+                    java4.사냥터.사냥터.사냥터=true;
                     사냥터.사냥터();
                     break;
                 case 2: //인벤토리

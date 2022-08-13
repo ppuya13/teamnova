@@ -1,9 +1,13 @@
 package java4.사냥터.구사냥터코드;
 
 
+import java4.사냥터.타이머;
+
 import static java4.Main.플레이어;
 import static java4.사냥터.구사냥터코드.구사냥터.몬스터어레이;
 import static java4.사냥터.구사냥터코드.구사냥터출력.*;
+import static java4.사냥터.사냥터.턴여부;
+import static java4.사냥터.사냥터.행동중;
 
 public class 구행동게이지 extends Thread {
     구전투 구전투2;
@@ -23,8 +27,8 @@ public class 구행동게이지 extends Thread {
                 플레이어.행동게이지 = 플레이어.행동;
             } else if (플레이어.행동게이지 == 플레이어.행동 && !턴여부 && !행동중) {
 //                System.out.println("실행");
-                구타이머 구타이머 = new 구타이머(구전투2);
-                구타이머.start();
+//                타이머 타이머 = new 타이머(구전투2);
+//                타이머.start();
                 턴여부 = true;
             }
             if(플레이어.행동게이지<플레이어.행동) {

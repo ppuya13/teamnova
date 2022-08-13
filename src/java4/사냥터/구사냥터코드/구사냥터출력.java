@@ -10,9 +10,9 @@ import static java4.Main.플레이어;
 
 public class 구사냥터출력 extends 구사냥터 {
     public static boolean 전투 = false; //true이면 전투중
-    public static boolean 행동중 = false; //공격을 시작하는 순간 true되고 행동이 완전히 끝나고 행동게이지가 줄어든 뒤에 false로 바뀜
+//    public static boolean 행동중 = false; //공격을 시작하는 순간 true되고 행동이 완전히 끝나고 행동게이지가 줄어든 뒤에 false로 바뀜
     public static boolean 턴넘김 = false; //true이면 턴넘김(전투 클래스에서 처리)
-    public static boolean 턴여부 = false; //턴이 시작되면 true;
+//    public static boolean 턴여부 = false; //턴이 시작되면 true;
     public static boolean 입력대기 = true; //스킬사용시 입력대기가 false이면 다음으로 넘어감
     public static boolean 몬스터삭제 = false;
     public static boolean 전투메뉴 = true; //true이면 전투 최상위 선택지를 출력함.
@@ -126,7 +126,7 @@ public class 구사냥터출력 extends 구사냥터 {
         구전투2.start();
         행동게이지.start();
         while(전투) {
-            while (턴여부) {
+//            while (턴여부) {
                 if(전투메뉴) {
                     System.out.println(메인.능력치창());
                     System.out.println(this.몬스터목록());
@@ -148,7 +148,7 @@ public class 구사냥터출력 extends 구사냥터 {
                     }
                 }
                 Thread.sleep(200);
-            }
+//            }
             Thread.sleep(100);
         }
         구전투2.interrupt();

@@ -1,4 +1,4 @@
-package java4.사냥터.구사냥터코드;
+package java4.사냥터;
 
 import java4.사냥터.몬스터.몬스터;
 import java4.스킬.단일스킬.기본공격;
@@ -9,18 +9,14 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import static java4.Main.플레이어;
-import static java4.사냥터.구사냥터코드.구사냥터.몬스터어레이;
-import static java4.사냥터.구사냥터코드.구사냥터출력.*;
+import static java4.Main.사냥터;
+import static java4.사냥터.사냥터.*;
 
 
-public class 구타이머 extends Thread {
-    public int 카운트 = 10;
+public class 타이머 extends Thread {
+    public int 카운트 = 5;
     public String 텍스트;
-    구전투 구전투2;
-
-    public 구타이머(구전투 구전투2){
-        this.구전투2 = 구전투2;
-    }
+    public boolean 타이머진행중=true;
     public void run(){
 
 
@@ -43,51 +39,27 @@ public class 구타이머 extends Thread {
                 else{
                     try {
                         this.시간초과();
-                    } catch (InterruptedException e) {
+                    } catch (InterruptedException | CloneNotSupportedException e) {
                         System.out.println("타이머(태스크)| 인터럽트 예외 발생");
-                    }
-                    try {
-                        this.타이머종료();
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
                     }
                 }
             }
 
-            private void 시간초과() throws InterruptedException {
-                구사냥터출력.턴여부 =false;
-                행동중=true;
+            private void 시간초과() throws InterruptedException, CloneNotSupportedException {
+                타이머창.setVisible(false);
+                턴여부 =false;
                 System.out.println("제한시간을 초과해 자동으로 공격합니다.");
                 기본공격 기본공격 = new 기본공격();
                 몬스터 타겟 = 몬스터어레이.get(0);
                 기본공격.사용효과(몬스터어레이,플레이어,타겟);
-                구사냥터출력.턴여부 =false;
-                몬스터삭제=true;
-                플레이어.능력치적용();
-                턴넘김=true;
-                타이머창.setVisible(false);
-                synchronized (구전투2) {
-                    구전투2.notify();
-                }
-                this.cancel();
-            }
-            public void 타이머종료() throws InterruptedException {
-                구사냥터출력.턴여부 =false;
-                행동중=true;
-                타이머창.setVisible(false);
-                this.cancel();
+                행동중=false;
+                입력대기=false;
+                타이머진행중=false;
 
-                while(true) {
-                    if(턴넘김) {
-                        몬스터삭제 = true;
-                        플레이어.능력치적용();
-                        synchronized (구전투2) {
-                            구전투2.notify();
-                        }
-                        break;
-                    }
-                    Thread.sleep(100);
-                }
+                //공격하고 턴을 끝낼 때 무조건 들어가는 세트
+                사냥터.턴종료();
+                //공격하고 턴을 끝낼 때 무조건 들어가는 세트
+                this.cancel();
             }
         };
         타이머.schedule(태스크,0,1000);
@@ -108,5 +80,4 @@ public class 구타이머 extends Thread {
         }
 
     }
-
 }

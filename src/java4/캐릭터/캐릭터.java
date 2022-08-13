@@ -2,7 +2,8 @@ package java4.캐릭터;
 
 import java4.Main;
 import java4.사냥터.몬스터.몬스터;
-import java4.사냥터.구사냥터코드.구사냥터출력;
+import java4.사냥터.사냥터;
+import java4.사냥터.전투_행동게이지;
 import java4.스킬.단일스킬.기본공격;
 import java4.스킬.스킬;
 import java4.아이템.소모.지속형.지속형;
@@ -14,9 +15,11 @@ import java.util.Random;
 import java.util.Scanner;
 
 import static java4.Main.플레이어;
-import static java4.사냥터.구사냥터코드.구사냥터.몬스터어레이;
-import static java4.Main.구사냥터출력;
 import static java4.사냥터.구사냥터코드.구사냥터출력.*;
+import static java4.Main.사냥터;
+import static java4.사냥터.사냥터.*;
+import static java4.사냥터.사냥터.몬스터어레이;
+import static java4.사냥터.사냥터.타이머;
 
 public abstract class 캐릭터 extends Thread{
 
@@ -107,22 +110,39 @@ public abstract class 캐릭터 extends Thread{
     int 정수강화;
     public final int 행동 = 10000; //행동게이지가 행동보다 높아지면 0으로 초기화하고 행동함
     public int 행동난수; //속도값에 따라 랜덤하게 행동난수값을 설정함
-    public static int 행동게이지 = 0;
+    public int 행동게이지 = 0;
     public static boolean 공격여부 = false;
     public static boolean 스킬여부 = false;
     public static boolean 아이템여부 = false;
-    public static boolean 플레이어선택중 =  false;
+//    public static boolean 플레이어선택중 =  false;
 
     public void run(){
 
         while(true) {
+//            System.out.println("캐릭터.run | 캐릭터깨어남, 턴여부: "+java4.사냥터.사냥터.턴여부);
             if(턴여부){
-                플레이어선택중=true;
+//                System.out.println("캐릭터.run| 턴여부 들어옴");
+//                플레이어선택중=true;
                 if(공격여부){
+//                    System.out.println("캐릭터.run| 공격여부 들어옴");
                     공격여부 =false;
                     try {
-                        this.캐릭터공격(몬스터어레이, 구사냥터출력);
-                    } catch (InterruptedException e) {
+                        System.out.println("캐릭터.run| 캐릭터공격발동");
+//                        System.out.println("캐릭터.run| 트라이 들어옴");
+                        if(!(this.캐릭터공격(몬스터어레이, 사냥터))){
+                            //결과가 false면(공격을 했으면)
+                            this.행동게이지 = 0;
+                            턴여부=false;
+                            플레이어.능력치적용();
+                            사냥터.몬스터삭제(true);
+                            if(사냥터.전투종료판정(몬스터어레이,보스전)){
+                                사냥터.전투정산(true,플레이어);
+                            }
+                            synchronized (전투_행동게이지){
+                                전투_행동게이지.notify();
+                            }
+                        }
+                    } catch (InterruptedException | CloneNotSupportedException e) {
                         throw new RuntimeException(e);
                     }
                 }
@@ -136,11 +156,11 @@ public abstract class 캐릭터 extends Thread{
                 }
                 else if(아이템여부){
                     아이템여부 = false;
-
                 }
-                플레이어선택중=false;
+                행동중=false;
             }
-
+            System.out.println("캐릭터.run| 행동중: "+행동중);
+            System.out.println("캐릭터.run| wait()");
             try {
                 synchronized (this) {
                     this.wait();
@@ -148,7 +168,6 @@ public abstract class 캐릭터 extends Thread{
             } catch (InterruptedException e) {
                 System.out.println("캐릭터| notify됨");
             }
-
 
         }//while문 종료
 
@@ -208,9 +227,9 @@ public abstract class 캐릭터 extends Thread{
                 } else if (전투입력 > 0 && 전투입력 <= 플레이어.스킬목록.size()) {
                     System.out.println("캐릭터.스킬()|스킬발동");
                     타겟스킬 = 플레이어.스킬목록.get(전투입력 - 1);
-                    if (타겟스킬.사용확인(몬스터어레이, 플레이어, 구사냥터출력)) {
-                        continue 스킬; //true면 취소했다는 뜻이기 때문에 스킬선택창으로 돌아감
-                    }
+//                    if (타겟스킬.사용확인(몬스터어레이, 플레이어, 구사냥터출력)) {
+//                        continue 스킬; //true면 취소했다는 뜻이기 때문에 스킬선택창으로 돌아감
+//                    }
                     몬스터삭제 = true;
                     턴넘김 = true;
                     break;
@@ -419,9 +438,10 @@ public abstract class 캐릭터 extends Thread{
                 "\n→");
         int 입력 = sc.nextInt();
     }
-    public boolean 캐릭터공격(ArrayList<몬스터> 몬스터어레이, 구사냥터출력 출력) throws InterruptedException {
+    public boolean 캐릭터공격(ArrayList<몬스터> 몬스터어레이, 사냥터 출력) throws InterruptedException {
         기본공격 기본공격 = new 기본공격();
-        return 기본공격.사용확인(몬스터어레이,this,출력);
+        System.out.println("캐릭터.캐릭터공격| 발동");
+        return 기본공격.사용확인(몬스터어레이,this,출력); //true면 사용실패or취소, false면 사용성공
     }
     public 아이템 아이템사용(int 입력){
         아이템 타겟;

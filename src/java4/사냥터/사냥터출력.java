@@ -4,9 +4,11 @@ import java4.사냥터.몬스터.몬스터;
 import java4.사냥터.몬스터.스킬.몬스터스킬;
 
 import static java4.사냥터.사냥터.몬스터어레이;
+import static java4.Main.메인;
 
-public class 사냥터출력 {
+public class 사냥터출력 extends Thread{
     public void 사냥터메인() {
+        System.out.println(메인.능력치창());
         System.out.print(""+
                 "\n몬스터를 사냥하러 왔습니다. 무엇을 하시겠습니까?"+
                 "\n0.마을로 돌아가기"+
@@ -39,6 +41,7 @@ public class 사냥터출력 {
                     "\n→");
         }
     }
+
 
     public StringBuilder 몬스터목록(){
         StringBuilder 몬스터목록 = new StringBuilder();
@@ -87,5 +90,9 @@ public class 사냥터출력 {
         }
         몬스터목록.append("\n┌────────────────────────────────────\n" ).append("│ 0. 취소\n").append(몬스터목록2).append("└────────────────────────────────────\n");
         return 몬스터목록;
+    }
+
+    public void 단일타겟선택(){
+
     }
 }
