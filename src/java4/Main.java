@@ -15,7 +15,7 @@ public class Main {
     public static 사냥터 사냥터 = new 사냥터();
     public static void main(String[] args) throws InterruptedException, CloneNotSupportedException {
         //캐릭터 초기화
-        플레이어.start();
+//        플레이어.start();
         플레이어.인벤토리초기화();
         플레이어.스킬초기화();
         //캐릭터 초기화

@@ -19,7 +19,7 @@ import static java4.사냥터.사냥터.입력대기;
 import static java4.사냥터.사냥터.몬스터어레이;
 import static java4.사냥터.사냥터.턴타이머;
 
-public abstract class 캐릭터 extends Thread{
+public abstract class 캐릭터{
 
 
     public int 전투횟수;
@@ -115,8 +115,85 @@ public abstract class 캐릭터 extends Thread{
     public static boolean 살펴보기여부 = false;
     public static boolean 도망치기여부 = false;
 
-    public void run(){
+//    public void run(){
+//
+//        while(true) {
+////            System.out.println("캐릭터.run | 캐릭터깨어남, 턴여부: "+java4.사냥터.사냥터.턴여부);
+//            if(턴여부){
+////                System.out.println("캐릭터.run| 턴여부 들어옴");
+////                플레이어선택중=true;
+//                if(공격여부){
+////                    System.out.println("캐릭터.run| 공격여부 들어옴");
+//                    공격여부 =false;
+//                    try {
+////                        System.out.println("캐릭터.run| 캐릭터공격발동");
+////                        System.out.println("캐릭터.run| 트라이 들어옴");
+//                        if(!(this.캐릭터공격(몬스터어레이, 사냥터))){
+//                            //결과가 false면(공격을 했으면)
+//                            this.행동게이지 = 0;
+//                            턴여부=false;
+//                            this.능력치적용();
+//                            사냥터.몬스터삭제(true);
+//                            this.턴넘김();
+//                            if(사냥터.전투종료판정(몬스터어레이,보스전)){
+//                                사냥터.전투정산(true,플레이어);
+//                            }
+//                            synchronized (전투_행동게이지){
+//                                전투_행동게이지.notify();
+//                            }
+//                        }
+//                    } catch (InterruptedException | CloneNotSupportedException e) {
+//                        throw new RuntimeException(e);
+//                    }
+//                }
+//                else if(스킬여부){
+//                    스킬여부 = false;
+//                    try {
+//                        this.스킬();
+//                    } catch (InterruptedException | CloneNotSupportedException e) {
+//                        throw new RuntimeException(e);
+//                    }
+//                }
+//                else if(아이템여부){
+//                    아이템여부 = false;
+//                    try {
+//                        this.아이템();
+//                    } catch (InterruptedException | CloneNotSupportedException e) {
+//                        throw new RuntimeException(e);
+//                    }
+//                }
+//                else if (살펴보기여부) {
+//                    살펴보기여부 = false;
+//                    try {
+//                        this.살펴보기();
+//                    } catch (InterruptedException e) {
+//                        throw new RuntimeException(e);
+//                    }
+//                }
+//                else if (도망치기여부) {
+//                    도망치기여부 = false;
+//                    try {
+//                        this.도망치기();
+//                    } catch (InterruptedException | CloneNotSupportedException e) {
+//                        throw new RuntimeException(e);
+//                    }
+//                }
+//                행동중=false;
+//            }
+////            System.out.println("캐릭터.run| 행동중: "+행동중);
+////            System.out.println("캐릭터.run| wait()");
+//            try {
+//                synchronized (this) {
+//                    this.wait();
+//                }
+//            } catch (InterruptedException e) {
+////                System.out.println("캐릭터| notify됨");
+//            }
+//
+//        }//while문 종료
+//    }
 
+    public void 행동() throws InterruptedException, CloneNotSupportedException {
         while(true) {
 //            System.out.println("캐릭터.run | 캐릭터깨어남, 턴여부: "+java4.사냥터.사냥터.턴여부);
             if(턴여부){
@@ -125,71 +202,45 @@ public abstract class 캐릭터 extends Thread{
                 if(공격여부){
 //                    System.out.println("캐릭터.run| 공격여부 들어옴");
                     공격여부 =false;
-                    try {
-                        System.out.println("캐릭터.run| 캐릭터공격발동");
+//                        System.out.println("캐릭터.run| 캐릭터공격발동");
 //                        System.out.println("캐릭터.run| 트라이 들어옴");
-                        if(!(this.캐릭터공격(몬스터어레이, 사냥터))){
-                            //결과가 false면(공격을 했으면)
-                            this.행동게이지 = 0;
-                            턴여부=false;
-                            this.능력치적용();
-                            사냥터.몬스터삭제(true);
-                            this.턴넘김();
-                            if(사냥터.전투종료판정(몬스터어레이,보스전)){
-                                사냥터.전투정산(true,플레이어);
-                            }
-                            synchronized (전투_행동게이지){
-                                전투_행동게이지.notify();
-                            }
+                    if(!(this.캐릭터공격(몬스터어레이, 사냥터))){
+                        //결과가 false면(공격을 했으면)
+                        this.행동게이지 = 0;
+                        턴여부=false;
+                        this.능력치적용();
+                        사냥터.몬스터삭제(true);
+                        this.턴넘김();
+                        if(사냥터.전투종료판정(몬스터어레이,보스전)){
+                            전투중=false;
+                            사냥터.전투정산(true,플레이어);
                         }
-                    } catch (InterruptedException | CloneNotSupportedException e) {
-                        throw new RuntimeException(e);
+//                        synchronized (전투_행동게이지){
+//                            전투_행동게이지.notify();
+//                        }
                     }
                 }
                 else if(스킬여부){
                     스킬여부 = false;
-                    try {
-                        this.스킬();
-                    } catch (InterruptedException | CloneNotSupportedException e) {
-                        throw new RuntimeException(e);
-                    }
+                    this.스킬();
                 }
                 else if(아이템여부){
                     아이템여부 = false;
-                    try {
-                        this.아이템();
-                    } catch (InterruptedException | CloneNotSupportedException e) {
-                        throw new RuntimeException(e);
-                    }
+                    this.아이템();
                 }
                 else if (살펴보기여부) {
                     살펴보기여부 = false;
-                    try {
-                        this.살펴보기();
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
+                    this.살펴보기();
                 }
                 else if (도망치기여부) {
                     도망치기여부 = false;
-                    try {
-                        this.도망치기();
-                    } catch (InterruptedException | CloneNotSupportedException e) {
-                        throw new RuntimeException(e);
-                    }
+                    this.도망치기();
                 }
                 행동중=false;
+                break;
             }
-            System.out.println("캐릭터.run| 행동중: "+행동중);
-            System.out.println("캐릭터.run| wait()");
-            try {
-                synchronized (this) {
-                    this.wait();
-                }
-            } catch (InterruptedException e) {
-                System.out.println("캐릭터| notify됨");
-            }
-
+//            System.out.println("캐릭터.run| 행동중: "+행동중);
+//            System.out.println("캐릭터.run| wait()");
         }//while문 종료
     }
     public void 스킬() throws InterruptedException, CloneNotSupportedException {
@@ -198,7 +249,7 @@ public abstract class 캐릭터 extends Thread{
         boolean 스킬반복 = true;
         스킬:
         while (스킬반복 && 턴여부) {
-            System.out.println("캐릭터.스킬()|스킬반복: "+스킬반복);
+//            System.out.println("캐릭터.스킬()|스킬반복: "+스킬반복);
             System.out.println(메인.능력치창());
             System.out.println("\n보유 중인 스킬 리스트");
             System.out.println(메인.스킬창());
@@ -213,12 +264,12 @@ public abstract class 캐릭터 extends Thread{
             while(입력대기){
                 Thread.sleep(50);
             }
-            System.out.println("캐릭터.스킬()|사냥터입력값: "+사냥터입력값 + ", 턴여부: "+턴여부);
+//            System.out.println("캐릭터.스킬()|사냥터입력값: "+사냥터입력값 + ", 턴여부: "+턴여부);
             if(턴여부) {
                 if (사냥터입력값 == 0) {
                     break;
                 } else if (사냥터입력값 > 0 && 사냥터입력값 <= this.스킬목록.size()) {
-                    System.out.println("캐릭터.스킬()|스킬발동");
+//                    System.out.println("캐릭터.스킬()|스킬발동");
                     타겟스킬 = this.스킬목록.get(사냥터입력값 - 1);
                     if (!타겟스킬.사용확인(몬스터어레이, 플레이어, 사냥터)) {
                         //결과가 false면(스킬을 사용했으면)
@@ -228,11 +279,12 @@ public abstract class 캐릭터 extends Thread{
                         사냥터.몬스터삭제(true);
                         this.턴넘김();
                         if(사냥터.전투종료판정(몬스터어레이,보스전)){
+                            전투중=false;
                             사냥터.전투정산(true,(플레이어)this);
                         }
-                        synchronized (전투_행동게이지){
-                            전투_행동게이지.notify();
-                        }
+//                        synchronized (전투_행동게이지){
+//                            전투_행동게이지.notify();
+//                        }
                     }
                     continue 스킬;
                 }
@@ -275,11 +327,12 @@ public abstract class 캐릭터 extends Thread{
                             this.인벤정리();
                             this.턴넘김();
                             if(사냥터.전투종료판정(몬스터어레이,보스전)){
+                                전투중=false;
                                 사냥터.전투정산(true,(플레이어)this);
                             }
-                            synchronized (전투_행동게이지){
-                                전투_행동게이지.notify();
-                            }
+//                            synchronized (전투_행동게이지){
+//                                전투_행동게이지.notify();
+//                            }
                         }
                         continue 아이템;
                     }
@@ -305,7 +358,7 @@ public abstract class 캐릭터 extends Thread{
                 break;
             }
             else if (사냥터입력값 > 0 && 사냥터입력값 <= 몬스터어레이.size()) {
-                System.out.println("캐릭터.살펴보기()| 몬스터어레이.size(): " + 몬스터어레이.size());
+//                System.out.println("캐릭터.살펴보기()| 몬스터어레이.size(): " + 몬스터어레이.size());
                 몬스터타겟 = 몬스터어레이.get(사냥터입력값 - 1);
                 System.out.println(메인.정보출력(몬스터타겟));
                 for(int i = 0 ; i < 몬스터어레이.get(사냥터입력값-1).스킬리스트.size() ; i++){
@@ -351,9 +404,9 @@ public abstract class 캐릭터 extends Thread{
                             System.out.println("도망쳤습니다.");
                             Thread.sleep(1000);
                             사냥터.전투정산(false,플레이어);
-                            synchronized (전투_행동게이지){
-                                전투_행동게이지.notify();
-                            }
+//                            synchronized (전투_행동게이지){
+//                                전투_행동게이지.notify();
+//                            }
                             return;
                     }
                 }
@@ -527,7 +580,7 @@ public abstract class 캐릭터 extends Thread{
     }
     public boolean 캐릭터공격(ArrayList<몬스터> 몬스터어레이, 사냥터 출력) throws InterruptedException {
         기본공격 기본공격 = new 기본공격();
-        System.out.println("캐릭터.캐릭터공격| 발동");
+//        System.out.println("캐릭터.캐릭터공격| 발동");
         return 기본공격.사용확인(몬스터어레이,this,출력); //true면 사용실패or취소, false면 사용성공
     }
     public 아이템 아이템사용(int 입력){

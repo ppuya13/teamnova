@@ -19,7 +19,6 @@ public abstract class 몬스터 {
 
     public String 이름;
     public final int 행동 = 10000; //행동게이지가 행동보다 높아지면 0으로 초기화하고 행동함
-    public int 행동난수; //속도값에 따라 랜덤하게 행동난수값을 설정함
     public int 행동게이지 = 0;
     //    public boolean 소환됨; //소환된 턴엔 행동하지 못하게 하기 위함.
     public int 속도; //행동게이지가 차는 속도, 대충 (1000/속도)초당 1회 행동함
@@ -34,13 +33,14 @@ public abstract class 몬스터 {
     public int 경험치;
     public int 소지금;
     public String 정보;
-    public String 번호;
+    public boolean 도망침 = false;
     public 아이템 드랍템;
     public ArrayList<몬스터스킬> 스킬리스트 = new ArrayList<>();
     public ArrayList<지속스킬> 지속스킬 = new ArrayList<>();
     public ArrayList<아이템> 드랍테이블 = new ArrayList<>();
     public ArrayList<아이템> 공용드랍테이블 = new ArrayList<>();
     public Random rd = new Random();
+    public int 난수;
 
     public 몬스터(){
 //        this.소환됨 = false;
@@ -124,12 +124,12 @@ public abstract class 몬스터 {
         return 속도;
     }
 
-    public void 몬스터행동(ArrayList<몬스터> 몬스터어레이, int 몬스터수, 캐릭터 플레이어) throws InterruptedException {
+    public void 몬스터행동(ArrayList<몬스터> 몬스터어레이, int 몬스터수, 캐릭터 플레이어) throws InterruptedException, CloneNotSupportedException {
 //        boolean 캐릭터사망 = false;
         boolean 리롤=true;
         while(리롤) {
             int 스킬선택 = rd.nextInt(this.스킬리스트.size());
-            리롤 = this.스킬리스트.get(스킬선택).사용효과(this, Main.플레이어, 몬스터어레이);
+            리롤 = this.스킬리스트.get(스킬선택).사용효과(this, 몬스터어레이);
 
             if (플레이어.캐릭터현재체력 <= 0) {
                 System.out.println("플레이어는 쓰러졌다.");

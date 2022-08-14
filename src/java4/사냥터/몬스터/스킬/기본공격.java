@@ -1,10 +1,11 @@
 package java4.사냥터.몬스터.스킬;
 
 import java4.사냥터.몬스터.몬스터;
-import java4.캐릭터.캐릭터;
 
 import java.util.ArrayList;
 import java.util.Random;
+
+import static java4.Main.플레이어;
 
 public class 기본공격 extends 몬스터스킬{
     public 기본공격(){
@@ -13,7 +14,7 @@ public class 기본공격 extends 몬스터스킬{
     }
 
     @Override
-    public boolean 사용효과(몬스터 몬스터, 캐릭터 플레이어, ArrayList<몬스터> 몬스터어레이) throws InterruptedException {
+    public boolean 사용효과(몬스터 몬스터, ArrayList<몬스터> 몬스터어레이) throws InterruptedException {
         if(플레이어.캐릭터현재체력>=1){ //캐릭터가 살아있으면
             Random rd = new Random();
             if(rd.nextInt(100)+플레이어.캐릭터최종회피>99) {//회피판정 성공시

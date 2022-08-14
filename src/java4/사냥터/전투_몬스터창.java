@@ -24,7 +24,6 @@ public class 전투_몬스터창 extends Thread{
         JLabel 라벨;
         몬스터 타겟;
         몬스터스킬 스킬;
-        int 지우기=1;
 
         //레이아웃 설정
         JFrame 몬스터 = new JFrame("몬스터");

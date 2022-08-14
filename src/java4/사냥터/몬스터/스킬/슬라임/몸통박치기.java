@@ -2,10 +2,11 @@ package java4.사냥터.몬스터.스킬.슬라임;
 
 import java4.사냥터.몬스터.몬스터;
 import java4.사냥터.몬스터.스킬.몬스터스킬;
-import java4.캐릭터.캐릭터;
 
 import java.util.ArrayList;
 import java.util.Random;
+
+import static java4.Main.플레이어;
 
 
 public class 몸통박치기 extends 몬스터스킬 {
@@ -15,7 +16,7 @@ public class 몸통박치기 extends 몬스터스킬 {
     }
 
     @Override
-    public boolean 사용효과(몬스터 몬스터, 캐릭터 플레이어, ArrayList<몬스터> 몬스터어레이) throws InterruptedException{
+    public boolean 사용효과(몬스터 몬스터, ArrayList<몬스터> 몬스터어레이) throws InterruptedException{
         Random rd = new Random();
         System.out.println("\n" + 몬스터.이름 + "의 "+ this.스킬명 +"!");
         int 데미지 = 몬스터.공격력()+15;

@@ -84,7 +84,7 @@ public class 연습용클래스 {
         몬스터어레이.clear();
         몬스터머릿수 = rd.nextInt(9) + 2;
         System.out.println(몬스터머릿수 + "마리의 몬스터를 발견했다!!!");
-        플레이어2.start();
+//        플레이어2.start();
         for (int i = 1; i <= 몬스터머릿수; i++) {
             몬스터번호 = Integer.toString(i);
             몬스터생성난수 = Math.random();
@@ -314,13 +314,13 @@ public class 연습용클래스 {
 
 //            플레이어2.행동게이지 = 8000;
             if(플레이어2.행동게이지==10000) {
-                System.out.println("싱크로전 : " + 플레이어2.getState());
+//                System.out.println("싱크로전 : " + 플레이어2.getState());
                 System.out.println("1초후 해제");
                 Thread.sleep(1000);
                 synchronized (플레이어2) {
                     플레이어2.행동게이지 = 0;
                     플레이어2.notify();
-                    System.out.println("notify후 : " + 플레이어2.getState());
+//                    System.out.println("notify후 : " + 플레이어2.getState());
 //                    플레이어2.yield();
 //                    System.out.println("yield후 : " + 플레이어2.getState());
 //                    플레이어2.interrupt();

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import static java4.Main.플레이어;
 
 public class 출력 { //화면에 표시하기 위한 메소드는 이곳에
-//this.캐릭터최종공격력=this.캐릭터공격력+this.캐릭터추가공격력+this.레벨업추가공격력+this.소모품추가공격력+this.영구공격력;
+    //this.캐릭터최종공격력=this.캐릭터공격력+this.캐릭터추가공격력+this.레벨업추가공격력+this.소모품추가공격력+this.영구공격력;
     public StringBuilder 능력치창(){
         boolean 소모템있음 = false;
         아이템 아이템;
@@ -297,7 +297,7 @@ public class 출력 { //화면에 표시하기 위한 메소드는 이곳에
                 "\n몬스터 정보 : " + 타겟.정보 +
                 "";
         return 출력값;
-     }
+    }
 
     public StringBuilder 스킬창(){
         StringBuilder 스킬창 = new StringBuilder();
@@ -309,10 +309,9 @@ public class 출력 { //화면에 표시하기 위한 메소드는 이곳에
         return 스킬창;
     }
 
-    public void 제작슬롯(){
-        StringBuilder 제작슬롯 = new StringBuilder();
-        제작슬롯
-    }
+
+
+
     public void 엔딩() throws InterruptedException {
         boolean 착용템있음=false;
         ArrayList<아이템> 착용목록 = new ArrayList<>();

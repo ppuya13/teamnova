@@ -5,6 +5,8 @@ import java4.캐릭터.캐릭터;
 
 import java.util.ArrayList;
 
+import static java4.Main.플레이어;
+
 public class 대규모광란 extends 지속스킬{
     public 대규모광란(){
         this.스킬명="대규모 광란";
@@ -15,7 +17,7 @@ public class 대규모광란 extends 지속스킬{
 
 
     @Override
-    public boolean 사용효과(몬스터 몬스터, 캐릭터 플레이어, ArrayList<몬스터> 몬스터어레이) throws InterruptedException {
+    public boolean 사용효과(몬스터 몬스터, ArrayList<몬스터> 몬스터어레이) throws InterruptedException {
         몬스터 대상;
         대규모광란 대규모광란;
         boolean 같은스킬없음 = false;

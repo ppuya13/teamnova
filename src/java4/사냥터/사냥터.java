@@ -12,6 +12,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 import static java4.Main.*;
+import static java4.Main.사냥터;
 import static java4.사냥터.사냥터.사냥터입력.사냥터입력값;
 import static java4.캐릭터.캐릭터.*;
 
@@ -24,8 +25,9 @@ public class 사냥터 {
     //    public static 사냥터입력 사냥터입력 = new 사냥터입력();
     public static 사냥터입력 사냥터입력 = new 사냥터입력();
     public static 사냥터출력 사냥터출력 = new 사냥터출력();
-    public static 전투_행동게이지 전투_행동게이지;
+    //    public static 전투_행동게이지 전투_행동게이지;
     public static 턴타이머 턴타이머;
+    public static boolean 도망치기사용 = false;
     public static boolean 전투중=false; //전투중일때만 전투관련 선택지가 출력되게 함
     public static boolean 입력대기 = false;
     public static boolean 턴여부=false;
@@ -143,9 +145,8 @@ public class 사냥터 {
 
 
         몬스터어레이.clear();
-//        this.몬스터머릿수 = rd.nextInt(9) + 1;
-//        몬스터머릿수 = rd.nextInt(9) + 2;
-        몬스터머릿수 = rd.nextInt(4) + 2;
+        몬스터머릿수 = rd.nextInt(9) + 2;
+//        몬스터머릿수 = rd.nextInt(4) + 2;
         System.out.println(몬스터머릿수 + "마리의 몬스터를 발견했다!!!");
         Thread.sleep(1000);
 
@@ -236,23 +237,68 @@ public class 사냥터 {
         몬스터정보 = new 오크전사(Integer.toString(5));
         this.몬스터어레이.add(몬스터정보);
     }
-
-    public void 전투(boolean 보스전) throws InterruptedException {
+    public void 행동게이지() throws InterruptedException, CloneNotSupportedException {
+        while (전투중 && !턴여부) {
+//            System.out.println("턴여부: " + 턴여부 + " 행동중: "+ 행동중);
+            if (플레이어.행동게이지 < 플레이어.행동) {
+                플레이어.행동게이지 = 플레이어.행동게이지 + 플레이어.속도();
+            }
+            if (플레이어.행동게이지 > 플레이어.행동) {
+                플레이어.행동게이지 = 플레이어.행동;
+            }
+            if(플레이어.행동게이지 == 플레이어.행동){
+//                System.out.println("실행");
+                턴여부 = true; //행게가 가득차면 턴을 on하고 기다림, 턴종료시 턴여부를 false하고 행게를 줄인뒤에 notify하기
+            }
+            if(플레이어.행동게이지<플레이어.행동) {
+                for (int i = 0; i < 몬스터어레이.size(); i++) {
+                    if (몬스터어레이.get(i).행동게이지 < 몬스터어레이.get(i).행동) {
+                        몬스터어레이.get(i).행동게이지 = 몬스터어레이.get(i).행동게이지 + 몬스터어레이.get(i).속도();
+                    }
+                    if (몬스터어레이.get(i).행동게이지 > 몬스터어레이.get(i).행동) {
+                        몬스터어레이.get(i).행동게이지 = 몬스터어레이.get(i).행동;
+                    }
+                    if (몬스터어레이.get(i).행동게이지 == 몬스터어레이.get(i).행동) {
+                        몬스터어레이.get(i).몬스터행동(몬스터어레이, 몬스터머릿수 - 죽은몬스터수, 플레이어);
+                        if(몬스터어레이.get(i).도망침) {
+                            몬스터어레이.remove(i);
+                            죽은몬스터수++;
+//                            this.몬스터삭제(true);
+                            if(this.전투종료판정(몬스터어레이,보스전)){
+                                전투중=false;
+                                this.전투정산(true,플레이어);
+                            }
+                        }
+                        else {
+                            몬스터어레이.get(i).행동게이지 = 0;
+                        }
+                    }
+                }
+            }
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                break;
+            }
+        }
+    }
+    public void 전투(boolean 보스전) throws InterruptedException, CloneNotSupportedException {
 //        boolean 전투시작선택중;
-        플레이어.행동게이지=9000;
+        플레이어.행동게이지=10000; //전투 시작시 플레이어의 행동게이지
 //        타이머 타이머;
         몬스터창 = new 전투_몬스터창(몬스터어레이);
         캐릭터창 = new 전투_캐릭터창(플레이어);
-        전투_행동게이지 = new 전투_행동게이지();
+//        전투_행동게이지 = new 전투_행동게이지();
         몬스터창.start();
         캐릭터창.start();
-        전투_행동게이지.start();
-
+//        전투_행동게이지.start();
 
         while(전투중){
+//            System.out.println("사냥터.전투| 전투중1: " + 전투중);
+            this.행동게이지(); //플레이어가 턴을 잡은 상태가 아니라면 행동게이지를 계속 증가시킴
 //            System.out.println("사냥터.전투()| 전투중: "+전투중 + ", 턴여부: " + 턴여부);
             전투시작:
-            while(턴여부) {
+            while(전투중&&턴여부) {
                 if(턴타이머 ==null) {
 //                    System.out.println("사냥터.전투| 타이머null");
                     턴타이머 = new 턴타이머();
@@ -284,60 +330,27 @@ public class 사냥터 {
                     switch (사냥터입력값){
                         case 1: //공격
                             행동중=true;
-//                            전투시작선택중=false;
                             공격여부=true;
-                            synchronized (플레이어) {
-                                플레이어.notify();
-                            }
-                            while (행동중){
-                                Thread.sleep(50);
-                            }
+                            플레이어.행동();
                             break;
                         case 2: //스킬
                             행동중=true;
                             스킬여부=true;
-//                            전투시작선택중=false;
-//                            System.out.println("스킬발동");
-                            synchronized (플레이어) {
-                                플레이어.notify();
-                            }
-                            while (행동중){
-                                Thread.sleep(50);
-                            }
+                            플레이어.행동();
                             break;
                         case 3: //아이템
                             행동중=true;
-                            아이템여부=true;
-//                            전투시작선택중=false;
-//                            System.out.println("아이템발동");
-                            synchronized (플레이어) {
-                                플레이어.notify();
-                            }
-                            while (행동중){
-                                Thread.sleep(50);
-                            }
+                            플레이어.행동();
                             break;
                         case 4: //살펴보기
                             행동중=true;
                             살펴보기여부=true;
-//                            전투시작선택중=false;
-//                            System.out.println("살펴보기발동");
-                            synchronized (플레이어) {
-                                플레이어.notify();
-                            }
-                            while (행동중){
-                                Thread.sleep(50);
-                            }
+                            플레이어.행동();
                             break;
                         case 5: //도망치기(보스전이 아닐때만)
                             행동중=true;
                             도망치기여부=true;
-                            synchronized (플레이어) {
-                                플레이어.notify();
-                            }
-                            while (행동중){
-                                Thread.sleep(50);
-                            }
+                            플레이어.행동();
                             break;
                     }
                 }else{//전투중이 아니거나 턴이 아니면
@@ -515,18 +528,18 @@ public class 사냥터 {
             }
         }
         플레이어.최종능력치적용();
-        전투중=false;
     }
     public void 턴종료() throws InterruptedException, CloneNotSupportedException {
+        플레이어.행동게이지=0;
         플레이어.능력치적용();
         플레이어.턴넘김();
         this.몬스터삭제(true);
         if(this.전투종료판정(몬스터어레이,보스전)){
+            전투중=false;
             this.전투정산(true,플레이어);
         }
-        플레이어.행동게이지=0;
-        synchronized (전투_행동게이지){
-            전투_행동게이지.notify();
-        }
+//        synchronized (전투_행동게이지){
+//            전투_행동게이지.notify();
+//        }
     }
 }

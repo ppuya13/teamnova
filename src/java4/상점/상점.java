@@ -358,10 +358,5 @@ public class 상점 { // 상점에 관련된 정보는 여기에
         }
     }
 
-    private 아이템 아이템생성(아이템 아이템) throws CloneNotSupportedException {
-        아이템 복제 = (아이템) 아이템.clone();
-        return 복제;
-    }
-
 
 }

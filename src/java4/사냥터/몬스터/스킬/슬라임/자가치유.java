@@ -2,7 +2,6 @@ package java4.사냥터.몬스터.스킬.슬라임;
 
 import java4.사냥터.몬스터.몬스터;
 import java4.사냥터.몬스터.스킬.몬스터스킬;
-import java4.캐릭터.캐릭터;
 
 import java.util.ArrayList;
 
@@ -13,7 +12,7 @@ public class 자가치유 extends 몬스터스킬 {
     }
 
     @Override
-    public boolean 사용효과(몬스터 몬스터, 캐릭터 플레이어, ArrayList<몬스터> 몬스터어레이) throws InterruptedException {
+    public boolean 사용효과(몬스터 몬스터, ArrayList<몬스터> 몬스터어레이) throws InterruptedException {
         int 효과 = (int)Math.ceil(몬스터.최대체력*0.3);
         if (몬스터.현재체력 == 몬스터.최대체력) {
 //            System.out.println("최대체력이라 리롤");

@@ -6,6 +6,8 @@ import java4.캐릭터.캐릭터;
 
 import java.util.ArrayList;
 
+import static java4.Main.플레이어;
+
 public class 전투의포효 extends 지속스킬 {
     public 전투의포효(){
         this.스킬명="전투의 포효";
@@ -14,7 +16,7 @@ public class 전투의포효 extends 지속스킬 {
     }
 
     @Override
-    public boolean 사용효과(몬스터 몬스터, 캐릭터 플레이어, ArrayList<몬스터> 몬스터어레이) throws InterruptedException {
+    public boolean 사용효과(몬스터 몬스터, ArrayList<몬스터> 몬스터어레이) throws InterruptedException {
         전투의포효 전투의포효 = new 전투의포효();
         전투의포효.지속시간++;
         boolean 같은스킬없음 = false;

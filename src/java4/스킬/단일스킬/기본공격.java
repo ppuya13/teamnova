@@ -51,6 +51,6 @@ public class 기본공격 extends 단일스킬{
                     "" + 타겟.이름 + "의 체력이" + 타겟.현재체력 + " 남았다!");
             Thread.sleep(1000);
         }
-        System.out.println("기본공격.사용효과| 끝");
+//        System.out.println("기본공격.사용효과| 끝");
     }
 }
