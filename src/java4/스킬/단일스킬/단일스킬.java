@@ -29,7 +29,6 @@ public abstract class 단일스킬 extends 스킬 {
             synchronized (사냥터입력) {
                 사냥터입력.notify();
             }
-//            Thread.sleep(50);
             입력대기=true;
             while(입력대기){
                 Thread.sleep(50);
@@ -48,11 +47,7 @@ public abstract class 단일스킬 extends 스킬 {
                         Thread.sleep(1000);
                         return true;
                     }
-                    synchronized (타이머){
-                        System.out.println("탄일스킬.사용효과| 타이머 인터럽트");
-                        타이머.타이머진행중=false;
-                        타이머.interrupt();
-                    }
+                    타이머.타이머종료();
 //                    System.out.println("단일스킬.사용효과| 플레이어선택중: " + 플레이어선택중);
                     System.out.println("단일스킬.사용효과| 사용직전");
                     몬스터 타겟 = 몬스터어레이.get(사냥터입력값 - 1);

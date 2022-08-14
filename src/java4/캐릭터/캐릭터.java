@@ -1,23 +1,21 @@
 package java4.캐릭터;
 
-import java4.Main;
 import java4.사냥터.몬스터.몬스터;
 import java4.사냥터.사냥터;
-import java4.사냥터.전투_행동게이지;
 import java4.스킬.단일스킬.기본공격;
 import java4.스킬.스킬;
 import java4.아이템.소모.지속형.지속형;
 import java4.아이템.아이템;
-import java4.출력;
 
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
-import static java4.Main.플레이어;
-import static java4.사냥터.구사냥터코드.구사냥터출력.*;
+import static java4.Main.*;
 import static java4.Main.사냥터;
 import static java4.사냥터.사냥터.*;
+import static java4.사냥터.사냥터.사냥터입력.사냥터입력값;
+import static java4.사냥터.사냥터.입력대기;
 import static java4.사냥터.사냥터.몬스터어레이;
 import static java4.사냥터.사냥터.타이머;
 
@@ -106,7 +104,7 @@ public abstract class 캐릭터 extends Thread{
     public int 불굴최대;
     Random rd = new Random();
     Scanner sc = new Scanner(System.in);
-    int 입력;
+    //    int 입력;
     int 정수강화;
     public final int 행동 = 10000; //행동게이지가 행동보다 높아지면 0으로 초기화하고 행동함
     public int 행동난수; //속도값에 따라 랜덤하게 행동난수값을 설정함
@@ -114,7 +112,8 @@ public abstract class 캐릭터 extends Thread{
     public static boolean 공격여부 = false;
     public static boolean 스킬여부 = false;
     public static boolean 아이템여부 = false;
-//    public static boolean 플레이어선택중 =  false;
+    public static boolean 살펴보기여부 = false;
+    public static boolean 도망치기여부 = false;
 
     public void run(){
 
@@ -133,8 +132,9 @@ public abstract class 캐릭터 extends Thread{
                             //결과가 false면(공격을 했으면)
                             this.행동게이지 = 0;
                             턴여부=false;
-                            플레이어.능력치적용();
+                            this.능력치적용();
                             사냥터.몬스터삭제(true);
+                            this.턴넘김();
                             if(사냥터.전투종료판정(몬스터어레이,보스전)){
                                 사냥터.전투정산(true,플레이어);
                             }
@@ -150,12 +150,33 @@ public abstract class 캐릭터 extends Thread{
                     스킬여부 = false;
                     try {
                         this.스킬();
-                    } catch (InterruptedException e) {
+                    } catch (InterruptedException | CloneNotSupportedException e) {
                         throw new RuntimeException(e);
                     }
                 }
                 else if(아이템여부){
                     아이템여부 = false;
+                    try {
+                        this.아이템();
+                    } catch (InterruptedException | CloneNotSupportedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                else if (살펴보기여부) {
+                    살펴보기여부 = false;
+                    try {
+                        this.살펴보기();
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                else if (도망치기여부) {
+                    도망치기여부 = false;
+                    try {
+                        this.도망치기();
+                    } catch (InterruptedException | CloneNotSupportedException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
                 행동중=false;
             }
@@ -170,46 +191,13 @@ public abstract class 캐릭터 extends Thread{
             }
 
         }//while문 종료
-
-
     }
-
-//    public void run(){
-////        System.out.println("이 객체의 이름은 " + this.이름 + " 이며 속도는 " + this.속도 + " 입니다.");
-//        while (true){
-//            try {
-//                if(this.캐릭터현재체력<=0){
-//                    System.out.println(this.이름 + "은(는) 쓰러졌다.");
-//                    Thread.sleep(1000);
-//                    System.exit(0);
-//                }
-//                Thread.sleep(100);
-//                this.행동게이지 = this.행동게이지 + 속도();
-//            } catch (InterruptedException e) {
-//                throw new RuntimeException(e);
-//            }
-//            if (this.행동게이지 > 행동) {
-//                this.행동게이지 = 행동;
-//            }
-//            if (this.행동게이지 == 행동) {
-////                System.out.println(this.이름 + "의 행동게이지가 가득찼습니다.");
-//                try {
-//                    synchronized (this) {
-//                        this.wait();
-//                    }
-//                } catch (InterruptedException e) {
-//                    break;
-//                }
-//            }
-//        }
-//    }
-
-    public void 스킬() throws InterruptedException {
-        출력 메인 = new 출력();
+    public void 스킬() throws InterruptedException, CloneNotSupportedException {
+//        출력 메인 = new 출력();
         스킬 타겟스킬;
         boolean 스킬반복 = true;
         스킬:
-        while (스킬반복) {
+        while (스킬반복 && 턴여부) {
             System.out.println("캐릭터.스킬()|스킬반복: "+스킬반복);
             System.out.println(메인.능력치창());
             System.out.println("\n보유 중인 스킬 리스트");
@@ -217,32 +205,45 @@ public abstract class 캐릭터 extends Thread{
             System.out.print("" +
                     "사용할 스킬을 선택해주세요. " +
                     "\n→");
-            synchronized (this) {
-                this.wait();
+            synchronized (사냥터입력) {
+                사냥터입력.notify();
             }
-            System.out.println("캐릭터.스킬()|전투입력: "+전투입력 + ", 턴여부: "+턴여부);
+//            Thread.sleep(50);
+            입력대기=true;
+            while(입력대기){
+                Thread.sleep(50);
+            }
+            System.out.println("캐릭터.스킬()|사냥터입력값: "+사냥터입력값 + ", 턴여부: "+턴여부);
             if(턴여부) {
-                if (전투입력 == 0) {
+                if (사냥터입력값 == 0) {
                     break;
-                } else if (전투입력 > 0 && 전투입력 <= 플레이어.스킬목록.size()) {
+                } else if (사냥터입력값 > 0 && 사냥터입력값 <= this.스킬목록.size()) {
                     System.out.println("캐릭터.스킬()|스킬발동");
-                    타겟스킬 = 플레이어.스킬목록.get(전투입력 - 1);
-//                    if (타겟스킬.사용확인(몬스터어레이, 플레이어, 구사냥터출력)) {
-//                        continue 스킬; //true면 취소했다는 뜻이기 때문에 스킬선택창으로 돌아감
-//                    }
-                    몬스터삭제 = true;
-                    턴넘김 = true;
-                    break;
+                    타겟스킬 = this.스킬목록.get(사냥터입력값 - 1);
+                    if (!타겟스킬.사용확인(몬스터어레이, 플레이어, 사냥터)) {
+                        //결과가 false면(스킬을 사용했으면)
+                        this.행동게이지 = 0;
+                        턴여부=false;
+                        this.능력치적용();
+                        사냥터.몬스터삭제(true);
+                        this.턴넘김();
+                        if(사냥터.전투종료판정(몬스터어레이,보스전)){
+                            사냥터.전투정산(true,(플레이어)this);
+                        }
+                        synchronized (전투_행동게이지){
+                            전투_행동게이지.notify();
+                        }
+                    }
+                    continue 스킬;
                 }
             }
         }
     }
-
     public void 아이템() throws InterruptedException, CloneNotSupportedException {
-        출력 메인 = new 출력();
+//        출력 메인 = new 출력();
         아이템 아이템정보;
         아이템:
-        while (true) {
+        while (턴여부) {
             System.out.println(메인.능력치창());
             System.out.println("\n아이템 사용하기");
             System.out.println(메인.행동인벤토리());
@@ -250,24 +251,110 @@ public abstract class 캐릭터 extends Thread{
                     "아이템을 선택해주세요. " +
                     "\n소모품만을 사용할 수 있으며, 아이템 사용 시 턴을 넘기게됩니다." +
                     "\n→");
-            synchronized (this) {
-                this.wait();
+            synchronized (사냥터입력) {
+                사냥터입력.notify();
+            }
+            입력대기=true;
+            while(입력대기){
+                Thread.sleep(50);
             }
             if(턴여부) {
-                if (전투입력 == 0) {
+                if (사냥터입력값 == 0) {
                     break;
-                } else if (전투입력 > 0 && 전투입력 <= 플레이어.소지품.size() + 플레이어.회복물약가방.size()) {
-                    아이템정보 = 플레이어.아이템사용(전투입력);
+                } else if (사냥터입력값 > 0 && 사냥터입력값 <= this.소지품.size() + this.회복물약가방.size()) {
+                    아이템정보 = this.아이템사용(사냥터입력값);
                     if (아이템정보.착용가능여부) { //선택한 아이템이 착용가능하면
                         System.out.println("전투중엔 아이템 장착/해제를 할 수 없습니다.");
                         Thread.sleep(1000);
                     } else {
-                        if (아이템정보.사용효과(플레이어)) {
-                            continue 아이템;
+                        if (!아이템정보.사용효과((플레이어)this)) {
+                            this.행동게이지 = 0;
+                            턴여부=false;
+                            this.능력치적용();
+                            사냥터.몬스터삭제(true);
+                            this.인벤정리();
+                            this.턴넘김();
+                            if(사냥터.전투종료판정(몬스터어레이,보스전)){
+                                사냥터.전투정산(true,(플레이어)this);
+                            }
+                            synchronized (전투_행동게이지){
+                                전투_행동게이지.notify();
+                            }
                         }
-                        플레이어.인벤정리();
-                        턴넘김 = true;
-                        break;
+                        continue 아이템;
+                    }
+                }
+            }
+        }
+    }
+    public void 살펴보기() throws InterruptedException {
+        몬스터 몬스터타겟;
+        while (턴여부) {
+            System.out.println(메인.능력치창());
+            System.out.println("\n살펴볼 몬스터를 선택하세요.");
+            System.out.println(사냥터출력.행동몬스터목록());
+            System.out.print("\n→");
+            synchronized (사냥터입력) {
+                사냥터입력.notify();
+            }
+            입력대기=true;
+            while(입력대기){
+                Thread.sleep(50);
+            }
+            if (사냥터입력값 == 0) {
+                break;
+            }
+            else if (사냥터입력값 > 0 && 사냥터입력값 <= 몬스터어레이.size()) {
+                System.out.println("캐릭터.살펴보기()| 몬스터어레이.size(): " + 몬스터어레이.size());
+                몬스터타겟 = 몬스터어레이.get(사냥터입력값 - 1);
+                System.out.println(메인.정보출력(몬스터타겟));
+                for(int i = 0 ; i < 몬스터어레이.get(사냥터입력값-1).스킬리스트.size() ; i++){
+                    System.out.println(몬스터어레이.get(사냥터입력값-1).이름+"의 스킬 " + i + ": " + 몬스터어레이.get(사냥터입력값-1).스킬리스트.get(i).스킬명);
+                }
+                System.out.print("" +
+                        "\n계속하려면 아무 숫자나 입력하세요." +
+                        "\n→");
+                synchronized (사냥터입력) {
+                    사냥터입력.notify();
+                }
+                입력대기=true;
+                while(입력대기){
+                    Thread.sleep(50);
+                }
+                break;
+            }
+        }
+    }
+    public void 도망치기() throws InterruptedException, CloneNotSupportedException {
+        if (!보스전) {
+            while (턴여부) {
+                System.out.println("" +
+                        "정말 도망치시겠습니까?" +
+                        "\n0.취소한다." +
+                        "\n1.도망친다.");
+                synchronized (사냥터입력) {
+                    사냥터입력.notify();
+                }
+                입력대기=true;
+                while(입력대기){
+                    Thread.sleep(50);
+                }
+
+                if (턴여부) {
+                    switch (사냥터입력값) {
+                        case 0:
+                            return;
+                        case 1:
+                            턴여부=false;
+                            행동중=false;
+                            타이머.타이머종료();
+                            System.out.println("도망쳤습니다.");
+                            Thread.sleep(1000);
+                            사냥터.전투정산(false,플레이어);
+                            synchronized (전투_행동게이지){
+                                전투_행동게이지.notify();
+                            }
+                            return;
                     }
                 }
             }
@@ -278,26 +365,26 @@ public abstract class 캐릭터 extends Thread{
         return 속도;
     }
     public void 턴넘김() throws InterruptedException {
-        if (턴넘김) {
-//                            플레이어.소모템적용(); //소모템 지속시간도 여기서 감소시킴
-            if (this.사용중.size() > 0) {//적용중인 지속스킬이 있다면
-                for (int i = 0; i < this.사용중.size(); i++) { //지속스킬 수만큼 반복
-                    ((지속형) this.사용중.get(i)).효과적용((플레이어)this);
-                }
-                재시작:
-                while (true) {
-                    if (this.사용중.size() > 0) {//계속 지워줘야하기 때문에 지속스킬 개수 판정을 다시함
-                        for (int i = 0; i < this.사용중.size(); i++) {
-                            if (((지속형) this.사용중.get(i)).효과삭제((플레이어)this)) {//스킬을 하나 지웠으면
-                                continue 재시작; //재시작함
-                            }
+//        System.out.println("캐릭터.턴넘김| 턴넘기기 실행");
+//        if (턴넘김) {
+        if (this.사용중.size() > 0) {//적용중인 지속스킬이 있다면
+            for (int i = 0; i < this.사용중.size(); i++) { //지속스킬 수만큼 반복
+                ((지속형) this.사용중.get(i)).효과적용((플레이어)this);
+            }
+            재시작:
+            while (true) {
+                if (this.사용중.size() > 0) {//계속 지워줘야하기 때문에 지속스킬 개수 판정을 다시함
+                    for (int i = 0; i < this.사용중.size(); i++) {
+                        if (((지속형) this.사용중.get(i)).효과삭제((플레이어)this)) {//스킬을 하나 지웠으면
+                            continue 재시작; //재시작함
                         }
                     }
-                    //지속스킬이 더이상 없거나 지울 스킬이 없다면
-                    break;
                 }
+                //지속스킬이 더이상 없거나 지울 스킬이 없다면
+                break;
             }
         }
+//        }
         this.능력치적용();
     }
     public abstract void 스킬초기화();
@@ -445,7 +532,8 @@ public abstract class 캐릭터 extends Thread{
     }
     public 아이템 아이템사용(int 입력){
         아이템 타겟;
-        int 회복물약가방크기= Main.플레이어.회복물약가방.size();
+//        int 회복물약가방크기= Main.플레이어.회복물약가방.size();
+        int 회복물약가방크기= this.회복물약가방.size();
         if(입력 <=회복물약가방크기){ //회복물약 내용물을 선택했다면
             타겟= this.회복물약가방.get(입력 -1);
         }

@@ -2,6 +2,8 @@ package java4.아이템.소모.회복형;
 
 import java4.캐릭터.플레이어;
 
+import static java4.사냥터.사냥터.타이머;
+
 public class 마나물약 extends 회복형 {
     public 마나물약(String 이름) {
         this.아이템이름=이름;
@@ -15,6 +17,7 @@ public class 마나물약 extends 회복형 {
     @Override
     public boolean 사용효과(플레이어 플레이어) throws InterruptedException {
         if(this.스택수>0) {
+            타이머.타이머종료();
             if (플레이어.캐릭터최종마나 - 플레이어.캐릭터현재마나 >= 30) {
                 플레이어.캐릭터현재마나 = 플레이어.캐릭터현재마나 + 30;
                 System.out.print("\n마나가 30회복되어 " + 플레이어.캐릭터현재마나 + "이 되었습니다.");

@@ -6,7 +6,7 @@ import java4.사냥터.몬스터.스킬.몬스터스킬;
 import static java4.사냥터.사냥터.몬스터어레이;
 import static java4.Main.메인;
 
-public class 사냥터출력 extends Thread{
+public class 사냥터출력{
     public void 사냥터메인() {
         System.out.println(메인.능력치창());
         System.out.print(""+
@@ -41,8 +41,6 @@ public class 사냥터출력 extends Thread{
                     "\n→");
         }
     }
-
-
     public StringBuilder 몬스터목록(){
         StringBuilder 몬스터목록 = new StringBuilder();
         StringBuilder 몬스터목록2 = new StringBuilder();
@@ -68,7 +66,6 @@ public class 사냥터출력 extends Thread{
         몬스터목록.append("\n┌────────────────────────────────────\n" ).append(몬스터목록2).append("└────────────────────────────────────\n");
         return 몬스터목록;
     }
-
     public StringBuilder 행동몬스터목록(){
         StringBuilder 몬스터목록 = new StringBuilder();
         StringBuilder 몬스터목록2 = new StringBuilder();
@@ -90,9 +87,5 @@ public class 사냥터출력 extends Thread{
         }
         몬스터목록.append("\n┌────────────────────────────────────\n" ).append("│ 0. 취소\n").append(몬스터목록2).append("└────────────────────────────────────\n");
         return 몬스터목록;
-    }
-
-    public void 단일타겟선택(){
-
     }
 }

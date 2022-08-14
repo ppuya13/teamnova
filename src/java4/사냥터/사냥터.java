@@ -1,14 +1,11 @@
 package java4.사냥터;
 
-import java4.사냥터.몬스터.고블린.고블린궁수;
-import java4.사냥터.몬스터.고블린.고블린전사;
-import java4.사냥터.몬스터.고블린.보물고블린;
+import java4.사냥터.몬스터.고블린.*;
 import java4.사냥터.몬스터.몬스터;
-import java4.사냥터.몬스터.슬라임.빨간슬라임;
-import java4.사냥터.몬스터.슬라임.초록슬라임;
-import java4.사냥터.몬스터.오크.오크전사;
-import java4.사냥터.몬스터.오크.오크주술사;
+import java4.사냥터.몬스터.슬라임.*;
+import java4.사냥터.몬스터.오크.*;
 import java4.아이템.아이템;
+import java4.인벤토리.인벤토리출력;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -36,9 +33,11 @@ public class 사냥터 {
     public static boolean 보스전;
     public static boolean 전투종료;
     public static boolean 입력유효 = false;
+    public static boolean 턴넘김 = false;
 
 
 
+    java4.인벤토리.인벤토리출력 인벤토리출력 = new 인벤토리출력();
     String 몬스터번호;
     double 몬스터생성난수;
     int num;
@@ -57,7 +56,7 @@ public class 사냥터 {
     전투_캐릭터창 캐릭터창;
 
 
-    public void 사냥터() throws InterruptedException {
+    public void 사냥터() throws InterruptedException, CloneNotSupportedException {
 
 //        Thread.sleep(1000);
 //        System.out.println("사냥터.사냥터()| 전투.getState(): "+전투.getState());
@@ -87,21 +86,33 @@ public class 사냥터 {
                     this.전투(보스전);//전투메소드 실행
                     break;
                 case 2: //인벤토리
+                    인벤토리출력.인벤토리();
                     break;
                 case 3: //휴식
+                    플레이어.휴식();
                     break;
                 case 4: //보스전
                     전투중=true;
-                    보스전=true;
                     플레이어.전투횟수++;
-                    this.몬스터생성();//몬스터어레이 셋팅
-                    this.전투(보스전);//전투메소드 실행
+                    보스전=false;
+                    this.보스전생성1();
+                    this.전투(보스전);
+
+                    플레이어.전투횟수++;
+                    보스전=true;
+                    this.보스전생성2();
+                    this.전투(보스전);
+                    if(보스토벌){//오크로드를 잡았다면
+                        Thread.sleep(1000);
+                        System.out.println("" +
+                                "\n사투 끝에 오크 로드는 쓰러졌고" +
+                                "\n마을의 평화는 지켜졌습니다.");
+                        메인.엔딩();
+                    }
                     break;
             }
         }//while문 끝
     }
-
-
     public static class 사냥터입력 extends Thread{
         Scanner sc = new Scanner(System.in);
         public static int 사냥터입력값;
@@ -177,9 +188,62 @@ public class 사냥터 {
             몬스터어레이.add(몬스터정보);
         }
     }
+    public void 보스전생성1() throws InterruptedException {
+        for(int i = 0 ; i < 몬스터어레이.size() ; i++){
+//            몬스터어레이.get(i).interrupt();
+        }
+        this.몬스터어레이.clear();
+//        this.몬스터머릿수 = rd.nextInt(9) + 1;
+        this.몬스터머릿수 = 8;
+        System.out.println("오크 로드를 토벌하러 출발합니다.");
+        Thread.sleep(1500);
+        System.out.println("오크 로드의 병사가 나타났습니다!");
+        Thread.sleep(1500);
+
+        몬스터정보 = new 오크주술사(Integer.toString(1));
+        this.몬스터어레이.add(몬스터정보);
+        몬스터정보 = new 오크주술사(Integer.toString(2));
+        this.몬스터어레이.add(몬스터정보);
+        몬스터정보 = new 오크전사(Integer.toString(3));
+        this.몬스터어레이.add(몬스터정보);
+        몬스터정보 = new 오크전사(Integer.toString(4));
+        this.몬스터어레이.add(몬스터정보);
+        몬스터정보 = new 오크전사(Integer.toString(5));
+        this.몬스터어레이.add(몬스터정보);
+        몬스터정보 = new 오크전사(Integer.toString(6));
+        this.몬스터어레이.add(몬스터정보);
+        몬스터정보 = new 오크전사(Integer.toString(7));
+        this.몬스터어레이.add(몬스터정보);
+        몬스터정보 = new 오크전사(Integer.toString(8));
+        this.몬스터어레이.add(몬스터정보);
+    }
+    public void 보스전생성2() throws InterruptedException {
+        this.몬스터어레이.clear();
+//        this.몬스터머릿수 = rd.nextInt(9) + 1;
+        this.몬스터머릿수 = 6;
+        Thread.sleep(1000);
+        System.out.println("오크 로드의 병사를 모두 물리치자,");
+        Thread.sleep(1500);
+        System.out.println("오크 로드가 직접 병사들을 이끌고 나타났습니다!");
+        Thread.sleep(1500);
+
+        몬스터정보 = new 오크로드("");
+        this.몬스터어레이.add(몬스터정보);
+        몬스터정보 = new 오크주술사(Integer.toString(1));
+        this.몬스터어레이.add(몬스터정보);
+        몬스터정보 = new 오크주술사(Integer.toString(2));
+        this.몬스터어레이.add(몬스터정보);
+        몬스터정보 = new 오크전사(Integer.toString(3));
+        this.몬스터어레이.add(몬스터정보);
+        몬스터정보 = new 오크전사(Integer.toString(4));
+        this.몬스터어레이.add(몬스터정보);
+        몬스터정보 = new 오크전사(Integer.toString(5));
+        this.몬스터어레이.add(몬스터정보);
+    }
+
     public void 전투(boolean 보스전) throws InterruptedException {
-        boolean 전투시작선택중;
-        플레이어.행동게이지=5000;
+//        boolean 전투시작선택중;
+        플레이어.행동게이지=9000;
 //        타이머 타이머;
         몬스터창 = new 전투_몬스터창(몬스터어레이);
         캐릭터창 = new 전투_캐릭터창(플레이어);
@@ -205,7 +269,8 @@ public class 사냥터 {
 //                    System.out.println("사냥터.전투| 타이머.getState: " + 타이머.getState());
                 }
 
-                전투시작선택중=true;
+//                전투시작선택중=true;
+                행동중=true;
                 메인.능력치창();
                 사냥터출력.몬스터목록();
                 사냥터출력.사냥터행동(보스전);
@@ -218,11 +283,12 @@ public class 사냥터 {
                     Thread.sleep(50);
                 }
 
-                if(전투중&&턴여부 && 전투시작선택중){//
+//                if(전투중&&턴여부 && 전투시작선택중){//
+                if(전투중&&턴여부&&행동중){//
                     switch (사냥터입력값){
                         case 1: //공격
                             행동중=true;
-                            전투시작선택중=false;
+//                            전투시작선택중=false;
                             공격여부=true;
                             synchronized (플레이어) {
                                 플레이어.notify();
@@ -232,20 +298,50 @@ public class 사냥터 {
                             }
                             break;
                         case 2: //스킬
-                            전투시작선택중=false;
-                            System.out.println("스킬발동");
+                            행동중=true;
+                            스킬여부=true;
+//                            전투시작선택중=false;
+//                            System.out.println("스킬발동");
+                            synchronized (플레이어) {
+                                플레이어.notify();
+                            }
+                            while (행동중){
+                                Thread.sleep(50);
+                            }
                             break;
                         case 3: //아이템
-                            전투시작선택중=false;
-                            System.out.println("아이템발동");
+                            행동중=true;
+                            아이템여부=true;
+//                            전투시작선택중=false;
+//                            System.out.println("아이템발동");
+                            synchronized (플레이어) {
+                                플레이어.notify();
+                            }
+                            while (행동중){
+                                Thread.sleep(50);
+                            }
                             break;
                         case 4: //살펴보기
-                            전투시작선택중=false;
-                            System.out.println("살펴보기발동");
+                            행동중=true;
+                            살펴보기여부=true;
+//                            전투시작선택중=false;
+//                            System.out.println("살펴보기발동");
+                            synchronized (플레이어) {
+                                플레이어.notify();
+                            }
+                            while (행동중){
+                                Thread.sleep(50);
+                            }
                             break;
                         case 5: //도망치기(보스전이 아닐때만)
-                            전투시작선택중=false;
-                            System.out.println("도망치기발동");
+                            행동중=true;
+                            도망치기여부=true;
+                            synchronized (플레이어) {
+                                플레이어.notify();
+                            }
+                            while (행동중){
+                                Thread.sleep(50);
+                            }
                             break;
                     }
                 }else{//전투중이 아니거나 턴이 아니면
@@ -343,6 +439,8 @@ public class 사냥터 {
         boolean 버림=false;
         몬스터창.interrupt();
         캐릭터창.interrupt();
+        몬스터어레이.clear();
+        플레이어.사용중.clear();
         if(승리) { //전투 승리 시에만 아이템 루팅이 가능함.
             System.out.println("전투에서 승리했습니다!");
             Thread.sleep(1000);
@@ -425,6 +523,7 @@ public class 사냥터 {
     }
     public void 턴종료() throws InterruptedException, CloneNotSupportedException {
         플레이어.능력치적용();
+        플레이어.턴넘김();
         this.몬스터삭제(true);
         if(this.전투종료판정(몬스터어레이,보스전)){
             this.전투정산(true,플레이어);

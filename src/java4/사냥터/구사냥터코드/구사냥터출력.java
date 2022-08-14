@@ -16,7 +16,7 @@ public class 구사냥터출력 extends 구사냥터 {
     public static boolean 입력대기 = true; //스킬사용시 입력대기가 false이면 다음으로 넘어감
     public static boolean 몬스터삭제 = false;
     public static boolean 전투메뉴 = true; //true이면 전투 최상위 선택지를 출력함.
-    public static int 전투입력;
+//    public static int 전투입력;
     //    public static boolean 몹사망 = false;
     public void 사냥터() throws InterruptedException, CloneNotSupportedException {
         사냥터:
@@ -132,21 +132,21 @@ public class 구사냥터출력 extends 구사냥터 {
                     System.out.println(this.몬스터목록());
                     this.사냥터행동(보스전);
                 }
-                System.out.println("사냥터출력.전투|전투입력: " + 전투입력);
-                전투입력 = sc.nextInt();
-                System.out.println("사냥터출력.전투|전투입력: " + 전투입력);
-                입력대기=false;
-                System.out.println("사냥터출력.전투| 전투메뉴: "+전투메뉴);
-
-                if(전투입력>0 && 전투입력<6){
-                    전투메뉴 = false;
-                    synchronized (구전투2) {
-                        구전투2.notify();
-                    }
-                    synchronized (플레이어) {
-                        플레이어.notify();
-                    }
-                }
+//                System.out.println("사냥터출력.전투|전투입력: " + 전투입력);
+//                전투입력 = sc.nextInt();
+//                System.out.println("사냥터출력.전투|전투입력: " + 전투입력);
+//                입력대기=false;
+//                System.out.println("사냥터출력.전투| 전투메뉴: "+전투메뉴);
+//
+//                if(전투입력>0 && 전투입력<6){
+//                    전투메뉴 = false;
+//                    synchronized (구전투2) {
+//                        구전투2.notify();
+//                    }
+//                    synchronized (플레이어) {
+//                        플레이어.notify();
+//                    }
+//                }
                 Thread.sleep(200);
 //            }
             Thread.sleep(100);

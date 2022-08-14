@@ -14,7 +14,7 @@ import static java4.사냥터.사냥터.*;
 
 
 public class 타이머 extends Thread {
-    public int 카운트 = 5;
+    public int 카운트 = 30;
     public String 텍스트;
     public boolean 타이머진행중=true;
     public void run(){
@@ -78,6 +78,11 @@ public class 타이머 extends Thread {
             타이머.cancel();
             타이머창.setVisible(false);
         }
-
+    }//run끝
+    public void 타이머종료(){
+        synchronized (this){
+            this.타이머진행중=false;
+            this.interrupt();
+        }
     }
 }

@@ -8,9 +8,10 @@ import java4.캐릭터.캐릭터;
 import java.util.ArrayList;
 
 import static java4.사냥터.구사냥터코드.구사냥터출력.*;
+import static java4.사냥터.사냥터.*;
 import static java4.사냥터.사냥터.사냥터입력.사냥터입력값;
-import static java4.사냥터.사냥터.턴여부;
-import static java4.사냥터.사냥터.행동중;
+import static java4.사냥터.사냥터.입력대기;
+import static java4.사냥터.사냥터.타이머;
 
 public abstract class 광역스킬 extends 스킬 {
 
@@ -28,32 +29,28 @@ public abstract class 광역스킬 extends 스킬 {
                     "\n0.취소한다." +
                     "\n1.사용한다." +
                     "\n→");
-            입력대기=true;
-            입력대기:
-            while(턴여부&&입력대기) {
-                Thread.sleep(100);
-//                System.out.println("광역스킬.사용확인| 입력대기중");
+            synchronized (사냥터입력) {
+                사냥터입력.notify();
             }
-//            System.out.println("입력받음");
-            System.out.println("사용효과발동됨1");
+            입력대기=true;
+            while(입력대기){
+                Thread.sleep(50);
+            }
             if (턴여부) {
-                System.out.println("사용효과발동됨2");
-                System.out.println("광역스킬.사용확인| 전투입력: " + 사냥터입력값);
+//                System.out.println("광역스킬.사용확인| 전투입력: " + 사냥터입력값);
 //                행동중 = true;
                 if (사냥터입력값 == 0) {
-                    행동중 = false;
+//                    행동중 = false;
                     return true;
                 } else if (사냥터입력값 == 1) {
-                    System.out.println("사용효과발동됨3");
+                    타이머.타이머종료();
                     if (캐릭터.캐릭터현재마나 < this.소모량) {
                         System.out.println("마나가 부족합니다.");
                         Thread.sleep(1000);
                         return true;
                     }
-                    System.out.println("사용효과발동됨4");
                     몬스터 타겟 = 몬스터어레이.get(0);
                     this.사용효과(몬스터어레이, 캐릭터, 타겟);
-                    System.out.println("사용효과발동됨5");
                     return false;
                 }
             }
