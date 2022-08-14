@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import static java4.사냥터.사냥터.*;
 import static java4.사냥터.사냥터.사냥터입력.사냥터입력값;
 import static java4.사냥터.사냥터.입력대기;
-import static java4.사냥터.사냥터.타이머;
+import static java4.사냥터.사냥터.턴타이머;
 
 public abstract class 광역스킬 extends 스킬 {
 
@@ -42,7 +42,7 @@ public abstract class 광역스킬 extends 스킬 {
 //                    행동중 = false;
                     return true;
                 } else if (사냥터입력값 == 1) {
-                    타이머.타이머종료();
+                    턴타이머.타이머종료();
                     if (캐릭터.캐릭터현재마나 < this.소모량) {
                         System.out.println("마나가 부족합니다.");
                         Thread.sleep(1000);

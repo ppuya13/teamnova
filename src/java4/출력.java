@@ -309,6 +309,10 @@ public class 출력 { //화면에 표시하기 위한 메소드는 이곳에
         return 스킬창;
     }
 
+    public void 제작슬롯(){
+        StringBuilder 제작슬롯 = new StringBuilder();
+        제작슬롯
+    }
     public void 엔딩() throws InterruptedException {
         boolean 착용템있음=false;
         ArrayList<아이템> 착용목록 = new ArrayList<>();

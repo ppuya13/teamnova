@@ -15,6 +15,10 @@ public class 대장간출력 {
     Scanner sc = new Scanner(System.in);
     출력 메인 = new 출력();
     아이템 아이템정보;
+    public static 대장간슬롯 슬롯1;
+    public static 대장간슬롯 슬롯2;
+    public static 대장간슬롯 슬롯3;
+
 
     public void 대장간() throws InterruptedException {
         this.강화리스트생성(플레이어);
@@ -29,7 +33,8 @@ public class 대장간출력 {
                     "\n대장간에서는 아이템을 강화할 수 있습니다." +
                     "\n0.나가기" +
                     "\n1.강화하기" +
-                    "\n2.살펴보기" +
+                    "\n2.제작하기"+
+                    "\n3.살펴보기(인벤토리)" +
                     "\n→");
             입력 = sc.nextInt();
             switch (입력){
@@ -133,7 +138,22 @@ public class 대장간출력 {
                             }
                         }
                     }
-                case 2: //강화살펴보기
+                case 2: //제작하기
+                    제작하기:
+                    while(true){
+                        System.out.println(메인.능력치창());
+                        System.out.println(메인.제작슬롯());
+                        System.out.print(""+
+                                "\n여기서는 무료로 아이템을 제작할 수 있습니다.(30초 소요)" +
+                                "\n슬롯을 선택해주세요." +
+                                "\n→");
+                        입력 = sc.nextInt();
+                        if(입력==0){
+                            continue 대장간;
+                        }
+                    }
+
+                case 3: //강화살펴보기
                     살펴보기:
                     while(true){
                         System.out.println(메인.능력치창());

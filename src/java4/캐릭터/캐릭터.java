@@ -17,7 +17,7 @@ import static java4.사냥터.사냥터.*;
 import static java4.사냥터.사냥터.사냥터입력.사냥터입력값;
 import static java4.사냥터.사냥터.입력대기;
 import static java4.사냥터.사냥터.몬스터어레이;
-import static java4.사냥터.사냥터.타이머;
+import static java4.사냥터.사냥터.턴타이머;
 
 public abstract class 캐릭터 extends Thread{
 
@@ -347,7 +347,7 @@ public abstract class 캐릭터 extends Thread{
                         case 1:
                             턴여부=false;
                             행동중=false;
-                            타이머.타이머종료();
+                            턴타이머.타이머종료();
                             System.out.println("도망쳤습니다.");
                             Thread.sleep(1000);
                             사냥터.전투정산(false,플레이어);

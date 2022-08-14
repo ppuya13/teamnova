@@ -13,7 +13,7 @@ import static java4.Main.사냥터;
 import static java4.사냥터.사냥터.*;
 
 
-public class 타이머 extends Thread {
+public class 턴타이머 extends Thread {
     public int 카운트 = 30;
     public String 텍스트;
     public boolean 타이머진행중=true;

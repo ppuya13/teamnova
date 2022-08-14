@@ -25,7 +25,7 @@ public class 사냥터 {
     public static 사냥터입력 사냥터입력 = new 사냥터입력();
     public static 사냥터출력 사냥터출력 = new 사냥터출력();
     public static 전투_행동게이지 전투_행동게이지;
-    public static 타이머 타이머;
+    public static 턴타이머 턴타이머;
     public static boolean 전투중=false; //전투중일때만 전투관련 선택지가 출력되게 함
     public static boolean 입력대기 = false;
     public static boolean 턴여부=false;
@@ -253,14 +253,14 @@ public class 사냥터 {
 //            System.out.println("사냥터.전투()| 전투중: "+전투중 + ", 턴여부: " + 턴여부);
             전투시작:
             while(턴여부) {
-                if(타이머==null) {
+                if(턴타이머 ==null) {
 //                    System.out.println("사냥터.전투| 타이머null");
-                    타이머 = new 타이머();
-                    타이머.start();
+                    턴타이머 = new 턴타이머();
+                    턴타이머.start();
 //                    System.out.println("사냥터.전투| 타이머.getState: " + 타이머.getState());
-                }else if(!타이머.타이머진행중){
-                    타이머 = new 타이머();
-                    타이머.start();
+                }else if(!턴타이머.타이머진행중){
+                    턴타이머 = new 턴타이머();
+                    턴타이머.start();
 //                    System.out.println("사냥터.전투| 타이머살아있음");
 //                    System.out.println("사냥터.전투| 타이머.getState: " + 타이머.getState());
                 }

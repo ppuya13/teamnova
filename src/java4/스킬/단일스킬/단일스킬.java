@@ -46,7 +46,7 @@ public abstract class 단일스킬 extends 스킬 {
                         Thread.sleep(1000);
                         return true;
                     }
-                    타이머.타이머종료();
+                    턴타이머.타이머종료();
 //                    System.out.println("단일스킬.사용효과| 플레이어선택중: " + 플레이어선택중);
                     System.out.println("단일스킬.사용효과| 사용직전");
                     몬스터 타겟 = 몬스터어레이.get(사냥터입력값 - 1);
