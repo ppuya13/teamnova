@@ -7,8 +7,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-import static java4.사냥터.사냥터.전투종료;
-
 
 //import static java4.사냥터.사냥터출력.몹사망;
 

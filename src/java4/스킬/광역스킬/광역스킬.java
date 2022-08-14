@@ -7,7 +7,6 @@ import java4.캐릭터.캐릭터;
 
 import java.util.ArrayList;
 
-import static java4.사냥터.구사냥터코드.구사냥터출력.*;
 import static java4.사냥터.사냥터.*;
 import static java4.사냥터.사냥터.사냥터입력.사냥터입력값;
 import static java4.사냥터.사냥터.입력대기;

@@ -1,24 +1,17 @@
 package java4;
 
-import java4.사냥터.구사냥터코드.구사냥터출력;
 import java4.대장간.대장간출력;
 import java4.사냥터.사냥터;
-import java4.사냥터.전투_행동게이지;
 import java4.상점.상점;
 import java4.인벤토리.인벤토리출력;
 import java4.캐릭터.플레이어;
 import java.util.Scanner;
 
 import static java4.사냥터.사냥터.사냥터입력;
-import static java4.사냥터.사냥터.전투_행동게이지;
-//import static java4.사냥터.사냥터.전투;
 
 public class Main {
     static public java4.캐릭터.플레이어 플레이어 = new 플레이어();
-
     public static 출력 메인 = new 출력();
-
-    public static 구사냥터출력 구사냥터출력 = new 구사냥터출력();
     public static 사냥터 사냥터 = new 사냥터();
     public static void main(String[] args) throws InterruptedException, CloneNotSupportedException {
         //캐릭터 초기화

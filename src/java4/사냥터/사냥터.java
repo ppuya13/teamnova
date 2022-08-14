@@ -31,10 +31,6 @@ public class 사냥터 {
     public static boolean 턴여부=false;
     public static boolean 행동중=false;
     public static boolean 보스전;
-    public static boolean 전투종료;
-    public static boolean 입력유효 = false;
-    public static boolean 턴넘김 = false;
-
 
 
     java4.인벤토리.인벤토리출력 인벤토리출력 = new 인벤토리출력();
