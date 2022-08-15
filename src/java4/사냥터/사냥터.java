@@ -34,7 +34,6 @@ public class 사냥터 {
     public static boolean 행동중=false;
     public static boolean 보스전;
 
-
     java4.인벤토리.인벤토리출력 인벤토리출력 = new 인벤토리출력();
     String 몬스터번호;
     double 몬스터생성난수;
@@ -259,6 +258,7 @@ public class 사냥터 {
                         몬스터어레이.get(i).행동게이지 = 몬스터어레이.get(i).행동;
                     }
                     if (몬스터어레이.get(i).행동게이지 == 몬스터어레이.get(i).행동) {
+                        몬스터어레이.get(i).몬스터행동중=true;
                         몬스터어레이.get(i).몬스터행동(몬스터어레이, 몬스터머릿수 - 죽은몬스터수, 플레이어);
                         if(몬스터어레이.get(i).도망침) {
                             몬스터어레이.remove(i);

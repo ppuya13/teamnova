@@ -2,6 +2,7 @@ package java4.캐릭터;
 
 
 import java4.스킬.단일스킬.강타;
+import java4.스킬.단일스킬.찌르기;
 import java4.스킬.스킬;
 import java4.스킬.광역스킬.휩쓸기;
 import java4.아이템.기타.슬라임젤리;
@@ -27,9 +28,9 @@ public class 플레이어 extends 캐릭터 {
         this.캐릭터최대마나 = 100;
         this.캐릭터최종마나 = this.캐릭터최대마나;
         this.캐릭터현재마나 = this.캐릭터최대마나;
-        this.캐릭터공격력 = 300;
+        this.캐릭터공격력 = 30;
         this.캐릭터최종공격력=0;
-        this.캐릭터방어력 = 0;
+        this.캐릭터방어력 = 100;
         this.캐릭터최종방어력=0;
         this.캐릭터치명확률 = 20;
         this.캐릭터최종치확 = 20;
@@ -62,6 +63,8 @@ public class 플레이어 extends 캐릭터 {
         스킬 스킬 = new 강타();
         this.스킬목록.add(스킬);
         스킬 = new 휩쓸기();
+        this.스킬목록.add(스킬);
+        스킬 = new 찌르기();
         this.스킬목록.add(스킬);
     }
     public void 인벤토리초기화 () { //초기 보유 아이템을 설정

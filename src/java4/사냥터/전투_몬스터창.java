@@ -2,6 +2,7 @@ package java4.사냥터;
 
 import java4.사냥터.몬스터.몬스터;
 import java4.사냥터.몬스터.스킬.몬스터스킬;
+import java4.스킬.지속피해.지속피해;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,6 +25,7 @@ public class 전투_몬스터창 extends Thread{
         JLabel 라벨;
         몬스터 타겟;
         몬스터스킬 스킬;
+        지속피해 지속피해;
 
         //레이아웃 설정
         JFrame 몬스터 = new JFrame("몬스터");
@@ -56,6 +58,13 @@ public class 전투_몬스터창 extends Thread{
                     for (int j = 0; j < 타겟.지속스킬.size(); j++) {
                         스킬 = 타겟.지속스킬.get(j);
                         라벨리스트.get(i).setText(라벨리스트.get(i).getText() + 스킬.스킬명 + "(" + (스킬.지속시간) + "턴) ");
+                    }
+                }
+                if (타겟.지속딜.size() > 0) {
+                    라벨리스트.get(i).setText(라벨리스트.get(i).getText() + " 상태이상: ");
+                    for (int j = 0; j < 타겟.지속딜.size(); j++) {
+                        지속피해 = 타겟.지속딜.get(j);
+                        라벨리스트.get(i).setText(라벨리스트.get(i).getText() + 지속피해.이름 + "(" + (지속피해.지속시간/10) + "초) ");
                     }
                 }
                 라벨리스트.get(i).setText(라벨리스트.get(i).getText() + ")\n");

@@ -4,6 +4,7 @@ import java4.Main;
 import java4.사냥터.몬스터.스킬.기본공격;
 import java4.사냥터.몬스터.스킬.몬스터스킬;
 import java4.사냥터.몬스터.스킬.지속스킬;
+import java4.스킬.지속피해.지속피해;
 import java4.아이템.소모.지속형.*;
 import java4.아이템.소모.회복형.*;
 import java4.아이템.아이템;
@@ -33,12 +34,14 @@ public abstract class 몬스터 {
     public int 경험치;
     public int 소지금;
     public String 정보;
+    public boolean 몬스터행동중=false;
     public boolean 도망침 = false;
     public 아이템 드랍템;
     public ArrayList<몬스터스킬> 스킬리스트 = new ArrayList<>();
     public ArrayList<지속스킬> 지속스킬 = new ArrayList<>();
     public ArrayList<아이템> 드랍테이블 = new ArrayList<>();
     public ArrayList<아이템> 공용드랍테이블 = new ArrayList<>();
+    public ArrayList<지속피해> 지속딜 = new ArrayList<>();
     public Random rd = new Random();
     public int 난수;
 
@@ -153,6 +156,7 @@ public abstract class 몬스터 {
                     }
                 }
                 //지속스킬이 더이상 없거나 지울 스킬이 없다면
+                this.몬스터행동중=false;
                 break;
             }
         }
