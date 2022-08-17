@@ -17,20 +17,28 @@ public class 대장간출력 {
     Scanner sc = new Scanner(System.in);
     출력 메인 = new 출력();
     아이템 아이템정보;
-    public 대장간슬롯 슬롯1;
-    public 대장간슬롯 슬롯2;
-    public 대장간슬롯 슬롯3;
+    public 제작 제작 = new 제작();
+    public 대장간슬롯 슬롯;
+    //    public 대장간슬롯 슬롯1;
+//    public 대장간슬롯 슬롯2;
+//    public 대장간슬롯 슬롯3;
+    ArrayList<대장간슬롯> 슬롯어레이 = new ArrayList<>();
     ArrayList<아이템> 제작템어레이 = new ArrayList<>();
     public 대장간출력(){
-        슬롯1 = new 대장간슬롯("슬롯1");
-        슬롯2 = new 대장간슬롯("슬롯2");
-        슬롯3 = new 대장간슬롯("슬롯3");
-        슬롯1.start();
-        슬롯2.start();
-        슬롯3.start();
+        for(int i = 0 ; i < 3 ; i++) {
+            슬롯 = new 대장간슬롯("슬롯" + i);
+            슬롯어레이.add(슬롯);
+        }
+        제작.start();
+//        슬롯1 = new 대장간슬롯("슬롯1");
+//        슬롯2 = new 대장간슬롯("슬롯2");
+//        슬롯3 = new 대장간슬롯("슬롯3");
+//        슬롯1.start();
+//        슬롯2.start();
+//        슬롯3.start();
     }
 
-    public void 대장간() throws InterruptedException {
+    public void 대장간() throws InterruptedException, CloneNotSupportedException {
         this.강화리스트생성();
         아이템정보=null;
         StringBuilder 강화능력치표시 = new StringBuilder();
@@ -151,10 +159,11 @@ public class 대장간출력 {
                 case 2: //제작하기
                     제작하기:
                     while(true){
-                        System.out.println(""+
+                        System.out.println("\n\n"+
                                 "\n제작하기" +
-                                "\n아이템은 동시에 3개까지만 제작할 수 있으며 1회 제작에 100골드가 필요합니다.");
-                        System.out.print(this.제작슬롯(슬롯1,슬롯2,슬롯3));
+                                "\n아이템은 동시에 3개까지만 제작할 수 있으며 1회 제작에 100골드가 필요합니다." +
+                                "\n제작 완료 시 높은 확률로 강화된 아이템이 만들어집니다.");
+                        System.out.print(this.제작슬롯(슬롯어레이.get(0),슬롯어레이.get(1),슬롯어레이.get(2)));
                         System.out.print(""+
                                 "\n이용할 슬롯의 번호를 입력해주세요." +
                                 "\n(0. 뒤로가기)" +
@@ -162,12 +171,16 @@ public class 대장간출력 {
                         입력 = sc.nextInt();
                         if(입력==0){
                             continue 대장간;
-                        }else if(입력==1){
-                            슬롯1.선택();
-                        }else if(입력==2){
-                            슬롯2.선택();
-                        }else if(입력==3){
-                            슬롯3.선택();
+                        }
+//                        else if(입력==1){
+//                            슬롯어레이.get(0).선택();
+//                        }else if(입력==2){
+//                            슬롯어레이.get(1).선택();
+//                        }else if(입력==3){
+//                            슬롯어레이.get(2).선택();
+//                        }
+                        else if(입력>0 && 입력<=슬롯어레이.size()){
+                            슬롯어레이.get(입력-1).선택();
                         }
                     }
 
@@ -197,15 +210,14 @@ public class 대장간출력 {
         }
     }
 
-    public class 대장간슬롯 extends Thread{
+    private class 대장간슬롯 {
 
         final int 제작시간=60;
-        public int 남은시간;
-        public int 상태; //0:비어있음, 1:제작중, 2:제작완료
-        public 아이템 제작아이템;
-        public String 아이템이름;
-        public String 이름;
-        int 제작난수;
+        int 남은시간 = 0;
+        int 상태; //0:비어있음, 1:제작중, 2:제작완료
+        아이템 제작아이템;
+        String 아이템이름;
+        String 이름;
         int 강화수치;
         int 반복횟수;
         Random rd = new Random();
@@ -217,38 +229,38 @@ public class 대장간출력 {
             this.상태 = 0;
             this.아이템이름 = "비어있음";
         }
-        public void run(){
-            while(true) {
-                synchronized (this) {
-                    try {
-                        this.wait();
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-                if(this.상태==0){//비어있을때 깨어났다면
-                    this.상태=1;
-                    try {
-                        this.제작아이템 = (아이템) 제작템어레이.get(입력-1).clone();
-                    } catch (CloneNotSupportedException e) {
-                        throw new RuntimeException(e);
-                    }
-                    this.아이템이름 = this.제작아이템.아이템이름;
-                    for(남은시간 = 제작시간 ; 남은시간 > 0 ; 남은시간--){
-//                        System.out.println("대장간출력(대장간슬롯.run)| 제작 남은시간 " + 남은시간 + "초 남음");
-                        try {
-                            Thread.sleep(1000);
-                        } catch (InterruptedException e) {
-                            throw new RuntimeException(e);
-                        }
-                    }
-                    System.out.println(this.이름 +"에서 아이템 제작이 완료되었습니다.");
-                    this.상태=2;
-                }
-            }//while문 끝
-        }
+//        public void run(){
+//            while(true) {
+//                synchronized (this) {
+//                    try {
+//                        this.wait();
+//                    } catch (InterruptedException e) {
+//                        throw new RuntimeException(e);
+//                    }
+//                }
+//                if(this.상태==0){//비어있을때 깨어났다면
+//                    this.상태=1;
+//                    try {
+//                        this.제작아이템 = (아이템) 제작템어레이.get(입력-1).clone();
+//                    } catch (CloneNotSupportedException e) {
+//                        throw new RuntimeException(e);
+//                    }
+//                    this.아이템이름 = this.제작아이템.아이템이름;
+//                    for(남은시간 = 제작시간 ; 남은시간 > 0 ; 남은시간--){
+////                        System.out.println("대장간출력(대장간슬롯.run)| 제작 남은시간 " + 남은시간 + "초 남음");
+//                        try {
+//                            Thread.sleep(1000);
+//                        } catch (InterruptedException e) {
+//                            throw new RuntimeException(e);
+//                        }
+//                    }
+//                    System.out.println(this.이름 +"에서 아이템 제작이 완료되었습니다.");
+//                    this.상태=2;
+//                }
+//            }//while문 끝
+//        }
 
-        public void 선택() throws InterruptedException {
+        public void 선택() throws InterruptedException, CloneNotSupportedException {
             if(this.상태==0){ //슬롯이 비어있으면
                 System.out.println(제작리스트출력(상점, this)); //뭘 만들지 물어봄
                 System.out.print("→");
@@ -261,9 +273,13 @@ public class 대장간출력 {
                         플레이어.소지금=플레이어.소지금-100;
                         System.out.println("100골드를 지불하여 " + this.이름 + "에서 " + 제작템어레이.get(입력-1).아이템이름 + "을(를) 제작합니다.");
                         Thread.sleep(1000);
-                        synchronized (this){
-                            this.notify();
-                        }
+//                        synchronized (this){
+//                            this.notify();
+//                        }
+                        this.상태 = 1;
+                        this.남은시간 = this.제작시간;
+                        this.제작아이템 = (아이템) 제작템어레이.get(입력-1).clone();
+                        this.아이템이름 = this.제작아이템.아이템이름;
                     }
                 }
             }
@@ -331,6 +347,29 @@ public class 대장간출력 {
                     this.아이템이름="비어있음";
                 }
             }
+        }
+    }
+
+    private class 제작 extends Thread{
+        public void run(){
+            while(true) {
+                for(int i = 0 ; i < 슬롯어레이.size() ; i++) {
+                    if (슬롯어레이.get(i).상태 == 1) {
+                        if(슬롯어레이.get(i).남은시간>0) {
+                            슬롯어레이.get(i).남은시간--;
+                        }
+                        else{
+                            슬롯어레이.get(i).상태=2;
+                            System.out.println(슬롯어레이.get(i).이름 + i + "에서 아이템 제작이 완료되었습니다.");
+                        }
+                    }
+                }
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }//while문 끝
         }
     }
 

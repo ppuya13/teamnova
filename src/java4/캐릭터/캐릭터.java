@@ -320,6 +320,7 @@ public abstract class 캐릭터{
                         case 0:
                             return;
                         case 1:
+                            전투중=false;
                             턴여부=false;
                             행동중=false;
                             턴타이머.타이머종료();

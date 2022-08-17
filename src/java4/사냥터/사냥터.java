@@ -264,6 +264,7 @@ public class 사냥터 {
                             몬스터어레이.remove(i);
                             죽은몬스터수++;
 //                            this.몬스터삭제(true);
+                            Thread.sleep(500);
                             if(this.전투종료판정(몬스터어레이,보스전)){
                                 전투중=false;
                                 this.전투정산(true,플레이어);
