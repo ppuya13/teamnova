@@ -7,6 +7,8 @@ import java4.캐릭터.캐릭터;
 
 import java.util.ArrayList;
 
+import static java4.Main.사냥터;
+
 public class 찌르기 extends 단일스킬{
 
     public 찌르기(){
@@ -35,6 +37,7 @@ public class 찌르기 extends 단일스킬{
         System.out.println("\n" + 타겟.이름 + "을(를) 공격합니다." +
                 "\n"+캐릭터.이름+"의 "+this.스킬명+"!");
         타겟.현재체력 = 타겟.현재체력 - 입힌데미지;
+        사냥터.창갱신();
         Thread.sleep(500);
         if(치명타){
             System.out.println("치명타!");

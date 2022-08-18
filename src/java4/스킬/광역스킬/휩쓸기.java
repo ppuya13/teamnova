@@ -6,6 +6,8 @@ import java4.캐릭터.캐릭터;
 
 import java.util.ArrayList;
 
+import static java4.Main.사냥터;
+
 public class 휩쓸기 extends 광역스킬 {
     public 휩쓸기(){
         this.고유번호=300;
@@ -42,6 +44,7 @@ public class 휩쓸기 extends 광역스킬 {
             //데미지 공식 끝
 
             타겟.현재체력 = 타겟.현재체력 - 입힌데미지;
+            사냥터.창갱신();
             if(치명타){
                 System.out.println("치명타!");
                 Thread.sleep(400);
