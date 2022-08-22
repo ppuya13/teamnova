@@ -26,7 +26,7 @@ public class 대장간출력 {
     ArrayList<아이템> 제작템어레이 = new ArrayList<>();
     public 대장간출력(){
         for(int i = 0 ; i < 3 ; i++) {
-            슬롯 = new 대장간슬롯("슬롯" + i);
+            슬롯 = new 대장간슬롯("슬롯" + (i+1));
             슬롯어레이.add(슬롯);
         }
         제작.start();
@@ -268,8 +268,10 @@ public class 대장간출력 {
                 if(입력==0){
                     return;
                 }
-                else if(입력 > 0 && 입력 <= 제작템어레이.size());{//입력+1이 선택된아이템
+                else if(입력 > 0 && 입력 < 제작템어레이.size()){//입력+1이 선택된아이템
+//                    System.out.println("입력 : " + 입력 + "제작템어레이.size() : " + 제작템어레이.size());
                     if(플레이어.소지금>=100){//돈이 충분하다면
+//                        System.out.println(제작템어레이.size());
                         플레이어.소지금=플레이어.소지금-100;
                         System.out.println("100골드를 지불하여 " + this.이름 + "에서 " + 제작템어레이.get(입력-1).아이템이름 + "을(를) 제작합니다.");
                         Thread.sleep(1000);
@@ -360,7 +362,7 @@ public class 대장간출력 {
                         }
                         else{
                             슬롯어레이.get(i).상태=2;
-                            System.out.println(슬롯어레이.get(i).이름 + i + "에서 아이템 제작이 완료되었습니다.");
+                            System.out.println(슬롯어레이.get(i).이름 + "에서 아이템 제작이 완료되었습니다.");
                         }
                     }
                 }
