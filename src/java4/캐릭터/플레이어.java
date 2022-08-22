@@ -28,7 +28,7 @@ public class 플레이어 extends 캐릭터 {
         this.캐릭터최대마나 = 100;
         this.캐릭터최종마나 = this.캐릭터최대마나;
         this.캐릭터현재마나 = this.캐릭터최대마나;
-        this.캐릭터공격력 = 300;
+        this.캐릭터공격력 = 500;
         this.캐릭터최종공격력=0;
         this.캐릭터방어력 = 100;
         this.캐릭터최종방어력=0;

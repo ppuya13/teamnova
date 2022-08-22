@@ -133,7 +133,7 @@ public abstract class 캐릭터{
                         this.능력치적용();
                         사냥터.몬스터삭제(true);
                         this.턴넘김();
-                        if(사냥터.전투종료판정(몬스터어레이,보스전)){
+                        if(사냥터.전투종료판정(몬스터어레이,보스전,보스전초전)){
                             전투중=false;
                             사냥터.전투정산(true,플레이어);
                         }
@@ -200,7 +200,7 @@ public abstract class 캐릭터{
                         this.능력치적용();
                         사냥터.몬스터삭제(true);
                         this.턴넘김();
-                        if(사냥터.전투종료판정(몬스터어레이,보스전)){
+                        if(사냥터.전투종료판정(몬스터어레이,보스전,보스전초전)){
                             전투중=false;
                             사냥터.전투정산(true,(플레이어)this);
                         }
@@ -248,7 +248,7 @@ public abstract class 캐릭터{
                             사냥터.몬스터삭제(true);
                             this.인벤정리();
                             this.턴넘김();
-                            if(사냥터.전투종료판정(몬스터어레이,보스전)){
+                            if(사냥터.전투종료판정(몬스터어레이,보스전,보스전초전)){
                                 전투중=false;
                                 사냥터.전투정산(true,(플레이어)this);
                             }
@@ -320,6 +320,9 @@ public abstract class 캐릭터{
                         case 0:
                             return;
                         case 1:
+                            if(보스전){
+                                전초전승리 =false;
+                            }
                             전투중=false;
                             턴여부=false;
                             행동중=false;

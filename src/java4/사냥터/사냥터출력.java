@@ -41,6 +41,13 @@ public class 사냥터출력{
                     "\n→");
         }
     }
+    public void 보스전확인(){
+        System.out.println("" +
+                "\n보스전을 시작할 경우 2연전을 치르게 되며" +
+                "\n두 번째 전투에서는 도망치기가 불가능합니다. 정말 보스전을 시작하시겠습니까?" +
+                "\n0.취소한다" +
+                "\n1.시작한다");
+    }
     public StringBuilder 몬스터목록(){
         StringBuilder 몬스터목록 = new StringBuilder();
         StringBuilder 몬스터목록2 = new StringBuilder();
