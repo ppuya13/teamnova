@@ -10,8 +10,6 @@ public class 보물고블린 extends 고블린{
     int 반복횟수;
     int 강화수치;
     int 정수강화;
-    도망치기 도망치기 = new 도망치기();
-    몬스터스킬 기본공격 = new 기본공격();
     public 보물고블린(String 이름){
         this.이름 = "보물 고블린 " + 이름;
         this.속도 =rd.nextInt(16) + 260; //260~275
@@ -24,9 +22,9 @@ public class 보물고블린 extends 고블린{
         this.경험치 = rd.nextInt(6) + 25; //25~30
         this.소지금 = rd.nextInt(196) + 5; //5~200
         this.정보 = "약탈한 물건을 들고다니는 고블린입니다. 값진 물건을 가지고 있습니다.";
-        this.스킬리스트.clear();
-        this.스킬리스트.add(기본공격);
-        this.스킬리스트.add(도망치기);
+//        this.스킬리스트.clear();
+//        this.스킬리스트.add(기본공격);
+//        this.스킬리스트.add(도망치기);
         this.드랍테이블.clear();
         값진아이템();
     }

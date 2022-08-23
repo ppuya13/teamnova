@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import static java4.사냥터.사냥터.*;
 import static java4.사냥터.사냥터.사냥터입력.사냥터입력값;
 import static java4.사냥터.사냥터.입력대기;
-import static java4.사냥터.사냥터.턴타이머;
+//import static java4.사냥터.사냥터.턴타이머;
 
 public abstract class 광역스킬 extends 스킬 {
 

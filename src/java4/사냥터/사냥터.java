@@ -30,7 +30,7 @@ public class 사냥터 {
     public static 사냥터입력 사냥터입력 = new 사냥터입력();
     public static 사냥터출력 사냥터출력 = new 사냥터출력();
     //    public static 전투_행동게이지 전투_행동게이지;
-    public static 턴타이머 턴타이머;
+//    public static 턴타이머 턴타이머;
     public static boolean 도망치기사용 = false;
     public static boolean 전투중=false; //전투중일때만 전투관련 선택지가 출력되게 함
     public static boolean 입력대기 = false;
@@ -56,6 +56,7 @@ public class 사냥터 {
     boolean 보스토벌;
     전투_몬스터창 몬스터창 = new 전투_몬스터창();
     전투_캐릭터창 캐릭터창 = new 전투_캐릭터창();
+    public static 턴타이머 턴타이머 = new 턴타이머();
 
 
     public void 사냥터() throws InterruptedException, CloneNotSupportedException {
@@ -73,8 +74,6 @@ public class 사냥터 {
             while(입력대기){
                 Thread.sleep(50);
             }
-//            System.out.println("사냥터.사냥터()|발동2");
-//            System.out.println("사냥터.사냥터()|입력대기: "+입력대기);
             switch (사냥터입력값) {
                 case 0: //마을로 돌아가기
                     사냥터=false;
@@ -269,6 +268,7 @@ public class 사냥터 {
             }
             if(플레이어.행동게이지 == 플레이어.행동){
 //                System.out.println("실행");
+                턴타이머.타이머시작();
                 턴여부 = true; //행게가 가득차면 턴을 on하고 기다림, 턴종료시 턴여부를 false하고 행게를 줄인뒤에 notify하기
             }
             if(플레이어.행동게이지<플레이어.행동) {
@@ -328,17 +328,18 @@ public class 사냥터 {
 //            System.out.println("사냥터.전투()| 전투중: "+전투중 + ", 턴여부: " + 턴여부);
             전투시작:
             while(전투중&&턴여부) {
-                if(턴타이머 ==null) {
-//                    System.out.println("사냥터.전투| 타이머null");
-                    턴타이머 = new 턴타이머();
-                    턴타이머.start();
-//                    System.out.println("사냥터.전투| 타이머.getState: " + 타이머.getState());
-                }else if(!턴타이머.타이머진행중){
-                    턴타이머 = new 턴타이머();
-                    턴타이머.start();
-//                    System.out.println("사냥터.전투| 타이머살아있음");
-//                    System.out.println("사냥터.전투| 타이머.getState: " + 타이머.getState());
-                }
+//                if(턴타이머 ==null) {
+////                    System.out.println("사냥터.전투| 타이머null");
+//                    턴타이머 = new 턴타이머();
+//                    턴타이머.start();
+////                    System.out.println("사냥터.전투| 타이머.getState: " + 타이머.getState());
+//                }else if(!턴타이머.타이머진행중){
+//                    턴타이머 = new 턴타이머();
+//                    턴타이머.start();
+////                    System.out.println("사냥터.전투| 타이머살아있음");
+////                    System.out.println("사냥터.전투| 타이머.getState: " + 타이머.getState());
+//                }
+
 
 //                전투시작선택중=true;
                 행동중=true;

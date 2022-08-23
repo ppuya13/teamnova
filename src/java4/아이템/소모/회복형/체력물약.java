@@ -4,6 +4,8 @@ import java4.캐릭터.플레이어;
 
 import static java4.사냥터.사냥터.턴타이머;
 
+//import static java4.사냥터.사냥터.턴타이머;
+
 public class 체력물약 extends 회복형 {
     public 체력물약(String 이름) {
         this.아이템이름=이름;

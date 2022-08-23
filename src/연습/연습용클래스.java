@@ -17,6 +17,9 @@ import java4.캐릭터.플레이어;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -37,7 +40,8 @@ public class 연습용클래스 {
 //    //16진수생성 예제 끝
 
     static int 공유변수 = 10; //이런식으로 스태틱으로 변수를 선언하면 모든 스레드에서 사용할 수 있음.
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, IOException {
+
         int 몬스터머릿수=0;
         Scanner sc = new Scanner(System.in);
         int 입력=1;
@@ -51,6 +55,10 @@ public class 연습용클래스 {
         ArrayList<몬스터> 몬스터어레이 = new ArrayList<>();
         캐릭터 플레이어2 = new 플레이어();
         아이템 공격력물약 = new 공격력물약("공격력물약");
+
+
+
+
 
         ///////////////////////////////////////////스레드연습 시작////////////////////////////////////////////////
 //        Runnable 실행할코드 = new Runnable() { //가장 기본적인 구조, new에서 자동완성을 하면 기본구조가 자동완성됨.

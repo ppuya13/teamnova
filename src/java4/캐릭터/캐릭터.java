@@ -17,7 +17,7 @@ import static java4.사냥터.사냥터.*;
 import static java4.사냥터.사냥터.사냥터입력.사냥터입력값;
 import static java4.사냥터.사냥터.입력대기;
 import static java4.사냥터.사냥터.몬스터어레이;
-import static java4.사냥터.사냥터.턴타이머;
+//import static java4.사냥터.사냥터.턴타이머;
 
 public abstract class 캐릭터{
 
