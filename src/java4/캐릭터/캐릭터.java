@@ -14,9 +14,10 @@ import java.util.Scanner;
 import static java4.Main.*;
 import static java4.Main.사냥터;
 import static java4.사냥터.사냥터.*;
-import static java4.사냥터.사냥터.사냥터입력.사냥터입력값;
+//import static java4.사냥터.사냥터.사냥터입력.사냥터입력값;
 import static java4.사냥터.사냥터.입력대기;
 import static java4.사냥터.사냥터.몬스터어레이;
+import static java4.사냥터.전투.턴타이머;
 //import static java4.사냥터.사냥터.턴타이머;
 
 public abstract class 캐릭터{
@@ -131,11 +132,11 @@ public abstract class 캐릭터{
                         this.행동게이지 = 0;
                         턴여부=false;
                         this.능력치적용();
-                        사냥터.몬스터삭제(true);
+                        전투.몬스터삭제(true);
                         this.턴넘김();
-                        if(사냥터.전투종료판정(몬스터어레이,보스전,보스전초전)){
+                        if(전투.전투종료판정(몬스터어레이,보스전,보스전초전)){
                             전투중=false;
-                            사냥터.전투정산(true,플레이어);
+                            전투.전투정산(true,플레이어);
                         }
 //                        synchronized (전투_행동게이지){
 //                            전투_행동게이지.notify();
@@ -178,9 +179,9 @@ public abstract class 캐릭터{
             System.out.print("" +
                     "사용할 스킬을 선택해주세요. " +
                     "\n→");
-            synchronized (사냥터입력) {
-                사냥터입력.notify();
-            }
+//            synchronized (사냥터입력) {
+//                사냥터입력.notify();
+//            }
 //            Thread.sleep(50);
             입력대기=true;
             while(입력대기){
@@ -188,21 +189,21 @@ public abstract class 캐릭터{
             }
 //            System.out.println("캐릭터.스킬()|사냥터입력값: "+사냥터입력값 + ", 턴여부: "+턴여부);
             if(턴여부) {
-                if (사냥터입력값 == 0) {
+                if (입력 == 0) {
                     break;
-                } else if (사냥터입력값 > 0 && 사냥터입력값 <= this.스킬목록.size()) {
+                } else if (입력 > 0 && 입력 <= this.스킬목록.size()) {
 //                    System.out.println("캐릭터.스킬()|스킬발동");
-                    타겟스킬 = this.스킬목록.get(사냥터입력값 - 1);
+                    타겟스킬 = this.스킬목록.get(입력 - 1);
                     if (!타겟스킬.사용확인(몬스터어레이, 플레이어, 사냥터)) {
                         //결과가 false면(스킬을 사용했으면)
                         this.행동게이지 = 0;
                         턴여부=false;
                         this.능력치적용();
-                        사냥터.몬스터삭제(true);
+                        전투.몬스터삭제(true);
                         this.턴넘김();
-                        if(사냥터.전투종료판정(몬스터어레이,보스전,보스전초전)){
+                        if(전투.전투종료판정(몬스터어레이,보스전,보스전초전)){
                             전투중=false;
-                            사냥터.전투정산(true,(플레이어)this);
+                            전투.전투정산(true,(플레이어)this);
                         }
 //                        synchronized (전투_행동게이지){
 //                            전투_행동게이지.notify();
@@ -225,18 +226,18 @@ public abstract class 캐릭터{
                     "아이템을 선택해주세요. " +
                     "\n소모품만을 사용할 수 있으며, 아이템 사용 시 턴을 넘기게됩니다." +
                     "\n→");
-            synchronized (사냥터입력) {
-                사냥터입력.notify();
-            }
+//            synchronized (사냥터입력) {
+//                사냥터입력.notify();
+//            }
             입력대기=true;
             while(입력대기){
                 Thread.sleep(50);
             }
             if(턴여부) {
-                if (사냥터입력값 == 0) {
+                if (입력 == 0) {
                     break;
-                } else if (사냥터입력값 > 0 && 사냥터입력값 <= this.소지품.size() + this.회복물약가방.size()) {
-                    아이템정보 = this.아이템사용(사냥터입력값);
+                } else if (입력 > 0 && 입력 <= this.소지품.size() + this.회복물약가방.size()) {
+                    아이템정보 = this.아이템사용(입력);
                     if (아이템정보.착용가능여부) { //선택한 아이템이 착용가능하면
                         System.out.println("전투중엔 아이템 장착/해제를 할 수 없습니다.");
                         Thread.sleep(1000);
@@ -245,12 +246,12 @@ public abstract class 캐릭터{
                             this.행동게이지 = 0;
                             턴여부=false;
                             this.능력치적용();
-                            사냥터.몬스터삭제(true);
+                            전투.몬스터삭제(true);
                             this.인벤정리();
                             this.턴넘김();
-                            if(사냥터.전투종료판정(몬스터어레이,보스전,보스전초전)){
+                            if(전투.전투종료판정(몬스터어레이,보스전,보스전초전)){
                                 전투중=false;
-                                사냥터.전투정산(true,(플레이어)this);
+                                전투.전투정산(true,(플레이어)this);
                             }
 //                            synchronized (전투_행동게이지){
 //                                전투_행동게이지.notify();
@@ -269,29 +270,29 @@ public abstract class 캐릭터{
             System.out.println("\n살펴볼 몬스터를 선택하세요.");
             System.out.println(사냥터출력.행동몬스터목록());
             System.out.print("\n→");
-            synchronized (사냥터입력) {
-                사냥터입력.notify();
-            }
+//            synchronized (사냥터입력) {
+//                사냥터입력.notify();
+//            }
             입력대기=true;
             while(입력대기){
                 Thread.sleep(50);
             }
-            if (사냥터입력값 == 0) {
+            if (입력 == 0) {
                 break;
             }
-            else if (사냥터입력값 > 0 && 사냥터입력값 <= 몬스터어레이.size()) {
+            else if (입력 > 0 && 입력 <= 몬스터어레이.size()) {
 //                System.out.println("캐릭터.살펴보기()| 몬스터어레이.size(): " + 몬스터어레이.size());
-                몬스터타겟 = 몬스터어레이.get(사냥터입력값 - 1);
+                몬스터타겟 = 몬스터어레이.get(입력 - 1);
                 System.out.println(메인.정보출력(몬스터타겟));
-                for(int i = 0 ; i < 몬스터어레이.get(사냥터입력값-1).스킬리스트.size() ; i++){
-                    System.out.println(몬스터어레이.get(사냥터입력값-1).이름+"의 스킬 " + i + ": " + 몬스터어레이.get(사냥터입력값-1).스킬리스트.get(i).스킬명);
+                for(int i = 0 ; i < 몬스터어레이.get(입력-1).스킬리스트.size() ; i++){
+                    System.out.println(몬스터어레이.get(입력-1).이름+"의 스킬 " + i + ": " + 몬스터어레이.get(입력-1).스킬리스트.get(i).스킬명);
                 }
                 System.out.print("" +
                         "\n계속하려면 아무 숫자나 입력하세요." +
                         "\n→");
-                synchronized (사냥터입력) {
-                    사냥터입력.notify();
-                }
+//                synchronized (사냥터입력) {
+//                    사냥터입력.notify();
+//                }
                 입력대기=true;
                 while(입력대기){
                     Thread.sleep(50);
@@ -307,16 +308,16 @@ public abstract class 캐릭터{
                         "정말 도망치시겠습니까?" +
                         "\n0.취소한다." +
                         "\n1.도망친다.");
-                synchronized (사냥터입력) {
-                    사냥터입력.notify();
-                }
+//                synchronized (사냥터입력) {
+//                    사냥터입력.notify();
+//                }
                 입력대기=true;
                 while(입력대기){
                     Thread.sleep(50);
                 }
 
                 if (턴여부) {
-                    switch (사냥터입력값) {
+                    switch (입력) {
                         case 0:
                             return;
                         case 1:
@@ -329,7 +330,7 @@ public abstract class 캐릭터{
                             턴타이머.타이머종료();
                             System.out.println("도망쳤습니다.");
                             Thread.sleep(1000);
-                            사냥터.전투정산(false,플레이어);
+                            전투.전투정산(false,플레이어);
 //                            synchronized (전투_행동게이지){
 //                                전투_행동게이지.notify();
 //                            }
@@ -362,7 +363,7 @@ public abstract class 캐릭터{
                 //지속스킬이 더이상 없거나 지울 스킬이 없다면
                 break;
             }
-            사냥터.창갱신();
+            전투.창갱신();
         }
 //        }
         this.능력치적용();

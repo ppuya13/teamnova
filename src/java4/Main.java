@@ -7,7 +7,7 @@ import java4.인벤토리.인벤토리출력;
 import java4.캐릭터.플레이어;
 import java.util.Scanner;
 
-import static java4.사냥터.사냥터.사냥터입력;
+//import static java4.사냥터.사냥터.사냥터입력;
 
 public class Main {
     static public java4.캐릭터.플레이어 플레이어 = new 플레이어();
@@ -24,7 +24,7 @@ public class Main {
         상점 상점 = new 상점();//상점에 물건들을 진열하기 위한 코드
         //상점 초기화
 
-        사냥터입력.start(); //일단 입력을 start함.(wait상태)
+//        사냥터입력.start(); //일단 입력을 start함.(wait상태)
 
 
         Scanner sc = new Scanner(System.in);

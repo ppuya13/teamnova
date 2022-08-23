@@ -5,7 +5,8 @@ import java4.아이템.아이템;
 import java4.캐릭터.플레이어;
 
 //import static java4.사냥터.사냥터.턴타이머;
-import static java4.사냥터.사냥터.턴타이머;
+//import static java4.사냥터.사냥터.턴타이머;
+import static java4.사냥터.전투.턴타이머;
 
 public abstract class 지속형 extends 소모아이템 {
     public 지속형() {
