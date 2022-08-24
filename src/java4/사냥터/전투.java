@@ -146,7 +146,6 @@ public class 전투 extends Thread{
             창갱신();
         }
     }
-
     public boolean 전투종료판정(ArrayList<몬스터> 몬스터어레이, boolean 보스전, boolean 보스전초전){
         boolean 전투승리 = false;
         if(!보스전) {//보스전이 아닐경우 살아남은 몬스터가 0마리면 전투승리를 리턴함
